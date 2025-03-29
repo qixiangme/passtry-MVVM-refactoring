@@ -10,7 +10,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _currentIndex = 0; // _currentIndex를 State로 이동
+  int _currentIndex = 0; 
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ],
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // 탭 변경 시 _currentIndex 업데이트
+            _currentIndex = index; 
           });
         },
       ),
