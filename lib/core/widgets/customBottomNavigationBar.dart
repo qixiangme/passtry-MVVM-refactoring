@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key});
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+  const CustomBottomNavigationBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   State<CustomBottomNavigationBar> createState() =>
@@ -10,15 +16,13 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  int _currentIndex = 0; 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 250.h,
       child: BottomNavigationBar(
         selectedItemColor: Colors.black,
-        currentIndex: _currentIndex,
+        currentIndex: widget.currentIndex,
         iconSize: 66.h,
         type: BottomNavigationBarType.fixed,
         unselectedLabelStyle: TextStyle(
@@ -33,11 +37,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           BottomNavigationBarItem(icon: Icon(Icons.square), label: '탐색'),
           BottomNavigationBarItem(icon: Icon(Icons.square), label: '마이'),
         ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index; 
-          });
-        },
+        onTap: widget.onTap,
       ),
     );
   }
