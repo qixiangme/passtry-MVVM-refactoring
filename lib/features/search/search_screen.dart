@@ -156,9 +156,9 @@ class SearchScreen extends StatelessWidget {
 
 class _SearchBar extends SliverPersistentHeaderDelegate {
   @override
-  double get minExtent => 60.0; // 최소 크기
+  double get minExtent => 40.0; // 최소 크기
   @override
-  double get maxExtent => 80.0; // 최대 크기
+  double get maxExtent => 45.0; // 최대 크기
 
   @override
   Widget build(
@@ -174,17 +174,26 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
         );
       },
       child: Container(
-        color: Colors.grey,
+        decoration: BoxDecoration(
+          color: Color(0xffECECEC),
+          borderRadius: BorderRadius.circular(35), // 둥글게 설정
+        ),
         child: SizedBox(
           child: Center(
-            child: Text(
-              '모집 중인 스터디, 공고 검색하기',
-              style: TextStyle(
-                color: const Color(0xFF6B6B6B) /* dark-gray */,
-                fontSize: 36.sp,
-                fontFamily: 'Wanted Sans',
-                fontWeight: FontWeight.w500,
-                letterSpacing: -0.36,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  '모집 중인 스터디, 공고 검색하기',
+                  style: TextStyle(
+                    color: const Color(0xFF6B6B6B) /* dark-gray */,
+                    fontSize: 34.sp,
+                    fontFamily: 'Wanted Sans',
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.36,
+                  ),
+                ),
               ),
             ),
           ),
