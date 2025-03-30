@@ -49,7 +49,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
           Center(
             child: Container(
               width: 992.w, // 화면 밀도 적용
-              height: 683.h, // 화면 밀도 적용
+              height: 720.h, // 화면 밀도 적용
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFC4CAD4)),
                 borderRadius: BorderRadius.all(
