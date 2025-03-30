@@ -34,7 +34,7 @@ class SearchScreen extends StatelessWidget {
                             color: const Color(0xFF1C1C1C) /* main-black */,
                             fontSize: 60.sp,
                             fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
@@ -96,11 +96,12 @@ class SearchScreen extends StatelessWidget {
               ],
             ),
           ),
+          SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverPersistentHeader(pinned: true, delegate: _SearchBar()),
           SliverToBoxAdapter(
             child: Column(
               children: [
-                SizedBox(height: 20),
+                SizedBox(height: 14),
                 SizedBox(
                   height: 130.h, // 가로 리스트 높이 지정
                   child: SingleChildScrollView(
@@ -176,7 +177,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
       child: Container(
         decoration: BoxDecoration(
           color: Color(0xffECECEC),
-          borderRadius: BorderRadius.circular(35), // 둥글게 설정
+          borderRadius: BorderRadius.circular(22), // 둥글게 설정
         ),
         child: SizedBox(
           child: Center(
@@ -190,7 +191,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
                     color: const Color(0xFF6B6B6B) /* dark-gray */,
                     fontSize: 34.sp,
                     fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     letterSpacing: -0.36,
                   ),
                 ),
