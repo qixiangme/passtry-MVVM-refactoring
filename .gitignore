@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Miscellaneous
 *.class
 *.log
@@ -31,7 +32,8 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+build/
+pubspec.lock
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +45,18 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# dotenv environment variables file
+.env*
+
+# Avoid committing generated Javascript files:
+*.dart.js
+*.info.json
+*.js
+*.js_
+*.js.deps
+*.js.map
+
+.flutter-plugins
+.flutter-plugins-dependencies
+>>>>>>> 3859b12d3f014d10286636456b1f58fb3a3ee422
