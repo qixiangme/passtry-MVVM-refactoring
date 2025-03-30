@@ -11,6 +11,7 @@ class UploadPostScreen extends StatefulWidget {
 class _UploadPostScreenState extends State<UploadPostScreen> {
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
+  List<bool> tagSelection = List.generate(8, (_) => false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,327 +99,505 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               runSpacing: 18.r, // 화면 밀도 적용
               children: [
                 // 태그 버튼들에 대한 부분도 동일하게 화면 밀도 적용
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[0] = !tagSelection[0];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[0]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[0]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '📚', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[0]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '학술', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[0]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '💻',
-                        style: TextStyle(
-                          color: Color(0xFF1C1C1C),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '전공',
-                        style: TextStyle(
-                          color: Color(0xFF1C1C1C),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[1] = !tagSelection[1];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[1]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[1]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '💻', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[1]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '전공', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[1]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '📚',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '학술',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[2] = !tagSelection[2];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[2]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[2]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '🎨', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[2]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '예술', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[2]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '🎨',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '예술',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 267.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[3] = !tagSelection[3];
+                    });
+                  },
+                  child: Container(
+                    width: 267.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[3]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[3]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '👥', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[3]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '문화•취미', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[3]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '👥',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '문화•취미',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[4] = !tagSelection[4];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[4]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[4]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '☀️', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[4]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '봉사', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[4]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '☀️',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '봉사',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[5] = !tagSelection[5];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[5]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[4]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '🔠', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[5]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '어학', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[5]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '🔠',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '어학',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[6] = !tagSelection[6];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[6]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[6]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '🤝', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[6]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '창업', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[6]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '🤝',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '창업',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
+
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      // 태그 선택 상태 토글
+                      tagSelection[7] = !tagSelection[7];
+                    });
+                  },
+                  child: Container(
+                    width: 190.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[7]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[7]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '✈️', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[7]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '여행', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          style: TextStyle(
+                            color:
+                                tagSelection[7]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '✈️',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '여행',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
+
                 // 다른 Container들도 동일하게 화면 밀도 적용
               ],
             ),
