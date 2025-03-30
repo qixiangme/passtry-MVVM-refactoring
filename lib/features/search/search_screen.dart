@@ -189,9 +189,9 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
                   '모집 중인 스터디, 공고 검색하기',
                   style: TextStyle(
                     color: const Color(0xFF6B6B6B) /* dark-gray */,
-                    fontSize: 34.sp,
+                    fontSize: 44.sp,
                     fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                     letterSpacing: -0.36,
                   ),
                 ),
