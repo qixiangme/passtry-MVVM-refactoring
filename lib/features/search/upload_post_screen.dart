@@ -9,43 +9,75 @@ class UploadPostScreen extends StatefulWidget {
 }
 
 class _UploadPostScreenState extends State<UploadPostScreen> {
+  final TextEditingController _titleTextController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(actions: [Icon(Icons.add)]),
       body: Column(
         children: [
-          SizedBox(height: 20.h), // 화면 밀도 적용
+          SizedBox(height: 50.h), // 화면 밀도 적용
           Center(
             child: Container(
               width: 992.w, // 화면 밀도 적용
               height: 119.h, // 화면 밀도 적용
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xFFC4CAD4)),
                 borderRadius: BorderRadius.all(
                   Radius.circular(38.5.r),
                 ), // 화면 밀도 적용
               ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, bottom: 2),
+                child: TextField(
+                  controller: _titleTextController,
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      fontSize: 44.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF6B6B6B),
+                    ),
+                    hintText: "제목(20자 이내)",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
             ),
           ),
-          SizedBox(height: 10.h), // 화면 밀도 적용
+          SizedBox(height: 35.h), // 화면 밀도 적용
           Center(
             child: Container(
               width: 992.w, // 화면 밀도 적용
               height: 683.h, // 화면 밀도 적용
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Color(0xFFC4CAD4)),
                 borderRadius: BorderRadius.all(
                   Radius.circular(38.5.r),
                 ), // 화면 밀도 적용
               ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, bottom: 2),
+                child: TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF6B6B6B),
+                    ),
+                    hintText: "본문(300자 이내)",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
             ),
           ),
-          SizedBox(height: 20.h), // 화면 밀도 적용
+          SizedBox(height: 30.h), // 화면 밀도 적용
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: 39.w), // 화면 밀도 적용
+              SizedBox(width: 90.w), // 화면 밀도 적용
               Text(
                 "태그",
                 style: TextStyle(
@@ -56,6 +88,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               ),
             ],
           ),
+          SizedBox(height: 10),
           SizedBox(
             width: 935.w, // 화면 밀도 적용
             child: Wrap(
@@ -66,10 +99,8 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               children: [
                 // 태그 버튼들에 대한 부분도 동일하게 화면 밀도 적용
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
                     color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
@@ -81,22 +112,22 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     ),
                   ),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '💻',
                         style: TextStyle(
                           color: Color(0xFF1C1C1C),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '전공',
                         style: TextStyle(
                           color: Color(0xFF1C1C1C),
                           fontSize: 36.sp, // 화면 밀도 적용
@@ -109,16 +140,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -131,17 +159,17 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                       Text(
                         '📚',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
                         '학술',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -152,16 +180,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -172,19 +197,19 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '🎨',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '예술',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -195,16 +220,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 267.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -215,19 +237,19 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '👥',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '문화•취미',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -238,16 +260,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -258,19 +277,19 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '☀️',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '봉사',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -281,16 +300,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -301,19 +317,19 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '🔠',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '어학',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -324,16 +340,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -344,19 +357,19 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '🤝',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '창업',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -367,16 +380,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 36.w, // 화면 밀도 적용
-                    vertical: 26.h, // 화면 밀도 적용
-                  ),
+                  width: 190.w,
+                  height: 100.h,
                   decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
                         width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+                        color: Color(0xFFECECEC),
                       ),
                       borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                     ),
@@ -387,19 +397,19 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '📚',
+                        '✈️',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
-                        '학술',
+                        '여행',
                         style: TextStyle(
-                          color: Color(0xFF1C1C1C),
+                          color: Color(0xFF6B6B6B),
                           fontSize: 36.sp, // 화면 밀도 적용
                           fontFamily: 'Wanted Sans',
                           fontWeight: FontWeight.w600,
@@ -409,15 +419,16 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     ],
                   ),
                 ),
+
                 // 다른 Container들도 동일하게 화면 밀도 적용
               ],
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: 39.w),
+              SizedBox(width: 90.w),
               Text(
                 "사진",
                 style: TextStyle(
@@ -437,26 +448,22 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
           Row(
             children: [
-              SizedBox(width: 10),
+              SizedBox(width: 30),
               SizedBox(
                 width: 242.w,
                 height: 242.h,
                 child: Stack(
                   children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 242.w,
-                        height: 242.h,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFC4CAD4) /* gray */,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                    Container(
+                      width: 242.w,
+                      height: 242.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFC4CAD4) /* gray */,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
                       ),
                     ),
@@ -468,7 +475,9 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         height: 53.h,
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(),
-                        child: Center(child: Icon(Icons.add)),
+                        child: Center(
+                          child: Icon(Icons.add, color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
@@ -489,7 +498,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         decoration: ShapeDecoration(
                           color: const Color(0xFFC4CAD4) /* gray */,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10.r),
                           ),
                         ),
                       ),
@@ -502,7 +511,9 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         height: 53.h,
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(),
-                        child: Center(child: Icon(Icons.add)),
+                        child: Center(
+                          child: Icon(Icons.add, color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
