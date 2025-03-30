@@ -77,8 +77,8 @@ class SearchScreen extends StatelessWidget {
                         width: 993.w,
                         margin: EdgeInsets.only(right: 16.w), // 각 항목 간의 간격
                         decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.all(Radius.circular(38)),
+                          color: Color(0xffFF9F1C),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
                       Container(
@@ -86,8 +86,8 @@ class SearchScreen extends StatelessWidget {
                         width: 993.w,
                         margin: EdgeInsets.only(right: 16.w), // 각 항목 간의 간격
                         decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.all(Radius.circular(38)),
+                          color: Color(0xffFF9F1C),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
                     ],
@@ -100,20 +100,20 @@ class SearchScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 SizedBox(
-                  height: 200.h, // 가로 리스트 높이 지정
+                  height: 130.h, // 가로 리스트 높이 지정
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal, // 가로 스크롤
                     child: Row(
-                      children: List.generate(10, (index) {
+                      children: List.generate(7, (index) {
                         return Container(
-                          width: 150.w,
-                          margin: EdgeInsets.symmetric(horizontal: 10.w),
+                          width: 180.w,
+                          margin: EdgeInsets.symmetric(horizontal: 9.w),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Color(0xffECECEC)),
+                            borderRadius: BorderRadius.circular(13),
                           ),
                         );
                       }),
@@ -134,11 +134,13 @@ class SearchScreen extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    height: 300.h, // 아이템 높이
-                    margin: EdgeInsets.symmetric(vertical: 10.h), // 아이템 사이 간격
+                    height: 380.h, // 아이템 높이
+                    margin: EdgeInsets.symmetric(vertical: 20.h), // 아이템 사이 간격
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey), // 경계선 색과 두께 지정
+                      borderRadius: BorderRadius.circular(13),
+                      border: Border.all(
+                        color: Color(0xffECECEC),
+                      ), // 경계선 색과 두께 지정
                     ),
                   ),
                 );
