@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> initial-setup
 # Miscellaneous
 *.class
 *.log
@@ -32,8 +35,12 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
+<<<<<<< HEAD
 build/
 pubspec.lock
+=======
+/build/
+>>>>>>> initial-setup
 
 # Symbolication related
 app.*.symbols
@@ -45,6 +52,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+<<<<<<< HEAD
 
 # dotenv environment variables file
 .env*
@@ -60,3 +68,5 @@ app.*.map.json
 .flutter-plugins
 .flutter-plugins-dependencies
 >>>>>>> 3859b12d3f014d10286636456b1f58fb3a3ee422
+=======
+>>>>>>> initial-setup
