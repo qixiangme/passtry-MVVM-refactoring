@@ -15,10 +15,7 @@ class MyApp extends StatelessWidget {
     ScreenUtil.init(context, designSize: Size(1080, 2400));
     return MaterialApp(
       home: const MainScreen(),
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(color: Colors.white),
-      ),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
     );
   }
 }

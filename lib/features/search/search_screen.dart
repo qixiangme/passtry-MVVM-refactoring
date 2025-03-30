@@ -19,7 +19,7 @@ class SearchScreen extends StatelessWidget {
               children: [
                 Container(
                   width: 1080.w,
-                  height: 300.h,
+                  height: 275.h,
                   padding: EdgeInsets.only(top: (200.75).h),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -96,7 +96,7 @@ class SearchScreen extends StatelessWidget {
               ],
             ),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverToBoxAdapter(child: SizedBox(height: 11)),
           SliverPersistentHeader(pinned: true, delegate: _SearchBar()),
           SliverToBoxAdapter(
             child: Column(
