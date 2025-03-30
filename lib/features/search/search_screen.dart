@@ -184,14 +184,14 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 20),
+                padding: EdgeInsets.only(left: 23),
                 child: Text(
                   '모집 중인 스터디, 공고 검색하기',
                   style: TextStyle(
                     color: const Color(0xFF6B6B6B) /* dark-gray */,
-                    fontSize: 44.sp,
+                    fontSize: 29.sp,
                     fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     letterSpacing: -0.36,
                   ),
                 ),
