@@ -19,15 +19,15 @@ class SearchScreen extends StatelessWidget {
               children: [
                 Container(
                   width: 1080.w,
-                  height: 120.h,
-                  padding: EdgeInsets.only(top: (13.75).h, bottom: 13.75.h),
+                  height: 300.h,
+                  padding: EdgeInsets.only(top: (200.75).h),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 832.50.w,
+                        width: 815.50.w,
                         child: Text(
                           '탐색',
                           style: TextStyle(
@@ -57,7 +57,7 @@ class SearchScreen extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
-                  height: 389.h,
+                  height: 500.h,
                   child: PageView(
                     scrollDirection: Axis.horizontal,
                     controller: PageController(
@@ -68,8 +68,8 @@ class SearchScreen extends StatelessWidget {
                         height: 389.h,
                         margin: EdgeInsets.only(right: 16.w), // 각 항목 간의 간격
                         decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.all(Radius.circular(38)),
+                          color: Color(0xffFF9F1C),
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
                         ),
                       ),
                       Container(
