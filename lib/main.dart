@@ -13,6 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: Size(1080, 2400));
-    return MaterialApp(home: const MainScreen());
+    return MaterialApp(
+      home: const MainScreen(),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+    );
   }
 }

@@ -21,7 +21,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return SizedBox(
       height: 250.h,
       child: BottomNavigationBar(
-        selectedItemColor: Colors.black,
+        selectedItemColor: Colors.orange,
         currentIndex: widget.currentIndex,
         iconSize: 66.h,
         type: BottomNavigationBarType.fixed,
@@ -29,7 +29,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           color: const Color(0xffC4CAD4),
           fontSize: 33.sp,
         ),
-        selectedLabelStyle: const TextStyle(color: Colors.black),
+        selectedLabelStyle: const TextStyle(color: Colors.orange),
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.square), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.square), label: '스터디'),
