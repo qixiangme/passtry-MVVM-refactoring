@@ -1,0 +1,17 @@
+[33m4057900[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: commit: 검색 박스 색, 크기, 테두리 수정정
+[33mfdda060[m HEAD@{1}: pull --tags origin main: Fast-forward
+[33mc5bdc99[m HEAD@{2}: checkout: moving from search to main
+[33me2649d7[m[33m ([m[1;32msearch[m[33m)[m HEAD@{3}: commit: 탐색 탭 전체적인 위치 조정정
+[33mb17995e[m HEAD@{4}: commit: 모집 중인 스터디 전체적으로 수정
+[33m9bfb7b0[m[33m ([m[1;31morigin/search[m[33m)[m HEAD@{5}: commit: 모집 중인 스터디 박스 변경
+[33md7bb3df[m HEAD@{6}: checkout: moving from search to search
+[33md7bb3df[m HEAD@{7}: checkout: moving from d7bb3dfd35056a0f8a935c02266e5df12a092707 to search
+[33md7bb3df[m HEAD@{8}: commit: 탐색 필터 부분과 게시글 부분 테두리 변경(색, 크기)
+[33m7f996cf[m HEAD@{9}: reset: moving to HEAD~1
+[33mc5bdc99[m HEAD@{10}: checkout: moving from main to c5bdc990b6cab6a13a7ee348a6d686483d8f08ca
+[33mc5bdc99[m HEAD@{11}: commit: 탐색 필터 부분과과 게시글 부분 테두리 변경(색, 크기)
+[33m7f996cf[m HEAD@{12}: pull origin main: Fast-forward
+[33mff93e30[m HEAD@{13}: commit: '탐색' 글씨 위치, 밑 주황색 박스 위치, 크기, 테두리 조정
+[33m8fc8d81[m HEAD@{14}: pull origin main: Fast-forward
+[33m9ffc6e7[m HEAD@{15}: commit (merge): Resolve merge conflict in .gitignore
+[33m7b4f965[m HEAD@{16}: commit (initial): 하단 바 아이콘 크기 변경
