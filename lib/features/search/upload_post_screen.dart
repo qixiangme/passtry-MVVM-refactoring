@@ -413,7 +413,6 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      // 태그 선택 상태 토글
                       tagSelection[5] = !tagSelection[5];
                     });
                   },
@@ -442,7 +441,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '🔠', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          '🔠', 
                           style: TextStyle(
                             color:
                                 tagSelection[5]
@@ -456,7 +455,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          '어학', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          '어학', 
                           style: TextStyle(
                             color:
                                 tagSelection[5]
@@ -475,7 +474,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      // 태그 선택 상태 토글
+                     
                       tagSelection[6] = !tagSelection[6];
                     });
                   },
@@ -504,7 +503,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '🤝', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          '🤝',
                           style: TextStyle(
                             color:
                                 tagSelection[6]
@@ -518,7 +517,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          '창업', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          '창업', 
                           style: TextStyle(
                             color:
                                 tagSelection[6]
@@ -538,7 +537,6 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      // 태그 선택 상태 토글
                       tagSelection[7] = !tagSelection[7];
                     });
                   },
@@ -581,7 +579,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          '여행', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          '여행', 
                           style: TextStyle(
                             color:
                                 tagSelection[7]
