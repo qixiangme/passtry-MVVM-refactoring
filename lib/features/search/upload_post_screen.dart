@@ -42,12 +42,12 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 ), // 화면 밀도 적용
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 2),
+                padding: const EdgeInsets.only(left: 15, bottom: 3),
                 child: TextField(
                   controller: _titleTextController,
                   decoration: InputDecoration(
                     hintStyle: TextStyle(
-                      fontSize: 44.sp,
+                      fontSize: 42.sp,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF6B6B6B),
                     ),
@@ -122,7 +122,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     decoration: ShapeDecoration(
                       color:
                           tagSelection[index]
-                              ? Color(0x21FF9F1C) // 주황색
+                              ? Color(0xffFF9F1C) // 주황색
                               : Color(0xFFECECEC), // 회색
 
                       shape: RoundedRectangleBorder(
