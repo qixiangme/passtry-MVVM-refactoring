@@ -177,21 +177,24 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
   final int selectedTagIndex;
   final Function(int) onTagSelected;
   Map<int, Map<String, String>> categoryDict = {
-    0: {'icon': '💻', 'text': '전공'},
-    1: {'icon': '📚', 'text': '학술'},
-    2: {'icon': '🎨', 'text': '예술'},
-    3: {'icon': '👥', 'text': '문화•취미'},
-    4: {'icon': '☀️', 'text': '봉사'},
-    5: {'icon': '🔠', 'text': '어학'},
-    6: {'icon': '🤝', 'text': '창업'},
-    7: {'icon': '✈️', 'text': '여행'},
+    0: {'icon': '🔥', 'text': '인기'},
+    1: {'icon': '⏱️', 'text': '최근'},
+
+    2: {'icon': '💻', 'text': '전공'},
+    3: {'icon': '📚', 'text': '학술'},
+    4: {'icon': '🎨', 'text': '예술'},
+    5: {'icon': '👥', 'text': '문화•취미'},
+    6: {'icon': '☀️', 'text': '봉사'},
+    7: {'icon': '🔠', 'text': '어학'},
+    8: {'icon': '🤝', 'text': '창업'},
+    9: {'icon': '✈️', 'text': '여행'},
   };
 
   _SearchBar({required this.selectedTagIndex, required this.onTagSelected});
   @override
-  double get minExtent => 110.0; // 최소 크기
+  double get minExtent => 95.0; // 최소 크기
   @override
-  double get maxExtent => 110.00; // 최대 크기
+  double get maxExtent => 95.00; // 최대 크기
 
   @override
   Widget build(
@@ -245,7 +248,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Row(
-                children: List.generate(7, (index) {
+                children: List.generate(9, (index) {
                   return GestureDetector(
                     onTap: () => onTagSelected(index),
                     child: Row(
