@@ -15,6 +15,11 @@ class _SearchScreenState extends State<SearchScreen> {
   int selectedTagIndex = 0;
   int currentCardIndex = 0;
   final PageController _pageController = PageController(viewportFraction: 1);
+  void onTagSelected(int index) {
+    setState(() {
+      selectedTagIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,96 +129,15 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
           ),
-          SliverPersistentHeader(pinned: true, delegate: _SearchBar()),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                SizedBox(height: 14),
-                SizedBox(
-                  height: 95.h, // 가로 리스트 높이 지정
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal, // 가로 스크롤
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Row(
-                        children: List.generate(7, (index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedTagIndex = index;
-                              });
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 190.w,
-                                  height: 100.h,
-                                  decoration: ShapeDecoration(
-                                    color:
-                                        selectedTagIndex == index
-                                            ? Color(0x21FF9F1C) // 주황색
-                                            : Colors.white, // 회색
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                        width: 2.75.w, // 화면 밀도 적용
-                                        color:
-                                            selectedTagIndex == index
-                                                ? Color(0xFFFF9F1C) // 주황색
-                                                : Color(0xFFECECEC), // 회색
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                        36.r,
-                                      ), // 화면 밀도 적용
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '🔠',
-                                        style: TextStyle(
-                                          color:
-                                              selectedTagIndex == index
-                                                  ? Color(0xFF1C1C1C)
-                                                  : Color(0xFF6B6B6B),
-                                          fontSize: 36.sp, // 화면 밀도 적용
-                                          fontFamily: 'Wanted Sans',
-                                          fontWeight: FontWeight.w600,
-                                          letterSpacing: -0.36,
-                                        ),
-                                      ),
-                                      SizedBox(width: 5),
-                                      Text(
-                                        '어학',
-                                        style: TextStyle(
-                                          color:
-                                              selectedTagIndex == index
-                                                  ? Color(0xFF1C1C1C)
-                                                  : Color(0xFF6B6B6B),
-                                          fontSize: 36.sp, // 화면 밀도 적용
-                                          fontFamily: 'Wanted Sans',
-                                          fontWeight: FontWeight.w600,
-                                          letterSpacing: -0.36,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                              ],
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _SearchBar(
+              selectedTagIndex: selectedTagIndex,
+              onTagSelected: onTagSelected,
             ),
           ),
+          SliverToBoxAdapter(child: Column(children: [SizedBox(height: 14)])),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -224,14 +148,18 @@ class _SearchScreenState extends State<SearchScreen> {
                       MaterialPageRoute(builder: (context) => PostScreen()),
                     );
                   },
-                  child: Container(
-                    height: 380.h, // 아이템 높이
-                    margin: EdgeInsets.symmetric(vertical: 20.h), // 아이템 사이 간격
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13),
-                      border: Border.all(
-                        color: Color(0xffECECEC),
-                      ), // 경계선 색과 두께 지정
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 992.w,
+                      height: 290.h, // 아이템 높이
+                      margin: EdgeInsets.symmetric(vertical: 20.h), // 아이템 사이 간격
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13),
+                        border: Border.all(
+                          color: Color(0xffECECEC),
+                        ), // 경계선 색과 두께 지정
+                      ),
                     ),
                   ),
                 );
@@ -246,10 +174,24 @@ class _SearchScreenState extends State<SearchScreen> {
 }
 
 class _SearchBar extends SliverPersistentHeaderDelegate {
+  final int selectedTagIndex;
+  final Function(int) onTagSelected;
+  Map<int, Map<String, String>> categoryDict = {
+    0: {'icon': '💻', 'text': '전공'},
+    1: {'icon': '📚', 'text': '학술'},
+    2: {'icon': '🎨', 'text': '예술'},
+    3: {'icon': '👥', 'text': '문화•취미'},
+    4: {'icon': '☀️', 'text': '봉사'},
+    5: {'icon': '🔠', 'text': '어학'},
+    6: {'icon': '🤝', 'text': '창업'},
+    7: {'icon': '✈️', 'text': '여행'},
+  };
+
+  _SearchBar({required this.selectedTagIndex, required this.onTagSelected});
   @override
-  double get minExtent => 40.0; // 최소 크기
+  double get minExtent => 110.0; // 최소 크기
   @override
-  double get maxExtent => 40.00; // 최대 크기
+  double get maxExtent => 110.00; // 최대 크기
 
   @override
   Widget build(
@@ -257,45 +199,128 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SearchBarScreen()),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 13),
-        decoration: BoxDecoration(
-          color: Color(0xffECECEC),
-          borderRadius: BorderRadius.circular(22), // 둥글게 설정
-        ),
-        child: SizedBox(
-          child: Center(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 23),
-                child: Text(
-                  '모집 중인 스터디, 공고 검색하기',
-                  style: TextStyle(
-                    color: const Color(0xFF6B6B6B) /* dark-gray */,
-                    fontSize: 29.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: -0.36,
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchBarScreen()),
+            );
+          },
+          child: Container(
+            height: 122.h,
+            margin: EdgeInsets.symmetric(horizontal: 13),
+            decoration: BoxDecoration(
+              color: Color(0xffECECEC),
+              borderRadius: BorderRadius.circular(22), // 둥글게 설정
+            ),
+            child: SizedBox(
+              child: Center(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 23),
+                    child: Text(
+                      '모집 중인 스터디, 공고 검색하기',
+                      style: TextStyle(
+                        color: const Color(0xFF6B6B6B) /* dark-gray */,
+                        fontSize: 29.sp,
+                        fontFamily: 'Wanted Sans',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -0.36,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
-      ),
+        SizedBox(height: 10),
+        SizedBox(
+          height: 95.h, // 가로 리스트 높이 지정
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal, // 가로 스크롤
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                children: List.generate(7, (index) {
+                  return GestureDetector(
+                    onTap: () => onTagSelected(index),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 190.w,
+                          height: 100.h,
+                          decoration: ShapeDecoration(
+                            color:
+                                selectedTagIndex == index
+                                    ? Color(0x21FF9F1C) // 주황색
+                                    : Colors.white, // 회색
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 2.75.w, // 화면 밀도 적용
+                                color:
+                                    selectedTagIndex == index
+                                        ? Color(0xFFFF9F1C) // 주황색
+                                        : Color(0xFFECECEC), // 회색
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                36.r,
+                              ), // 화면 밀도 적용
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                categoryDict[index]!["icon"]!,
+                                style: TextStyle(
+                                  color:
+                                      selectedTagIndex == index
+                                          ? Color(0xFF1C1C1C)
+                                          : Color(0xFF6B6B6B),
+                                  fontSize: 36.sp, // 화면 밀도 적용
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.36,
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                categoryDict[index]!["text"]!,
+                                style: TextStyle(
+                                  color:
+                                      selectedTagIndex == index
+                                          ? Color(0xFF1C1C1C)
+                                          : Color(0xFF6B6B6B),
+                                  fontSize: 36.sp, // 화면 밀도 적용
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.36,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+    return true;
   }
 }
