@@ -4,8 +4,17 @@ import 'package:componentss/features/search/upload_post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  int selectedTagIndex = 0;
+  int currentCardIndex = 0;
+  final PageController _pageController = PageController(viewportFraction: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +22,7 @@ class SearchScreen extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            toolbarHeight: 300,
+            toolbarHeight: 340,
             backgroundColor: Colors.white,
             flexibleSpace: Column(
               children: [
@@ -55,66 +64,141 @@ class SearchScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 40),
 
-                SizedBox(
-                  width: double.infinity,
-                  height: 500.h,
-                  child: PageView(
-                    scrollDirection: Axis.horizontal,
-                    controller: PageController(
-                      viewportFraction: 1,
-                    ), // 가로 스크롤 설정
-                    children: [
-                      Container(
-                        height: 389.h,
-                        margin: EdgeInsets.only(right: 16.w), // 각 항목 간의 간격
-                        decoration: BoxDecoration(
-                          color: Color(0xffFF9F1C),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                Row(
+                  children: [
+                    SizedBox(width: 20),
+                    SizedBox(
+                      width: 993.w,
+                      height: 360.h,
+                      child: PageView(
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        onPageChanged: ((index) {
+                          setState(() {
+                            currentCardIndex = index;
+                          });
+                        }),
+                        children: List.generate(
+                          4,
+                          (index) => Container(
+                            height: 389.h,
+                            width: 993.w,
+                            margin: EdgeInsets.only(right: 30.w),
+                            decoration: BoxDecoration(
+                              color: Color(0xffFF9F1C),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 389.h,
-                        width: 993.w,
-                        margin: EdgeInsets.only(right: 16.w), // 각 항목 간의 간격
-                        decoration: BoxDecoration(
-                          color: Color(0xffFF9F1C),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    4,
+                    (index) => Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:
+                            currentCardIndex == index
+                                ? Colors
+                                    .black // 활성화된 페이지는 주황색
+                                : Color(0xffD9D9D9),
                       ),
-                      Container(
-                        height: 389.h,
-                        width: 993.w,
-                        margin: EdgeInsets.only(right: 16.w), // 각 항목 간의 간격
-                        decoration: BoxDecoration(
-                          color: Color(0xffFF9F1C),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          SliverToBoxAdapter(child: SizedBox(height: 11)),
+          SliverToBoxAdapter(child: SizedBox(height: 3)),
           SliverPersistentHeader(pinned: true, delegate: _SearchBar()),
           SliverToBoxAdapter(
             child: Column(
               children: [
                 SizedBox(height: 14),
                 SizedBox(
-                  height: 130.h, // 가로 리스트 높이 지정
+                  height: 95.h, // 가로 리스트 높이 지정
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal, // 가로 스크롤
                     child: Row(
                       children: List.generate(7, (index) {
-                        return Container(
-                          width: 180.w,
-                          margin: EdgeInsets.symmetric(horizontal: 9.w),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Color(0xffECECEC)),
-                            borderRadius: BorderRadius.circular(13),
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedTagIndex = index;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 190.w,
+                                height: 100.h,
+                                decoration: ShapeDecoration(
+                                  color:
+                                      selectedTagIndex == index
+                                          ? Color(0x21FF9F1C) // 주황색
+                                          : Colors.white, // 회색
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      width: 2.75.w, // 화면 밀도 적용
+                                      color:
+                                          selectedTagIndex == index
+                                              ? Color(0xFFFF9F1C) // 주황색
+                                              : Color(0xFFECECEC), // 회색
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                      36.r,
+                                    ), // 화면 밀도 적용
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '🔠',
+                                      style: TextStyle(
+                                        color:
+                                            selectedTagIndex == index
+                                                ? Color(0xFF1C1C1C)
+                                                : Color(0xFF6B6B6B),
+                                        fontSize: 36.sp, // 화면 밀도 적용
+                                        fontFamily: 'Wanted Sans',
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: -0.36,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      '어학',
+                                      style: TextStyle(
+                                        color:
+                                            selectedTagIndex == index
+                                                ? Color(0xFF1C1C1C)
+                                                : Color(0xFF6B6B6B),
+                                        fontSize: 36.sp, // 화면 밀도 적용
+                                        fontFamily: 'Wanted Sans',
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: -0.36,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                            ],
                           ),
                         );
                       }),
@@ -159,7 +243,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
   @override
   double get minExtent => 40.0; // 최소 크기
   @override
-  double get maxExtent => 45.0; // 최대 크기
+  double get maxExtent => 40.00; // 최대 크기
 
   @override
   Widget build(
@@ -175,6 +259,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
         );
       },
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 13),
         decoration: BoxDecoration(
           color: Color(0xffECECEC),
           borderRadius: BorderRadius.circular(22), // 둥글게 설정
