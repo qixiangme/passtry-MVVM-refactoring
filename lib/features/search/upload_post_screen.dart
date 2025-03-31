@@ -11,6 +11,18 @@ class UploadPostScreen extends StatefulWidget {
 class _UploadPostScreenState extends State<UploadPostScreen> {
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
+  Map<int, Map<String, String>> categoryDict = {
+    0: {'icon': '🔥', 'text': '인기'},
+    1: {'icon': '⏱️', 'text': '최근'},
+    2: {'icon': '💻', 'text': '전공'},
+    3: {'icon': '📚', 'text': '학술'},
+    4: {'icon': '🎨', 'text': '예술'},
+    5: {'icon': '👥', 'text': '취미'},
+    6: {'icon': '☀️', 'text': '봉사'},
+    7: {'icon': '🔠', 'text': '어학'},
+    8: {'icon': '🤝', 'text': '창업'},
+    9: {'icon': '✈️', 'text': '여행'},
+  };
   List<bool> tagSelection = List.generate(8, (_) => false);
   @override
   Widget build(BuildContext context) {
@@ -97,13 +109,11 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               runAlignment: WrapAlignment.center,
               spacing: 18.r, // 화면 밀도 적용
               runSpacing: 18.r, // 화면 밀도 적용
-              children: [
-                // 태그 버튼들에 대한 부분도 동일하게 화면 밀도 적용
-                GestureDetector(
+              children: List.generate(8, (index) {
+                return GestureDetector(
                   onTap: () {
                     setState(() {
-                      // 태그 선택 상태 토글
-                      tagSelection[0] = !tagSelection[0];
+                      tagSelection[index] = !tagSelection[index];
                     });
                   },
                   child: Container(
@@ -111,139 +121,15 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     height: 100.h,
                     decoration: ShapeDecoration(
                       color:
-                          tagSelection[0]
+                          tagSelection[index]
                               ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[0]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '📚', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[0]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '학술', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[0]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      // 태그 선택 상태 토글
-                      tagSelection[1] = !tagSelection[1];
-                    });
-                  },
-                  child: Container(
-                    width: 190.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[1]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[1]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '💻', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[1]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '전공', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[1]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                              : Color(0xFFECECEC), // 회색
 
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      // 태그 선택 상태 토글
-                      tagSelection[2] = !tagSelection[2];
-                    });
-                  },
-                  child: Container(
-                    width: 190.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[2]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 2.75.w, // 화면 밀도 적용
                           color:
-                              tagSelection[2]
+                              tagSelection[index]
                                   ? Color(0xFFFF9F1C) // 주황색
                                   : Color(0xFFECECEC), // 회색
                         ),
@@ -256,10 +142,10 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '🎨', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          categoryDict[index]!['icon']!,
                           style: TextStyle(
                             color:
-                                tagSelection[2]
+                                tagSelection[index]
                                     ? Color(0xFF1C1C1C)
                                     : Color(0xFF6B6B6B),
                             fontSize: 36.sp, // 화면 밀도 적용
@@ -270,10 +156,10 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          '예술', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
+                          categoryDict[index]!['text']!,
                           style: TextStyle(
                             color:
-                                tagSelection[2]
+                                tagSelection[index]
                                     ? Color(0xFF1C1C1C)
                                     : Color(0xFF6B6B6B),
                             fontSize: 36.sp, // 화면 밀도 적용
@@ -285,321 +171,11 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                       ],
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      // 태그 선택 상태 토글
-                      tagSelection[3] = !tagSelection[3];
-                    });
-                  },
-                  child: Container(
-                    width: 267.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[3]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[3]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '👥', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[3]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '문화•취미', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[3]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      // 태그 선택 상태 토글
-                      tagSelection[4] = !tagSelection[4];
-                    });
-                  },
-                  child: Container(
-                    width: 190.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[4]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[4]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '☀️', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[4]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '봉사', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[4]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      tagSelection[5] = !tagSelection[5];
-                    });
-                  },
-                  child: Container(
-                    width: 190.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[5]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[4]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '🔠', 
-                          style: TextStyle(
-                            color:
-                                tagSelection[5]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '어학', 
-                          style: TextStyle(
-                            color:
-                                tagSelection[5]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                     
-                      tagSelection[6] = !tagSelection[6];
-                    });
-                  },
-                  child: Container(
-                    width: 190.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[6]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[6]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '🤝',
-                          style: TextStyle(
-                            color:
-                                tagSelection[6]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '창업', 
-                          style: TextStyle(
-                            color:
-                                tagSelection[6]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      tagSelection[7] = !tagSelection[7];
-                    });
-                  },
-                  child: Container(
-                    width: 190.w,
-                    height: 100.h,
-                    decoration: ShapeDecoration(
-                      color:
-                          tagSelection[7]
-                              ? Color(0x21FF9F1C) // 주황색
-                              : Colors.white, // 회색
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          width: 2.75.w, // 화면 밀도 적용
-                          color:
-                              tagSelection[7]
-                                  ? Color(0xFFFF9F1C) // 주황색
-                                  : Color(0xFFECECEC), // 회색
-                        ),
-                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '✈️', // 예시: '전공', '학술', '예술' 등으로 바꾸세요
-                          style: TextStyle(
-                            color:
-                                tagSelection[7]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          '여행', 
-                          style: TextStyle(
-                            color:
-                                tagSelection[7]
-                                    ? Color(0xFF1C1C1C)
-                                    : Color(0xFF6B6B6B),
-                            fontSize: 36.sp, // 화면 밀도 적용
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // 다른 Container들도 동일하게 화면 밀도 적용
-              ],
+                );
+              }),
             ),
           ),
+
           SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -179,11 +179,10 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
   Map<int, Map<String, String>> categoryDict = {
     0: {'icon': '🔥', 'text': '인기'},
     1: {'icon': '⏱️', 'text': '최근'},
-
     2: {'icon': '💻', 'text': '전공'},
     3: {'icon': '📚', 'text': '학술'},
     4: {'icon': '🎨', 'text': '예술'},
-    5: {'icon': '👥', 'text': '문화•취미'},
+    5: {'icon': '👥', 'text': '취미'},
     6: {'icon': '☀️', 'text': '봉사'},
     7: {'icon': '🔠', 'text': '어학'},
     8: {'icon': '🤝', 'text': '창업'},
