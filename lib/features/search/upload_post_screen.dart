@@ -117,7 +117,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     });
                   },
                   child: Container(
-                    width: 190.w,
+                    width: 200.w,
                     height: 100.h,
                     decoration: ShapeDecoration(
                       color:
@@ -203,7 +203,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               ),
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Row(
             children: [
               SizedBox(width: 30),
