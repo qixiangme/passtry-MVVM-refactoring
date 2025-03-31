@@ -11,26 +11,26 @@ class PostScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+          SizedBox(height: 15),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(width: 15),
-              CircleAvatar(radius: 54.r),
-              SizedBox(width: 15),
+              SizedBox(width: 25),
+              CircleAvatar(radius: 55.r),
+              SizedBox(width: 10),
               Text(
                 "유저이름",
-                style: TextStyle(fontSize: 48.sp, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 45.sp, fontWeight: FontWeight.w600),
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 17),
           Row(
             children: [
-              SizedBox(width: 20),
+              SizedBox(width: 30),
               Text(
                 "게시물 제목",
-                style: TextStyle(fontSize: 60.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 58.sp, fontWeight: FontWeight.w600),
               ),
             ],
           ),
