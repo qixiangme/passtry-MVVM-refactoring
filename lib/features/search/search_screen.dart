@@ -33,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 Container(
                   width: 1080.w,
-                  height: 275.h,
+                  height: 265.h,
                   padding: EdgeInsets.only(top: (60.75).h),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -70,7 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 8),
 
                 Row(
                   children: [
@@ -137,7 +137,7 @@ class _SearchScreenState extends State<SearchScreen> {
               onTagSelected: onTagSelected,
             ),
           ),
-          SliverToBoxAdapter(child: Column(children: [SizedBox(height: 14)])),
+          SliverToBoxAdapter(child: Column(children: [SizedBox(height: 10)])),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -240,7 +240,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 12),
         SizedBox(
           height: 95.h, // 가로 리스트 높이 지정
           child: SingleChildScrollView(
