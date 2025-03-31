@@ -48,7 +48,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   decoration: InputDecoration(
                     hintStyle: TextStyle(
                       fontSize: 42.sp,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                       color: Color(0xFF6B6B6B),
                     ),
                     hintText: "제목(20자 이내)",
@@ -70,7 +70,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 ), // 화면 밀도 적용
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 2),
+                padding: const EdgeInsets.only(left: 15, bottom: 3),
                 child: TextField(
                   controller: _textController,
                   decoration: InputDecoration(
@@ -86,11 +86,11 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               ),
             ),
           ),
-          SizedBox(height: 30.h), // 화면 밀도 적용
+          SizedBox(height: 40.h), // 화면 밀도 적용
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: 90.w), // 화면 밀도 적용
+              SizedBox(width: 85.w), // 화면 밀도 적용
               Text(
                 "태그",
                 style: TextStyle(
@@ -189,13 +189,16 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(width: 20),
-              Text(
-                "*최대 2장까지 가능합니다.",
-                style: TextStyle(
-                  fontSize: 40.sp, // 화면 밀도 적용
-                  color: Color(0XFFC4CAD4),
-                  fontWeight: FontWeight.w400,
+              SizedBox(width: 17),
+              Padding(
+                padding: EdgeInsets.only(top: 1.5),
+                child: Text(
+                  "*최대 2장까지 가능합니다.",
+                  style: TextStyle(
+                    fontSize: 39.sp, // 화면 밀도 적용
+                    color: Color(0XFFC4CAD4),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
