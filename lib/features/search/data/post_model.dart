@@ -1,22 +1,49 @@
 class PostModel {
+  final String userId;
   final String title;
-  final String description;
+  final String content;
   final String imageUrl;
-  final String sort;
+  final String id;
+  final String createdAt;
+  final String views;
+  final List<String> tags;
 
-  PostModel({
+  PostModel(
+    this.userId,
+    this.createdAt,
+    this.views,
+    this.tags, {
     required this.title,
-    required this.description,
+    required this.content,
     required this.imageUrl,
-    required this.sort
+    required this.id,
   });
 
+  // JSON 데이터를 PostModel 객체로 변환하는 메서드
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      title: json["title"],
-      description: json["description"],
-      imageUrl: json["imageUrl"] ?? "",
-      sort: json["sort"],
+      json['userId'] as String,
+      json['createdAt'] as String,
+      json['views'] as String,
+      List<String>.from(json['tags'] ?? []), // null이면 빈 리스트 반환
+      title: json['title'] as String,
+      content: json['content'] as String,
+      imageUrl: json['imageUrl'] as String,
+      id: json['id'] as String,
     );
+  }
+
+  // PostModel 객체를 JSON으로 변환하는 메서드
+  Map<String, dynamic> toJson() {
+    return {
+      'userId': userId,
+      'title': title,
+      'content': content,
+      'imageUrl': imageUrl,
+      'id': id,
+      'createdAt': createdAt,
+      'views': views,
+      'tags': tags,
+    };
   }
 }

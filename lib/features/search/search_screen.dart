@@ -1,4 +1,5 @@
 import 'package:componentss/features/search/post_screen.dart';
+import 'package:componentss/features/search/search_bar_screen.dart';
 import 'package:componentss/features/search/ui/screen/search_bar_screen.dart';
 import 'package:componentss/features/search/upload_post_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
