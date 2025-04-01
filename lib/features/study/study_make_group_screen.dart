@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/features/study/study_make_group_screen2.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
+
 
 class StudyMakeGroup extends StatefulWidget {
   const StudyMakeGroup({super.key});
@@ -19,8 +21,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
     setState(() {
       _selectedCategoryItemText = itemText;
     });
-    // 디버깅용 출력 (선택 사항)
-    // print("Parent received category item: $itemText");
+    // 디버깅용 출력
   }
 
   // CategoryChip 선택 시 호출될 콜백 함수
@@ -28,9 +29,9 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
     setState(() {
       _selectedCategoryChipText = chipText;
     });
-    // 디버깅용 출력 (선택 사항)
-    // print("Parent received category chip: $chipText");
+    // 디버깅용 출력
   }
+
   // 다음 버튼 탭 처리 및 네비게이션 함수
   void _handleNextButtonTap() {
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
@@ -45,9 +46,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
     // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => StudyMakeGroup2(),
-      ),
+      MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
     ).then((_) {
       // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
       // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -63,6 +62,18 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Icon(CustomIcon.back, size: 18),
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 77.w),
         child: Stack(
@@ -70,14 +81,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 150.h),
 
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () {
-                    Navigator.pop(context); // 이전 페이지로 이동
-                  },
-                ),
                 SizedBox(height: 100.h),
                 Text(
                   '어떤 면접을 앞두고 계신가요?',
@@ -102,22 +106,28 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
                 Container(
                   width: 992.w,
                   padding: (EdgeInsets.symmetric(horizontal: 50.w)),
-                  child: CategoryItems(onItemSelected: _handleCategoryItemSelect),
+                  child: CategoryItems(
+                    onItemSelected: _handleCategoryItemSelect,
+                  ),
                 ),
 
                 SizedBox(height: 100.h),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 77.w),
                   width: 991.w,
-                  child: CategoryChipGroup(onChipSelected: _handleCategoryChipSelect,),
+                  child: CategoryChipGroup(
+                    onChipSelected: _handleCategoryChipSelect,
+                  ),
                 ),
 
-                SizedBox(height: 150.h),
-                Center(
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 200.h),
+                child : Center(
                   child: NextButton(
-                    isClicked: _isNextButtonClicked, // 부모의 상태 전달
-                    onTap: _handleNextButtonTap, // 부모의 함수 전달
-                  ),
+                    isClicked: _isNextButtonClicked,
+                    onTap: _handleNextButtonTap,
+                  ),)
                 ),
               ],
             ),
@@ -149,9 +159,9 @@ class _CategoryItemState extends State<CategoryItem> {
   @override
   Widget build(BuildContext context) {
     Color containerColor =
-    widget.isSelected ? Colors.orange.withOpacity(0.3) : Colors.white;
+        widget.isSelected ? Colors.orange.withOpacity(0.3) : Colors.white;
     Color borderColor =
-    widget.isSelected ? Colors.orange : const Color(0xFFEBEBEB);
+        widget.isSelected ? Colors.orange : const Color(0xFFEBEBEB);
 
     return GestureDetector(
       onTap: () {
@@ -159,7 +169,6 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.onSelected(widget.text);
       },
       child: Container(
-
         width: 250.w,
         height: 250.h,
         padding: EdgeInsets.all(20.w),
@@ -207,10 +216,8 @@ class _CategoryItemState extends State<CategoryItem> {
 class CategoryItems extends StatefulWidget {
   final Function(String) onItemSelected;
 
-  const CategoryItems({
-    required this.onItemSelected, // 생성자에서 콜백 함수 받기
-    Key? key,
-  }) : super(key: key);
+  const CategoryItems({required this.onItemSelected, Key? key})
+    : super(key: key);
 
   @override
   _CategoryItemsState createState() => _CategoryItemsState();
@@ -249,19 +256,17 @@ class _CategoryItemsState extends State<CategoryItems> {
       spacing: 15.w,
       runSpacing: 15.h,
       children:
-      items.map((itemInfo) {
-        return CategoryItem(
-          text: itemInfo.text,
-          assetPath: itemInfo.assetPath,
-          isSelected: selectedText == itemInfo.text,
-          onSelected: handleItemSelected,
-        );
-      }).toList(),
+          items.map((itemInfo) {
+            return CategoryItem(
+              text: itemInfo.text,
+              assetPath: itemInfo.assetPath,
+              isSelected: selectedText == itemInfo.text,
+              onSelected: handleItemSelected,
+            );
+          }).toList(),
     );
   }
 }
-
-
 
 class CategoryChip extends StatelessWidget {
   final String emoji;
@@ -281,7 +286,7 @@ class CategoryChip extends StatelessWidget {
   Widget build(BuildContext context) {
     Color bgColor = isSelected ? const Color(0x21FF9F1C) : Colors.white;
     Color borderColor =
-    isSelected ? const Color(0xFFFF9F1C) : const Color(0xFFEBEBEB);
+        isSelected ? const Color(0xFFFF9F1C) : const Color(0xFFEBEBEB);
 
     return GestureDetector(
       onTap: () {
@@ -340,10 +345,8 @@ class CategoryChipInfo {
 class CategoryChipGroup extends StatefulWidget {
   final Function(String) onChipSelected;
 
-  const CategoryChipGroup({
-    required this.onChipSelected, // 생성자에서 콜백 함수 받기
-    Key? key,
-  }) : super(key: key);
+  const CategoryChipGroup({required this.onChipSelected, Key? key})
+    : super(key: key);
 
   @override
   _CategoryChipGroupState createState() => _CategoryChipGroupState();
@@ -379,57 +382,47 @@ class _CategoryChipGroupState extends State<CategoryChipGroup> {
       spacing: 20.w,
       runSpacing: 20.h,
       children:
-      chipItems.map((chipInfo) {
-        return CategoryChip(
-          emoji: chipInfo.emoji,
-          text: chipInfo.text,
-          // 현재 선택된 텍스트와 이 칩의 텍스트가 같은지 비교하여 isSelected 결정
-          isSelected: selectedChipText == chipInfo.text,
-          // 콜백 함수 전달
-          onSelected: handleChipSelected,
-        );
-      }).toList(), // map 결과를 List로 변환
+          chipItems.map((chipInfo) {
+            return CategoryChip(
+              emoji: chipInfo.emoji,
+              text: chipInfo.text,
+              // 현재 선택된 텍스트와 이 칩의 텍스트가 같은지 비교하여 isSelected 결정
+              isSelected: selectedChipText == chipInfo.text,
+
+              onSelected: handleChipSelected,
+            );
+          }).toList(),
     );
   }
 }
 
-
-
 class NextButton extends StatelessWidget {
-  final bool isClicked; // 부모로부터 받을 클릭 상태
-  final VoidCallback onTap; // 부모로부터 받을 탭 콜백 함수
+  final bool isClicked;
+  final VoidCallback onTap;
 
-  const NextButton({
-    required this.isClicked, // 생성자에 추가
-    required this.onTap, // 생성자에 추가
-    Key? key,
-  }) : super(key: key);
+  const NextButton({required this.isClicked, required this.onTap, Key? key})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // isClicked 상태는 이제 생성자로 받은 isClicked 사용
     Color bgColor = isClicked ? Color(0xFFFF9F1C) : Colors.white;
     Color borderColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
     Color textColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
 
     return InkWell(
-      onTap: onTap, // 부모로부터 받은 onTap 콜백 사용
-      child: AnimatedContainer( // 색상 변경 애니메이션 유지
+      onTap: onTap,
+      child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         width: 993.w,
         height: 160.h,
-        // padding 제거됨 (필요시 추가)
         decoration: ShapeDecoration(
           color: bgColor,
           shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 2.75.w,
-              color: borderColor,
-            ),
+            side: BorderSide(width: 2.75.w, color: borderColor),
             borderRadius: BorderRadius.circular(33.r),
           ),
         ),
-        alignment: Alignment.center, // Row 대신 Alignment 사용 간소화
+        alignment: Alignment.center,
         child: Text(
           '다음',
           textAlign: TextAlign.center,

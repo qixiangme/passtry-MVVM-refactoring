@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-
+import 'package:componentss/features/study/study_make_group_level_screen.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
 
 class StudyMakeGroup2 extends StatefulWidget {
   const StudyMakeGroup2({super.key});
@@ -15,7 +16,7 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
-  // 남은 일 수 계산 (기존과 동일)
+  // 남은 일 수 계산
   int _calculateRemainingDays() {
     if (_selectedDate == null) {
       return 0;
@@ -31,7 +32,7 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
     return difference >= 0 ? difference : 0;
   }
 
-  // 날짜 선택 Bottom Sheet 표시 (기존과 동일)
+  // 날짜 선택 Bottom Sheet 표시
   void _showDatePicker(BuildContext context) {
     DateTime initialDate = _selectedDate ?? DateTime.now();
     DateTime firstDate = DateTime.now().subtract(Duration(days: 1));
@@ -62,7 +63,6 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
                 onPressed: () {
                   setState(() {
                     _selectedDate = tempDate;
-
                   });
                   Navigator.pop(context);
                 },
@@ -74,7 +74,7 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
     );
   }
 
-  // 시간 선택 Bottom Sheet 표시 (기존과 동일)
+  // 시간 선택 Bottom Sheet 표시
   void _showTimePicker(BuildContext context) {
     DateTime initialDateTime = DateTime(
       DateTime.now().year,
@@ -121,62 +121,66 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
 
   @override
   Widget build(BuildContext context) {
-    // 날짜/시간 포맷터 (기존과 동일)
+    // 날짜/시간 포맷터
     final DateFormat dateFormatter = DateFormat('yyyy.MM.dd');
     final DateFormat timeFormatter = DateFormat('HH:mm');
 
     String displayDate =
-    _selectedDate != null ? dateFormatter.format(_selectedDate!) : '날짜 선택';
+        _selectedDate != null ? dateFormatter.format(_selectedDate!) : '날짜 선택';
     String displayTime =
-    _selectedTime != null
-        ? timeFormatter.format(
-      DateTime(2000, 1, 1, _selectedTime!.hour, _selectedTime!.minute),
-    )
-        : '시간 선택';
+        _selectedTime != null
+            ? timeFormatter.format(
+              DateTime(2000, 1, 1, _selectedTime!.hour, _selectedTime!.minute),
+            )
+            : '시간 선택';
 
     int remainingDays = _calculateRemainingDays();
 
     return Scaffold(
-      backgroundColor: Colors.white, // 전체 배경색 (이전 코드 참고)
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Icon(CustomIcon.back, size: 18),
+          ),
+        ),
+      ),
       body: Padding(
-        // 좌우 패딩은 이전 코드의 77.w 유지, 상하 패딩 추가 고려
         padding: EdgeInsets.symmetric(horizontal: 77.w, vertical: 20.h),
-        // 상하 패딩 추가
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 150.h),
 
-            IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context); // 이전 페이지로 이동
-              },
-            ),
             SizedBox(height: 100.h),
 
             Text(
               '면접 날짜와 시간을 알려주세요',
               style: TextStyle(
                 color: const Color(0xFF1F1F1F),
-                fontSize: 70.sp, // ScreenUtil 적용
+                fontSize: 70.sp,
                 fontFamily: 'Wanted Sans',
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 8.h), // 간격 조정
+            SizedBox(height: 8.h),
             Text(
               '남은 날짜에 맞추어 준비를 도와드릴게요',
               style: TextStyle(
                 color: const Color(0xFF8E95A2),
                 fontSize: 44.sp,
-                // ScreenUtil 적용
+
                 fontFamily: 'Wanted Sans',
                 fontWeight: FontWeight.w500,
                 letterSpacing: -0.44,
               ),
             ),
-            SizedBox(height: 120.h), // 간격 유지 또는 조정
+            SizedBox(height: 120.h),
             // 날짜 선택 영역
             _buildDateTimePickerRow(
               context: context,
@@ -184,7 +188,7 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
               icon: Icons.calendar_today_outlined,
               onTap: () => _showDatePicker(context),
             ),
-            SizedBox(height: 40.h), // 간격 조정 (이전 15 보다 늘림)
+            SizedBox(height: 40.h),
             // 시간 선택 영역
             _buildDateTimePickerRow(
               context: context,
@@ -192,85 +196,80 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
               icon: Icons.access_time_outlined,
               onTap: () => _showTimePicker(context),
             ),
-            SizedBox(height: 70.h), // 간격 조정 (이전 50.h 보다 늘림)
-            // 남은 날짜 표시 영역 (가운데 정렬된 스타일로 변경)
+            SizedBox(height: 70.h),
+            // 남은 날짜 표시 영역
             Container(
               width: double.infinity,
-              // 너비 최대로 설정하여 중앙 정렬 효과
+
               padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 40.h),
-              // ScreenUtil 적용
+
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(33.r), // ScreenUtil 적용
                 border: Border.all(color: Colors.grey[300]!),
               ),
               child: Row(
-                // Row 로 변경하여 중앙 정렬
-                mainAxisAlignment: MainAxisAlignment.start, // Row 내부 중앙 정렬
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    '면접까지 ',
-                    style: TextStyle(fontSize: 45.sp), // ScreenUtil 적용
-                  ),
+                  Text('면접까지 ', style: TextStyle(fontSize: 45.sp)),
                   Text(
                     '$remainingDays일',
                     style: TextStyle(
-                      fontSize: 45.sp, // ScreenUtil 적용
+                      fontSize: 45.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.orange,
                     ),
                   ),
-                  Text(
-                    ' 남음',
-                    style: TextStyle(fontSize: 45.sp), // ScreenUtil 적용
-                  ),
+                  Text(' 남음', style: TextStyle(fontSize: 45.sp)),
                 ],
               ),
             ),
 
-            // Spacer() 추가하여 버튼을 하단으로 밀기
             Spacer(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 200.h),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    padding: EdgeInsets.symmetric(vertical: 45.h),
 
-            // 하단 버튼
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  padding: EdgeInsets.symmetric(vertical: 45.h),
-                  // ScreenUtil 적용
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(33.r), // ScreenUtil 적용
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(33.r),
+                    ),
+                    elevation: 0,
                   ),
-                  elevation: 0,
-                ),
-                onPressed:
-                (_selectedDate != null && _selectedTime != null)
-                    ? () {
-                  print('Selected Date: $displayDate');
-                  print('Selected Time: $displayTime');
-                  print('Remaining Days: $remainingDays');
-                  // 다음 로직
-                }
-                    : null,
-                child: Text(
-                  '다음',
-                  style: TextStyle(
-                    fontSize: 50.sp, // ScreenUtil 적용
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                  onPressed:
+                      (_selectedDate != null && _selectedTime != null)
+                          ? () {
+                            print('Selected Date: $displayDate');
+                            print('Selected Time: $displayTime');
+                            print('Remaining Days: $remainingDays');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => StudyMakeGroupLevel()),
+                            );
+                          }
+                          : null,
+                  child: Text(
+                    '다음',
+                    style: TextStyle(
+                      fontSize: 50.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 20.h), // 하단 여백 추가
           ],
         ),
       ),
     );
   }
 
-  // Helper 위젯 함수 (_buildDateTimePickerRow)는 동일하게 사용
+  // Helper 위젯 함수
   Widget _buildDateTimePickerRow({
     required BuildContext context,
     required String displayText,
@@ -281,11 +280,10 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
     return InkWell(
       onTap: onTap,
       child: Container(
-        // 내부 패딩에 ScreenUtil 적용
         padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 40.h),
         decoration: BoxDecoration(
           color: Colors.white,
-          // BorderRadius 에 ScreenUtil 적용
+
           borderRadius: BorderRadius.circular(33.r),
           border: Border.all(color: Colors.grey[300]!),
         ),
@@ -295,7 +293,6 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
             Text(
               displayText,
               style: TextStyle(
-                // fontSize 에 ScreenUtil 적용
                 fontSize: 45.sp,
                 color: isSelected ? Colors.black : Colors.grey[500],
               ),
