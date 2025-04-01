@@ -34,14 +34,15 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left: 20, top: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 15),
-            const Text("찾고 있는 빵집 주소 네자리를"),
-            const Text("입력해주세요"),
-            const SizedBox(height: 20),
+            const Text(
+              "찾고 있는 빵집 주소 네 자리를\n입력해주세요",
+              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 70),
 
             // 네모 박스 (클릭하면 키보드 열림)
             GestureDetector(
@@ -50,19 +51,20 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(4, (index) {
                   return Container(
-                    width: 50,
-                    height: 50,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    width: 80,
+                    height: 80,
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2),
-                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Color(0xffC4CAD4)),
+                      borderRadius: BorderRadius.circular(13),
                     ),
                     alignment: Alignment.center,
                     child: Text(
                       digits[index], // 입력된 숫자 표시
                       style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        color: Color(0xff6B6B6B),
+                        fontSize: 40,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   );
@@ -95,7 +97,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                 },
               ),
             ),
-            SizedBox(height: 480),
+            SizedBox(height: 400),
             Center(
               child: GestureDetector(
                 onTap: () {
