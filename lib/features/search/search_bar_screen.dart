@@ -1,3 +1,4 @@
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarScreen extends StatefulWidget {
@@ -67,25 +68,27 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.close),
+        leading: Padding(
+          padding: EdgeInsets.only(top: 20, left: 3),
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(CustomIcon.back, size: 19),
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20),
           SizedBox(
-            width: 700,
+            width: 380,
             height: 45,
             child: TextField(
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
                 filled: true,
                 fillColor: Color(0xffECECEC),
                 hintText: "모집 중인 스터디, 공고 검색하기",
@@ -93,6 +96,11 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.only(left: 20),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Icon(Icons.search, size: 28),
                 ),
               ),
               controller: _controller,
