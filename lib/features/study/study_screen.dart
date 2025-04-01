@@ -1,15 +1,15 @@
 import 'package:componentss/features/study/search_group_screen.dart';
+import 'package:componentss/features/study/study_make_group_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:componentss/features/study/study_make_group_screen.dart';
 
 class Group {
   final String id;
   final String name;
-  final String description; // 예: '학술 분야, 연합동아리, 난이도 중, 최근 트렌드 포함'
-  final String imageUrl; // 그룹 대표 이미지 URL
-  final String meetingInfo; // 예: '4/5' (진행 횟수/총 횟수 등)
-  final String memberCount; // 예: '6명'
+  final String description;
+  final String imageUrl;
+  final String meetingInfo;
+  final String memberCount;
 
   Group({
     required this.id,
@@ -19,43 +19,6 @@ class Group {
     required this.meetingInfo,
     required this.memberCount,
   });
-
-  // JSON 변환 로직이 필요
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(1080, 2400),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          title: 'Study Group List',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: Colors.white,
-            fontFamily: 'Wanted Sans',
-            textTheme: TextTheme(
-              bodyMedium: TextStyle(
-                fontFamily: 'Wanted Sans',
-                color: Color(0xFF353C49),
-              ),
-              titleLarge: TextStyle(
-                fontSize: 44.sp,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF353C49),
-              ),
-            ),
-          ),
-          home: StudyScreen(),
-        );
-      },
-    );
-  }
 }
 
 class StudyScreen extends StatefulWidget {
@@ -66,23 +29,7 @@ class StudyScreen extends StatefulWidget {
 }
 
 class _StudyScreenState extends State<StudyScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    //  if( 스터디 그룹 참여 여부 확인) {
-    //    WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text("토스트 알림: 화면이 전환되었습니다."),
-    //         duration: Duration(seconds: 2), // 알림 지속 시간 설정
-    //       ),
-    //     );
-    //   });
-    //  }
-  }
-
-  // 서버 데이터 예시.
+  bool isExpanded = false;
   final List<Group> _studyGroups = [
     Group(
       id: '1',
@@ -118,187 +65,288 @@ class _StudyScreenState extends State<StudyScreen> {
     ),
   ];
 
-  bool isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        // 화면 전체 패딩 적용
-        padding: EdgeInsets.symmetric(horizontal: 77.w),
-        child: Stack(
-          children: [
-            Column(
+      appBar: AppBar(
+        title: Text("스터디", style: TextStyle(color: Colors.white)),
+        backgroundColor: Color(0xFF6B6B6B),
+      ),
+      body: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(color: Color(0xFF6B6B6B)),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 150.h),
-                Row(
-                  children: [
-                    Text('스터디', style: Theme.of(context).textTheme.titleLarge),
-                    Spacer(),
-                    SizedBox(
-                      width: 55.w,
-                      height: 54.h,
-                      child: Image.asset(
-                        excludeFromSemantics: true,
-                        'assets/icons/cup_star.png',
-                        errorBuilder:
-                            (context, error, stackTrace) => Icon(
-                              Icons.star_border,
-                              size: 50.sp,
-                            ), // 에러 시 대체 아이콘
+                Center(
+                  child: Container(
+                    width: 992.w,
+                    height: 112.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    child: Center(child: Text("알림")),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text("모시기모시기"),
+                Text("모시기모시기"),
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(38.5.r),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 50.h),
-
-                Expanded(
-                  child:
-                      _studyGroups.isEmpty
-                          ? Center(
-                            // 데이터 없을 때 표시
-                            child: Text(
-                              '참여 가능한 스터디가 없습니다.',
-                              style: TextStyle(
-                                fontSize: 35.sp,
-                                color: Colors.grey,
-                              ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "참여중인 스터디",
+                            style: TextStyle(
+                              fontSize: 50.sp,
+                              fontWeight: FontWeight.bold,
                             ),
-                          )
-                          : ListView.builder(
-                            itemCount: _studyGroups.length,
-                            itemBuilder: (context, index) {
-                              // 각 그룹 데이터를 StudyGroupCard에 전달
-                              return Padding(
-                                padding: EdgeInsets.only(bottom: 40.h),
-                                child: StudyGroupCard(
-                                  group: _studyGroups[index],
-                                ),
-                              );
-                            },
                           ),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 460.h,
+                            child:
+                                _studyGroups.isEmpty
+                                    ? Center(
+                                      child: Text(
+                                        '참여 가능한 스터디가 없습니다.',
+                                        style: TextStyle(
+                                          fontSize: 35.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                    : SizedBox(
+                                      height: 150.h, // 카드 높이에 맞게 설정
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: _studyGroups.length,
+                                        itemBuilder: (context, index) {
+                                          return StudyGroupCard(
+                                            group: _studyGroups[index],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "스터디 랭킹",
+                            style: TextStyle(
+                              fontSize: 50.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 460.h,
+                            child:
+                                _studyGroups.isEmpty
+                                    ? Center(
+                                      child: Text(
+                                        '참여 가능한 스터디가 없습니다.',
+                                        style: TextStyle(
+                                          fontSize: 35.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                    : SizedBox(
+                                      height: 40.h, // 카드 높이에 맞게 설정
+                                      child: ListView.builder(
+                                        itemCount: _studyGroups.length,
+                                        itemBuilder: (context, index) {
+                                          return RankingCard(
+                                            group: _studyGroups[index],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "다가오는 면접 일정",
+                            style: TextStyle(
+                              fontSize: 50.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 4),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 460.h,
+                            child:
+                                _studyGroups.isEmpty
+                                    ? Center(
+                                      child: Text(
+                                        '참여 가능한 스터디가 없습니다.',
+                                        style: TextStyle(
+                                          fontSize: 35.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                    : SizedBox(
+                                      height: 40.h, // 카드 높이에 맞게 설정
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: _studyGroups.length,
+                                        itemBuilder: (context, index) {
+                                          return RankingCard(
+                                            group: _studyGroups[index],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-            Positioned(
-              right: 5.0,
-              bottom: 70.0,
+          ),
+          Positioned(
+            right: 5.0,
+            bottom: 70.0,
 
-              child: FloatingActionButton(
-                heroTag: null,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(70.r),
-                ),
-
-                backgroundColor: Colors.grey[700],
-                child: Image.asset(
-                  excludeFromSemantics: true,
-                  height: 80.h,
-                  width: 80.w,
-                  'assets/icons/search.png',
-                ),
-                onPressed: () {
-                  setState(() {
-                    isExpanded = !isExpanded;
-                  });
-                },
+            child: FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(70.r),
               ),
+
+              backgroundColor: Colors.grey[700],
+              child: Image.asset(
+                height: 80.h,
+                width: 80.w,
+                'assets/icons/search.png',
+              ),
+              onPressed: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
             ),
+          ),
 
-            Positioned(
-              right: 5.0,
-              bottom: 70.0,
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 200),
-                opacity: isExpanded ? 1.0 : 0.0,
+          Positioned(
+            right: 5.0,
+            bottom: 70.0,
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 200),
+              opacity: isExpanded ? 1.0 : 0.0,
 
-                child: Column(
-                  children: <Widget>[
-                    FloatingActionButton(
-                      heroTag: null,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(70.r),
-                      ),
+              child: Column(
+                children: <Widget>[
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70.r),
+                    ),
 
-                      backgroundColor: Colors.grey[900],
-                      child: Image.asset(
-                        excludeFromSemantics: true,
-                        height: 80.h,
-                        width: 80.w,
-                        'assets/icons/plus.png',
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                        });
+                    backgroundColor: Colors.grey[900],
+                    child: Image.asset(
+                      height: 80.h,
+                      width: 80.w,
+                      'assets/icons/plus.png',
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StudyMakeGroup(),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 16.0),
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70.r),
+                    ),
+
+                    backgroundColor: Colors.grey[900],
+                    child: Image.asset(
+                      height: 80.h,
+                      width: 80.w,
+                      'assets/icons/search.png',
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => StudyMakeGroup(),
+                            builder: (context) => SearchGroupScreen(),
                           ),
                         );
-                      },
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16.0),
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70.r),
                     ),
-                    SizedBox(height: 16.0),
-                    FloatingActionButton(
-                      heroTag: null,
 
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(70.r),
-                      ),
-
-                      backgroundColor: Colors.grey[900],
-                      child: Image.asset(
-                        excludeFromSemantics: true,
-                        height: 80.h,
-                        width: 80.w,
-                        'assets/icons/search.png',
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchGroupScreen(),
-                            ),
-                          );
-                        });
-                      },
+                    backgroundColor: Colors.grey[900],
+                    child: Image.asset(
+                      height: 80.h,
+                      width: 80.w,
+                      'assets/icons/plus.png',
                     ),
-                    SizedBox(height: 16.0),
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(70.r),
-                      ),
-
-                      backgroundColor: Colors.grey[900],
-                      child: Image.asset(
-                        excludeFromSemantics: true,
-
-                        height: 80.h,
-                        width: 80.w,
-                        'assets/icons/plus.png',
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-// 스터디 그룹 정보를 표시하는 카드 위젯
 class StudyGroupCard extends StatelessWidget {
   final Group group;
 
@@ -306,168 +354,103 @@ class StudyGroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // 카드 클릭 시 동작
-        print('Group ${group.id} clicked!');
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => StudyDetailPage(groupId: group.id)));
-      },
-      borderRadius: BorderRadius.circular(38.50.r),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 50.h),
-        decoration: ShapeDecoration(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 2.w, color: const Color(0xFFD8DCE2)),
-            borderRadius: BorderRadius.circular(38.50.r),
-          ),
-          shadows: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.15),
-              spreadRadius: 1,
-              blurRadius: 8,
-              offset: Offset(0, 4),
+    return Container(
+      width: 482.w,
+      height: 434.h,
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.r),
+        border: Border.all(color: Color(0XFFC4CAD4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 233.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15.r)),
+              color: Colors.blueAccent,
+              image:
+                  group.imageUrl.isNotEmpty
+                      ? DecorationImage(
+                        image: NetworkImage(group.imageUrl),
+                        fit: BoxFit.cover,
+                      )
+                      : null,
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          Padding(
+            padding: EdgeInsets.all(10.w),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        group.name,
-                        style: TextStyle(
-                          color: const Color(0xFF1C1C1C),
-                          fontSize: 44.sp,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.44.w,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 25.h),
-                      Text(
-                        group.description,
-                        style: TextStyle(
-                          color: const Color(0xFF6B6B6B),
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.w500,
-                          height: 1.4,
-
-                          letterSpacing: -0.35.w,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                Text(
+                  group.name,
+                  style: TextStyle(
+                    fontSize: 44.sp,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 30.w),
+                SizedBox(height: 5),
 
-                Container(
-                  width: 150.w,
-                  height: 150.h,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD8DCE2),
-                    borderRadius: BorderRadius.circular(75.r),
-                    // image: DecorationImage(
-                    //   image: NetworkImage(group.imageUrl),
-                    //   fit: BoxFit.cover,
-                    //   onError: (exception, stackTrace) {},
-                    // ),
-                  ),
-                  // child: ClipRRect(
-                  //   borderRadius: BorderRadius.circular(75.r),
-                  //   child: Image.network(
-                  //     group.imageUrl,
-                  //     fit: BoxFit.cover,
-                  //     errorBuilder: (context, error, stackTrace) {
-                  //       return Icon(
-                  //         Icons.group,
-                  //         size: 80.sp,
-                  //         color: Colors.grey[400],
-                  //       );
-                  //     },
-                  //     loadingBuilder: (context, child, loadingProgress) {
-                  //       if (loadingProgress == null) return child;
-                  //       return Center(
-                  //         child: CircularProgressIndicator(
-                  //           strokeWidth: 2.w,
-                  //           valueColor: AlwaysStoppedAnimation<Color>(
-                  //             Colors.grey[300]!,
-                  //           ),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.calendar_today, color: Colors.black54),
+                    Text(group.memberCount),
+                    SizedBox(width: 10),
+                    Icon(Icons.calendar_today, color: Colors.black54),
+                    Text(group.memberCount),
+                  ],
                 ),
               ],
             ),
-            SizedBox(height: 30.h),
-            Divider(color: Color(0xFFEAEAEA), thickness: 1.5.h),
-            SizedBox(height: 30.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Row(
-                children: [
-                  _buildInfoItem(
-                    iconPath: 'assets/icons/calendar.png',
-                    iconAlt: Icons.calendar_today_outlined,
-                    text: group.meetingInfo,
-                  ),
-                  SizedBox(width: 100.w),
-                  _buildInfoItem(
-                    iconPath: 'assets/icons/small_man.png',
-                    iconAlt: Icons.group_outlined,
-                    text: group.memberCount,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  Widget _buildInfoItem({
-    required String iconPath,
-    required IconData iconAlt,
-    required String text,
-  }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 45.w,
-          height: 45.h,
-          child: Image.asset(
-            excludeFromSemantics: true,
-            iconPath,
-            errorBuilder:
-                (context, error, stackTrace) =>
-                    Icon(iconAlt, size: 40.sp, color: Color(0xFF6B6B6B)),
-          ),
-        ),
-        SizedBox(width: 20.w),
-        Text(
-          text,
-          style: TextStyle(
-            color: const Color(0xFF6B6B6B),
-            fontSize: 36.sp,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+class RankingCard extends StatelessWidget {
+  final Group group;
+
+  const RankingCard({super.key, required this.group});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 482.w,
+      height: 210.h,
+      margin: EdgeInsets.symmetric(vertical: 10.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.r),
+        border: Border.all(color: Color(0XFFC4CAD4)),
+      ),
+      child: Text("data"), // 이미지 연결되면 설정할게요,,,
+    );
+  }
+}
+
+class InterviewSchedule extends StatelessWidget {
+  final Group group;
+
+  const InterviewSchedule({super.key, required this.group});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 302.w,
+      height: 210.h,
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.r),
+        border: Border.all(color: Color(0XFFC4CAD4)),
+      ),
+      child: Text("data"), // 이미지 연결되면 설정할게요,,,
     );
   }
 }
