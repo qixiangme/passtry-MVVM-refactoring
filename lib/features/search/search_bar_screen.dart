@@ -85,7 +85,6 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
             height: 45,
             child: TextField(
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
                 filled: true,
                 fillColor: Color(0xffECECEC),
                 hintText: "모집 중인 스터디, 공고 검색하기",
@@ -93,6 +92,11 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.only(left: 20),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Icon(Icons.search, size: 28),
                 ),
               ),
               controller: _controller,
