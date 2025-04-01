@@ -12,19 +12,42 @@ class StudyMakeGroup extends StatefulWidget {
 class _StudyMakeGroupState extends State<StudyMakeGroup> {
   bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
 
+  String? _selectedCategoryItemText;
+  String? _selectedCategoryChipText;
+
+  void _handleCategoryItemSelect(String itemText) {
+    setState(() {
+      _selectedCategoryItemText = itemText;
+    });
+    // 디버깅용 출력 (선택 사항)
+    // print("Parent received category item: $itemText");
+  }
+
+  // CategoryChip 선택 시 호출될 콜백 함수
+  void _handleCategoryChipSelect(String chipText) {
+    setState(() {
+      _selectedCategoryChipText = chipText;
+    });
+    // 디버깅용 출력 (선택 사항)
+    // print("Parent received category chip: $chipText");
+  }
   // 다음 버튼 탭 처리 및 네비게이션 함수
   void _handleNextButtonTap() {
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
+    print("--- 다음 버튼 클릭 ---");
+    print("선택된 단체: ${_selectedCategoryItemText ?? '선택되지 않음'}");
+    print("선택된 분야: ${_selectedCategoryChipText ?? '선택되지 않음'}");
+    print("--------------------");
     setState(() {
       _isNextButtonClicked = true;
     });
 
-    print("다음으로");
-
     // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
+      MaterialPageRoute(
+        builder: (context) => StudyMakeGroup2(),
+      ),
     ).then((_) {
       // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
       // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -79,14 +102,14 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
                 Container(
                   width: 992.w,
                   padding: (EdgeInsets.symmetric(horizontal: 50.w)),
-                  child: buildCategoryItems(),
+                  child: CategoryItems(onItemSelected: _handleCategoryItemSelect),
                 ),
 
                 SizedBox(height: 100.h),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 77.w),
                   width: 991.w,
-                  child: buildCategoryChipGroup(),
+                  child: CategoryChipGroup(onChipSelected: _handleCategoryChipSelect,),
                 ),
 
                 SizedBox(height: 150.h),
@@ -111,8 +134,7 @@ class CategoryItem extends StatefulWidget {
   final bool isSelected;
   final Function(String) onSelected;
 
-  const CategoryItem({
-    super.key,
+  CategoryItem({
     required this.text,
     required this.assetPath,
     required this.isSelected,
@@ -127,9 +149,9 @@ class _CategoryItemState extends State<CategoryItem> {
   @override
   Widget build(BuildContext context) {
     Color containerColor =
-        widget.isSelected ? Colors.orange.withOpacity(0.3) : Colors.white;
+    widget.isSelected ? Colors.orange.withOpacity(0.3) : Colors.white;
     Color borderColor =
-        widget.isSelected ? Colors.orange : const Color(0xFFEBEBEB);
+    widget.isSelected ? Colors.orange : const Color(0xFFEBEBEB);
 
     return GestureDetector(
       onTap: () {
@@ -137,6 +159,7 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.onSelected(widget.text);
       },
       child: Container(
+
         width: 250.w,
         height: 250.h,
         padding: EdgeInsets.all(20.w),
@@ -182,7 +205,12 @@ class _CategoryItemState extends State<CategoryItem> {
 }
 
 class CategoryItems extends StatefulWidget {
-  const CategoryItems({super.key});
+  final Function(String) onItemSelected;
+
+  const CategoryItems({
+    required this.onItemSelected, // 생성자에서 콜백 함수 받기
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CategoryItemsState createState() => _CategoryItemsState();
@@ -211,6 +239,7 @@ class _CategoryItemsState extends State<CategoryItems> {
     setState(() {
       selectedText = text;
     });
+    widget.onItemSelected(text);
   }
 
   @override
@@ -220,21 +249,19 @@ class _CategoryItemsState extends State<CategoryItems> {
       spacing: 15.w,
       runSpacing: 15.h,
       children:
-          items.map((itemInfo) {
-            return CategoryItem(
-              text: itemInfo.text,
-              assetPath: itemInfo.assetPath,
-              isSelected: selectedText == itemInfo.text,
-              onSelected: handleItemSelected,
-            );
-          }).toList(),
+      items.map((itemInfo) {
+        return CategoryItem(
+          text: itemInfo.text,
+          assetPath: itemInfo.assetPath,
+          isSelected: selectedText == itemInfo.text,
+          onSelected: handleItemSelected,
+        );
+      }).toList(),
     );
   }
 }
 
-Widget buildCategoryItems() {
-  return CategoryItems();
-}
+
 
 class CategoryChip extends StatelessWidget {
   final String emoji;
@@ -242,23 +269,23 @@ class CategoryChip extends StatelessWidget {
   final bool isSelected;
   final Function(String) onSelected;
 
-  const CategoryChip({
+  CategoryChip({
     required this.emoji,
     required this.text,
     required this.isSelected,
     required this.onSelected,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color bgColor = isSelected ? const Color(0x21FF9F1C) : Colors.white;
     Color borderColor =
-        isSelected ? const Color(0xFFFF9F1C) : const Color(0xFFEBEBEB);
+    isSelected ? const Color(0xFFFF9F1C) : const Color(0xFFEBEBEB);
 
     return GestureDetector(
       onTap: () {
-        print("$text 클릭됨");
+        print("${text} 클릭됨");
         onSelected(text);
       },
       child: Container(
@@ -311,7 +338,12 @@ class CategoryChipInfo {
 }
 
 class CategoryChipGroup extends StatefulWidget {
-  const CategoryChipGroup({super.key});
+  final Function(String) onChipSelected;
+
+  const CategoryChipGroup({
+    required this.onChipSelected, // 생성자에서 콜백 함수 받기
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CategoryChipGroupState createState() => _CategoryChipGroupState();
@@ -336,6 +368,7 @@ class _CategoryChipGroupState extends State<CategoryChipGroup> {
     setState(() {
       selectedChipText = text;
     });
+    widget.onChipSelected(text);
   }
 
   @override
@@ -346,23 +379,21 @@ class _CategoryChipGroupState extends State<CategoryChipGroup> {
       spacing: 20.w,
       runSpacing: 20.h,
       children:
-          chipItems.map((chipInfo) {
-            return CategoryChip(
-              emoji: chipInfo.emoji,
-              text: chipInfo.text,
-              // 현재 선택된 텍스트와 이 칩의 텍스트가 같은지 비교하여 isSelected 결정
-              isSelected: selectedChipText == chipInfo.text,
-              // 콜백 함수 전달
-              onSelected: handleChipSelected,
-            );
-          }).toList(), // map 결과를 List로 변환
+      chipItems.map((chipInfo) {
+        return CategoryChip(
+          emoji: chipInfo.emoji,
+          text: chipInfo.text,
+          // 현재 선택된 텍스트와 이 칩의 텍스트가 같은지 비교하여 isSelected 결정
+          isSelected: selectedChipText == chipInfo.text,
+          // 콜백 함수 전달
+          onSelected: handleChipSelected,
+        );
+      }).toList(), // map 결과를 List로 변환
     );
   }
 }
 
-Widget buildCategoryChipGroup() {
-  return CategoryChipGroup();
-}
+
 
 class NextButton extends StatelessWidget {
   final bool isClicked; // 부모로부터 받을 클릭 상태
@@ -371,8 +402,8 @@ class NextButton extends StatelessWidget {
   const NextButton({
     required this.isClicked, // 생성자에 추가
     required this.onTap, // 생성자에 추가
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -383,8 +414,7 @@ class NextButton extends StatelessWidget {
 
     return InkWell(
       onTap: onTap, // 부모로부터 받은 onTap 콜백 사용
-      child: AnimatedContainer(
-        // 색상 변경 애니메이션 유지
+      child: AnimatedContainer( // 색상 변경 애니메이션 유지
         duration: const Duration(milliseconds: 200),
         width: 993.w,
         height: 160.h,
@@ -392,7 +422,10 @@ class NextButton extends StatelessWidget {
         decoration: ShapeDecoration(
           color: bgColor,
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 2.75.w, color: borderColor),
+            side: BorderSide(
+              width: 2.75.w,
+              color: borderColor,
+            ),
             borderRadius: BorderRadius.circular(33.r),
           ),
         ),
