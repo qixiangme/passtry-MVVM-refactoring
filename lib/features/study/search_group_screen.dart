@@ -1,9 +1,9 @@
 import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/features/study/study_screen.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class SearchGroupScreen extends StatefulWidget {
   const SearchGroupScreen({super.key});
@@ -33,7 +33,13 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: Padding(
+          padding: EdgeInsets.only(top: 8),
+          child: Icon(CustomIcon.back, size: 18),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, top: 15),
         child: Column(
@@ -239,7 +245,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "검색하기",
+                        _isButtonEnabled ? "다음" : "검색하기",
                         style: TextStyle(
                           fontSize: 50.sp,
                           fontWeight: FontWeight.w600,
