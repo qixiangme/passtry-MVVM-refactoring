@@ -38,13 +38,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   padding: EdgeInsets.only(top: (60.75).h),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
                         width: 815.50.w,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 12),
+                          padding: const EdgeInsets.only(left: 25),
                           child: Text(
                             '탐색',
                             style: TextStyle(
@@ -56,7 +55,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 40),
+                      SizedBox(width: 33),
                       IconButton(
                         onPressed: () {
                           Navigator.push(
@@ -66,7 +65,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           );
                         },
-                        icon: Icon(CustomIcon.add),
+                        icon: Icon(
+                          CustomIcon.add,
+                          size: 27,
+                          color: Color(0xff1C1C1C),
+                        ),
                       ),
                     ],
                   ),
@@ -230,14 +233,18 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
                           '모집 중인 스터디, 공고 검색하기',
                           style: TextStyle(
                             color: const Color(0xFF6B6B6B) /* dark-gray */,
-                            fontSize: 29.sp,
+                            fontSize: 34.sp,
                             fontFamily: 'Wanted Sans',
                             fontWeight: FontWeight.w600,
                             letterSpacing: -0.36,
                           ),
                         ),
-                        SizedBox(width: 180),
-                        Icon(CustomIcon.search, color: Color(0XFF6B6B6B)),
+                        SizedBox(width: 157),
+                        Icon(
+                          CustomIcon.search,
+                          color: Color(0XFF6B6B6B),
+                          size: 22,
+                        ),
                       ],
                     ),
                   ),
