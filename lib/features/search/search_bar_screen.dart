@@ -67,21 +67,24 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.close),
+        leading: Padding(
+          padding: EdgeInsets.only(top: 20, left: 3),
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.close),
+          ),
         ),
         automaticallyImplyLeading: false,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 20),
           SizedBox(
-            width: 700,
+            width: 380,
             height: 45,
             child: TextField(
               decoration: InputDecoration(
