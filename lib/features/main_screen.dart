@@ -11,6 +11,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late int _currentIndex;
   @override
   void initState() {
     super.initState();
@@ -18,7 +19,6 @@ class _MainScreenState extends State<MainScreen> {
     _currentIndex = widget.goToPage;
   }
 
-  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

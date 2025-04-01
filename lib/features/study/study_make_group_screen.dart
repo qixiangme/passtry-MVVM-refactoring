@@ -24,9 +24,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
     // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => StudyMakeGroup2(),
-      ),
+      MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
     ).then((_) {
       // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
       // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -94,9 +92,9 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
                 SizedBox(height: 150.h),
                 Center(
                   child: NextButton(
-                  isClicked: _isNextButtonClicked, // 부모의 상태 전달
-                  onTap: _handleNextButtonTap, // 부모의 함수 전달
-                ),
+                    isClicked: _isNextButtonClicked, // 부모의 상태 전달
+                    onTap: _handleNextButtonTap, // 부모의 함수 전달
+                  ),
                 ),
               ],
             ),
@@ -113,7 +111,8 @@ class CategoryItem extends StatefulWidget {
   final bool isSelected;
   final Function(String) onSelected;
 
-  CategoryItem({
+  const CategoryItem({
+    super.key,
     required this.text,
     required this.assetPath,
     required this.isSelected,
@@ -138,7 +137,6 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.onSelected(widget.text);
       },
       child: Container(
-
         width: 250.w,
         height: 250.h,
         padding: EdgeInsets.all(20.w),
@@ -184,6 +182,8 @@ class _CategoryItemState extends State<CategoryItem> {
 }
 
 class CategoryItems extends StatefulWidget {
+  const CategoryItems({super.key});
+
   @override
   _CategoryItemsState createState() => _CategoryItemsState();
 }
@@ -242,13 +242,13 @@ class CategoryChip extends StatelessWidget {
   final bool isSelected;
   final Function(String) onSelected;
 
-  CategoryChip({
+  const CategoryChip({
     required this.emoji,
     required this.text,
     required this.isSelected,
     required this.onSelected,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +258,7 @@ class CategoryChip extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        print("${text} 클릭됨");
+        print("$text 클릭됨");
         onSelected(text);
       },
       child: Container(
@@ -311,7 +311,7 @@ class CategoryChipInfo {
 }
 
 class CategoryChipGroup extends StatefulWidget {
-  const CategoryChipGroup({Key? key}) : super(key: key);
+  const CategoryChipGroup({super.key});
 
   @override
   _CategoryChipGroupState createState() => _CategoryChipGroupState();
@@ -364,7 +364,6 @@ Widget buildCategoryChipGroup() {
   return CategoryChipGroup();
 }
 
-
 class NextButton extends StatelessWidget {
   final bool isClicked; // 부모로부터 받을 클릭 상태
   final VoidCallback onTap; // 부모로부터 받을 탭 콜백 함수
@@ -372,8 +371,8 @@ class NextButton extends StatelessWidget {
   const NextButton({
     required this.isClicked, // 생성자에 추가
     required this.onTap, // 생성자에 추가
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -384,7 +383,8 @@ class NextButton extends StatelessWidget {
 
     return InkWell(
       onTap: onTap, // 부모로부터 받은 onTap 콜백 사용
-      child: AnimatedContainer( // 색상 변경 애니메이션 유지
+      child: AnimatedContainer(
+        // 색상 변경 애니메이션 유지
         duration: const Duration(milliseconds: 200),
         width: 993.w,
         height: 160.h,
@@ -392,10 +392,7 @@ class NextButton extends StatelessWidget {
         decoration: ShapeDecoration(
           color: bgColor,
           shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 2.75.w,
-              color: borderColor,
-            ),
+            side: BorderSide(width: 2.75.w, color: borderColor),
             borderRadius: BorderRadius.circular(33.r),
           ),
         ),

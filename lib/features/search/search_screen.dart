@@ -28,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 310,
             backgroundColor: Colors.white,
             flexibleSpace: Column(
