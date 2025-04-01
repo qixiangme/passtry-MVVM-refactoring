@@ -1,3 +1,5 @@
+import 'package:componentss/features/study/search_group_screen.dart';
+import 'package:componentss/features/study/study_make_group_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,6 +29,7 @@ class StudyScreen extends StatefulWidget {
 }
 
 class _StudyScreenState extends State<StudyScreen> {
+  bool isExpanded = false;
   final List<Group> _studyGroups = [
     Group(
       id: '1',
@@ -235,6 +238,107 @@ class _StudyScreenState extends State<StudyScreen> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            right: 5.0,
+            bottom: 70.0,
+
+            child: FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(70.r),
+              ),
+
+              backgroundColor: Colors.grey[700],
+              child: Image.asset(
+                height: 80.h,
+                width: 80.w,
+                'assets/icons/search.png',
+              ),
+              onPressed: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
+            ),
+          ),
+
+          Positioned(
+            right: 5.0,
+            bottom: 70.0,
+            child: AnimatedOpacity(
+              duration: Duration(milliseconds: 200),
+              opacity: isExpanded ? 1.0 : 0.0,
+
+              child: Column(
+                children: <Widget>[
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70.r),
+                    ),
+
+                    backgroundColor: Colors.grey[900],
+                    child: Image.asset(
+                      height: 80.h,
+                      width: 80.w,
+                      'assets/icons/plus.png',
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StudyMakeGroup(),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 16.0),
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70.r),
+                    ),
+
+                    backgroundColor: Colors.grey[900],
+                    child: Image.asset(
+                      height: 80.h,
+                      width: 80.w,
+                      'assets/icons/search.png',
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchGroupScreen(),
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                  SizedBox(height: 16.0),
+                  FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(70.r),
+                    ),
+
+                    backgroundColor: Colors.grey[900],
+                    child: Image.asset(
+                      height: 80.h,
+                      width: 80.w,
+                      'assets/icons/plus.png',
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],
