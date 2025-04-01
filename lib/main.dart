@@ -1,3 +1,4 @@
+import 'package:componentss/features/auth/onboarding_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: Size(1080, 2400));
     return MaterialApp(
-      home: const MainScreen(),
+      home: MainScreen(),
       theme: ThemeData(
+        fontFamily: "Wanted Sans",
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(color: Colors.white),
       ),
