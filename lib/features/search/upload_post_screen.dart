@@ -1,3 +1,4 @@
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,10 +12,30 @@ class UploadPostScreen extends StatefulWidget {
 class _UploadPostScreenState extends State<UploadPostScreen> {
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
+  Map<int, Map<String, String>> categoryDict = {
+    0: {'icon': '💻', 'text': '전공'},
+    1: {'icon': '📚', 'text': '학술'},
+    2: {'icon': '🎨', 'text': '예술'},
+    3: {'icon': '👥', 'text': '취미'},
+    4: {'icon': '☀️', 'text': '봉사'},
+    5: {'icon': '🔠', 'text': '어학'},
+    6: {'icon': '🤝', 'text': '창업'},
+    7: {'icon': '✈️', 'text': '여행'},
+  };
+  List<bool> tagSelection = List.generate(8, (_) => false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [Icon(Icons.add)]),
+      appBar: AppBar(
+        actions: [Icon(CustomIcon.add)],
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(CustomIcon.back),
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(height: 50.h), // 화면 밀도 적용
@@ -29,13 +50,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 ), // 화면 밀도 적용
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 2),
+                padding: const EdgeInsets.only(left: 15, bottom: 3),
                 child: TextField(
                   controller: _titleTextController,
                   decoration: InputDecoration(
                     hintStyle: TextStyle(
-                      fontSize: 44.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 42.sp,
+                      fontWeight: FontWeight.w700,
                       color: Color(0xFF6B6B6B),
                     ),
                     hintText: "제목(20자 이내)",
@@ -57,7 +78,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 ), // 화면 밀도 적용
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 2),
+                padding: const EdgeInsets.only(left: 15, bottom: 3),
                 child: TextField(
                   controller: _textController,
                   decoration: InputDecoration(
@@ -73,11 +94,11 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               ),
             ),
           ),
-          SizedBox(height: 30.h), // 화면 밀도 적용
+          SizedBox(height: 40.h), // 화면 밀도 적용
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: 90.w), // 화면 밀도 적용
+              SizedBox(width: 85.w), // 화면 밀도 적용
               Text(
                 "태그",
                 style: TextStyle(
@@ -96,333 +117,73 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               runAlignment: WrapAlignment.center,
               spacing: 18.r, // 화면 밀도 적용
               runSpacing: 18.r, // 화면 밀도 적용
-              children: [
-                // 태그 버튼들에 대한 부분도 동일하게 화면 밀도 적용
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    color: Color(0x21FF9F1C),
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFFF9F1C),
+              children: List.generate(8, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      tagSelection[index] = !tagSelection[index];
+                    });
+                  },
+                  child: Container(
+                    width: 200.w,
+                    height: 100.h,
+                    decoration: ShapeDecoration(
+                      color:
+                          tagSelection[index]
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
+
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w, // 화면 밀도 적용
+                          color:
+                              tagSelection[index]
+                                  ? Color(0xFFFF9F1C) // 주황색
+                                  : Color(0xFFECECEC), // 회색
+                        ),
+                        borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
                       ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          categoryDict[index]!['icon']!,
+                          style: TextStyle(
+                            color:
+                                tagSelection[index]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          categoryDict[index]!['text']!,
+                          style: TextStyle(
+                            color:
+                                tagSelection[index]
+                                    ? Color(0xFF1C1C1C)
+                                    : Color(0xFF6B6B6B),
+                            fontSize: 36.sp, // 화면 밀도 적용
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '💻',
-                        style: TextStyle(
-                          color: Color(0xFF1C1C1C),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '전공',
-                        style: TextStyle(
-                          color: Color(0xFF1C1C1C),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '📚',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '학술',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '🎨',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '예술',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 267.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '👥',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '문화•취미',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '☀️',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '봉사',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '🔠',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '어학',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '🤝',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '창업',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 190.w,
-                  height: 100.h,
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w, // 화면 밀도 적용
-                        color: Color(0xFFECECEC),
-                      ),
-                      borderRadius: BorderRadius.circular(36.r), // 화면 밀도 적용
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '✈️',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '여행',
-                        style: TextStyle(
-                          color: Color(0xFF6B6B6B),
-                          fontSize: 36.sp, // 화면 밀도 적용
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.36,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // 다른 Container들도 동일하게 화면 밀도 적용
-              ],
+                );
+              }),
             ),
           ),
+
           SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,18 +197,21 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(width: 20),
-              Text(
-                "*최대 2장까지 가능합니다.",
-                style: TextStyle(
-                  fontSize: 40.sp, // 화면 밀도 적용
-                  color: Color(0XFFC4CAD4),
-                  fontWeight: FontWeight.w400,
+              SizedBox(width: 17),
+              Padding(
+                padding: EdgeInsets.only(top: 1.5),
+                child: Text(
+                  "*최대 2장까지 가능합니다.",
+                  style: TextStyle(
+                    fontSize: 39.sp, // 화면 밀도 적용
+                    color: Color(0XFFC4CAD4),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 15),
+          SizedBox(height: 13),
           Row(
             children: [
               SizedBox(width: 30),

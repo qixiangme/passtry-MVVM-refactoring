@@ -79,7 +79,7 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           SizedBox(
             width: 700,
             height: 45,
@@ -87,10 +87,11 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 filled: true,
-                fillColor: Colors.grey[250],
-                hintText: "검색어를 입력하세요",
+                fillColor: Color(0xffECECEC),
+                hintText: "모집 중인 스터디, 공고 검색하기",
+                hintStyle: TextStyle(fontSize: 14),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,
                 ),
               ),

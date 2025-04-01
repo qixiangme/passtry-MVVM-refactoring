@@ -1,4 +1,4 @@
-import 'package:componentss/icons/my_flutter_app_icons.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,14 +30,41 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           color: const Color(0xffC4CAD4),
           fontSize: 33.sp,
         ),
-        selectedLabelStyle: const TextStyle(color: Colors.orange),
+        selectedLabelStyle: const TextStyle(color: Color(0xffFF9F1C)),
         items: [
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.bread), label: '스터디'),
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.bread), label: '베이킹'),
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.serch), label: '탐색'),
           BottomNavigationBarItem(
-            icon: Icon(MyFlutterApp.profile),
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.home),
+            ),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.study),
+            ),
+            label: '스터디',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.baking),
+            ),
+            label: '베이킹',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.search),
+            ),
+            label: '탐색',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.my),
+            ),
             label: '마이',
           ),
         ],
