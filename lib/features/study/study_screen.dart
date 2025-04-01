@@ -66,6 +66,22 @@ class StudyScreen extends StatefulWidget {
 }
 
 class _StudyScreenState extends State<StudyScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    //  if( 스터디 그룹 참여 여부 확인) {
+    //    WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text("토스트 알림: 화면이 전환되었습니다."),
+    //         duration: Duration(seconds: 2), // 알림 지속 시간 설정
+    //       ),
+    //     );
+    //   });
+    //  }
+  }
+
   // 서버 데이터 예시.
   final List<Group> _studyGroups = [
     Group(
