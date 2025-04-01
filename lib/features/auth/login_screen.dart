@@ -69,6 +69,7 @@ class LoginScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: TextField(
+                  obscureText: true,
                   decoration: InputDecoration(
                     hintText: "영문, 숫자, 특수문자 조합 8자리 이상",
                     hintStyle: TextStyle(color: Color(0xFFC4CAD4)),

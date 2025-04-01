@@ -12,11 +12,11 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 60),
+            SizedBox(height: 90),
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(left: 13),
               child: Text(
-                'Username님, 환영합니다!',
+                'Username 님, 환영합니다!',
                 style: TextStyle(
                   color: const Color(0xFF1C1C1C) /* main-black */,
                   fontSize: 76.sp,
@@ -27,13 +27,13 @@ class WelcomeScreen extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 13.0, top: 8),
               child: Text(
                 "함께 면접 준비 시작해 볼까요?",
-                style: TextStyle(fontSize: 60.sp),
+                style: TextStyle(fontSize: 60.sp, fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(height: 600),
+            SizedBox(height: 550),
 
             GestureDetector(
               onTap: () {},
