@@ -1,4 +1,4 @@
-import 'package:componentss/features/auth/onboarding_screen.dart';
+import 'package:componentss/features/auth/ui/screen/onboarding_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,5 +1,5 @@
-import 'package:componentss/features/auth/login_screen.dart';
-import 'package:componentss/features/auth/register_screen.dart';
+import 'package:componentss/features/auth/ui/screen/login_screen.dart';
+import 'package:componentss/features/auth/ui/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -1,4 +1,4 @@
-import 'package:componentss/features/auth/welcome_screen.dart';
+import 'package:componentss/features/auth/ui/screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
