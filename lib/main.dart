@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: const OnboardingScreen(),
       theme: ThemeData(
+        fontFamily: "Wanted Sans",
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(color: Colors.white),
       ),
