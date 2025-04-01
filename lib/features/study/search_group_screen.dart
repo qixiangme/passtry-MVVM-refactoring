@@ -35,9 +35,14 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: EdgeInsets.only(top: 8),
-          child: Icon(CustomIcon.back, size: 18),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Icon(CustomIcon.back, size: 18),
+          ),
         ),
       ),
       body: Padding(
