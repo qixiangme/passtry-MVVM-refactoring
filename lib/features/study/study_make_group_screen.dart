@@ -10,6 +10,35 @@ class StudyMakeGroup extends StatefulWidget {
 }
 
 class _StudyMakeGroupState extends State<StudyMakeGroup> {
+  bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
+
+  // 다음 버튼 탭 처리 및 네비게이션 함수
+  void _handleNextButtonTap() {
+    // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
+    setState(() {
+      _isNextButtonClicked = true;
+    });
+
+    print("다음으로");
+
+    // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudyMakeGroup2(),
+      ),
+    ).then((_) {
+      // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
+      // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
+      if (mounted) {
+        // 3. 버튼 상태를 다시 false로 초기화
+        setState(() {
+          _isNextButtonClicked = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,53 +93,10 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
 
                 SizedBox(height: 150.h),
                 Center(
-                  child: InkWell(
-                    onTap: () {
-                      // 컨테이너를 눌렀을 때 실행될 코드
-                      print("다음으로");
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => StudyMakeGroup2(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: 993.w,
-                      height: 160.h,
-                      padding: const EdgeInsets.all(10),
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 2.75.w,
-                            color: const Color(0xFFFF9F1C) /* main-orange */,
-                          ),
-                          borderRadius: BorderRadius.circular(33.r),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 27.50.w,
-                        children: [
-                          Text(
-                            '다음',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: const Color(0xFFFF9F1C) /* main-orange */,
-                              fontSize: 50.sp,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: -0.50,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: NextButton(
+                  isClicked: _isNextButtonClicked, // 부모의 상태 전달
+                  onTap: _handleNextButtonTap, // 부모의 함수 전달
+                ),
                 ),
               ],
             ),
@@ -151,9 +137,8 @@ class _CategoryItemState extends State<CategoryItem> {
         print("${widget.text} 클릭됨");
         widget.onSelected(widget.text);
       },
-      child: AnimatedContainer(
-        // AnimatedContainer로 변경
-        duration: const Duration(milliseconds: 100),
+      child: Container(
+
         width: 250.w,
         height: 250.h,
         padding: EdgeInsets.all(20.w),
@@ -377,4 +362,56 @@ class _CategoryChipGroupState extends State<CategoryChipGroup> {
 
 Widget buildCategoryChipGroup() {
   return CategoryChipGroup();
+}
+
+
+class NextButton extends StatelessWidget {
+  final bool isClicked; // 부모로부터 받을 클릭 상태
+  final VoidCallback onTap; // 부모로부터 받을 탭 콜백 함수
+
+  const NextButton({
+    required this.isClicked, // 생성자에 추가
+    required this.onTap, // 생성자에 추가
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // isClicked 상태는 이제 생성자로 받은 isClicked 사용
+    Color bgColor = isClicked ? Color(0xFFFF9F1C) : Colors.white;
+    Color borderColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
+    Color textColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
+
+    return InkWell(
+      onTap: onTap, // 부모로부터 받은 onTap 콜백 사용
+      child: AnimatedContainer( // 색상 변경 애니메이션 유지
+        duration: const Duration(milliseconds: 200),
+        width: 993.w,
+        height: 160.h,
+        // padding 제거됨 (필요시 추가)
+        decoration: ShapeDecoration(
+          color: bgColor,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 2.75.w,
+              color: borderColor,
+            ),
+            borderRadius: BorderRadius.circular(33.r),
+          ),
+        ),
+        alignment: Alignment.center, // Row 대신 Alignment 사용 간소화
+        child: Text(
+          '다음',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: textColor,
+            fontSize: 50.sp,
+            fontFamily: 'Wanted Sans',
+            fontWeight: FontWeight.w600,
+            letterSpacing: -0.50,
+          ),
+        ),
+      ),
+    );
+  }
 }
