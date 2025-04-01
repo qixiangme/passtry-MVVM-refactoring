@@ -1,3 +1,4 @@
+import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/features/study/study_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -146,10 +147,12 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                   SizedBox(width: 20),
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => StudyScreen(),
+                                          builder:
+                                              (context) =>
+                                                  MainScreen(goToPage: 1),
                                         ),
                                       );
                                     },
