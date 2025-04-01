@@ -57,9 +57,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   fonts:
-    - family: MyFlutterApp
+    - family: CustomIcon
       fonts:
-        - asset: assets/MyFlutterApp.ttf
+        - asset: assets/CustomIcon.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

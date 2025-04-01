@@ -1,3 +1,4 @@
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,7 +26,16 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [Icon(Icons.add)]),
+      appBar: AppBar(
+        actions: [Icon(CustomIcon.add)],
+        automaticallyImplyLeading: false,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(CustomIcon.back),
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(height: 50.h), // 화면 밀도 적용

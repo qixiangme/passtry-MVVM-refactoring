@@ -1,6 +1,7 @@
 import 'package:componentss/features/search/post_screen.dart';
 import 'package:componentss/features/search/search_bar_screen.dart';
 import 'package:componentss/features/search/upload_post_screen.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -65,7 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           );
                         },
-                        icon: Icon(Icons.add),
+                        icon: Icon(CustomIcon.add),
                       ),
                     ],
                   ),
@@ -223,15 +224,21 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: EdgeInsets.only(left: 23),
-                    child: Text(
-                      '모집 중인 스터디, 공고 검색하기',
-                      style: TextStyle(
-                        color: const Color(0xFF6B6B6B) /* dark-gray */,
-                        fontSize: 29.sp,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.36,
-                      ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '모집 중인 스터디, 공고 검색하기',
+                          style: TextStyle(
+                            color: const Color(0xFF6B6B6B) /* dark-gray */,
+                            fontSize: 29.sp,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.36,
+                          ),
+                        ),
+                        SizedBox(width: 180),
+                        Icon(CustomIcon.search, color: Color(0XFF6B6B6B)),
+                      ],
                     ),
                   ),
                 ),

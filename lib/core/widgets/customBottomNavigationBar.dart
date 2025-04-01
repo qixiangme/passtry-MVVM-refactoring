@@ -1,4 +1,4 @@
-import 'package:componentss/icons/my_flutter_app_icons.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,14 +32,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         ),
         selectedLabelStyle: const TextStyle(color: Colors.orange),
         items: [
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.bread), label: '스터디'),
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.bread), label: '베이킹'),
-          BottomNavigationBarItem(icon: Icon(MyFlutterApp.serch), label: '탐색'),
-          BottomNavigationBarItem(
-            icon: Icon(MyFlutterApp.profile),
-            label: '마이',
-          ),
+          BottomNavigationBarItem(icon: Icon(CustomIcon.home), label: '홈'),
+          BottomNavigationBarItem(icon: Icon(CustomIcon.study), label: '스터디'),
+          BottomNavigationBarItem(icon: Icon(CustomIcon.baking), label: '베이킹'),
+          BottomNavigationBarItem(icon: Icon(CustomIcon.search), label: '탐색'),
+          BottomNavigationBarItem(icon: Icon(CustomIcon.my), label: '마이'),
         ],
         onTap: widget.onTap,
       ),
