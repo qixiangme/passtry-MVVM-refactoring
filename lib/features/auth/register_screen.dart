@@ -142,18 +142,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(38.5.r)),
                       border: Border.all(color: Color(0XFFFF9F1C)),
                     ),
-                    child: GestureDetector(
-                      child: Center(
-                        child: Text(
-                          "다음",
-                          style: TextStyle(
-                            fontSize: 50.sp,
-                            fontWeight: FontWeight.w600,
-                            color:
-                                _isButtonEnabled
-                                    ? Colors.white
-                                    : Color(0XFFFF9F1C),
-                          ),
+                    child: Center(
+                      child: Text(
+                        "다음",
+                        style: TextStyle(
+                          fontSize: 50.sp,
+                          fontWeight: FontWeight.w600,
+                          color:
+                              _isButtonEnabled
+                                  ? Colors.white
+                                  : Color(0XFFFF9F1C),
                         ),
                       ),
                     ),

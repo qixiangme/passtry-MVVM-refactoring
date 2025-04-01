@@ -19,7 +19,7 @@ class SearchApi {
   Future<List<PostModel>> searchPosts(
     String query, {
     int page = 1,
-    String sort = "latest",
+    String tag = "latest",
   }) async {
 
 
@@ -40,7 +40,7 @@ class SearchApi {
 
 
 
-      queryParameters: {'query': query, 'page': page.toString(), 'sort': sort},
+      queryParameters: {'query': query, 'page': page.toString(), 'tag': tag},
     );
 
     final response = await http.get(

@@ -1,10 +1,13 @@
+import 'dart:convert';
+import 'package:componentss/features/search/data/post_model.dart';
+import 'package:componentss/features/search/data/sort_api.dart';
 import 'package:componentss/features/search/post_screen.dart';
 import 'package:componentss/features/search/search_bar_screen.dart';
-import 'package:componentss/features/search/ui/screen/search_bar_screen.dart';
 import 'package:componentss/features/search/upload_post_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -17,10 +20,74 @@ class _SearchScreenState extends State<SearchScreen> {
   int selectedTagIndex = 0;
   int currentCardIndex = 0;
   final PageController _pageController = PageController(viewportFraction: 1);
-  void onTagSelected(int index) {
+  final SortApi sortApi = SortApi();
+
+  List<PostModel> posts = []; // 📌 불러온 게시글 리스트
+  bool isLoading = false; // 📌 로딩 상태
+
+  // 태그 목록
+  final List<String> tagNames = [
+    "popular",
+    "latest",
+    "major",
+    "academic",
+    "art",
+    "hobby",
+    "volunteer",
+    "language",
+    "startup",
+    "travel",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPosts(); // 초기 데이터 불러오기
+  }
+
+  // 📌 태그 선택 시 API 호출
+  void onTagSelected(int index) async {
     setState(() {
       selectedTagIndex = index;
+      // isLoading = true; // 로딩 시작
     });
+
+    // try {
+    //   List<PostModel> sortedPosts = await sortApi.sortPosts(
+    //     tag: tagNames[index],
+    //   );
+    //   setState(() {
+    //     posts = sortedPosts;
+    //   });
+    // } catch (e) {
+    //   print("❌ 데이터 불러오기 실패: $e");
+    // } finally {
+    //   setState(() {
+    //     isLoading = false; // 로딩 완료
+    //   });
+    // }
+  }
+
+  // 📌 초기 데이터 불러오기
+  void fetchPosts() async {
+    // setState(() {
+    //   isLoading = true;
+    // });
+
+    // try {
+    //   List<PostModel> sortedPosts = await sortApi.sortPosts(
+    //     tag: tagNames[selectedTagIndex],
+    //   );
+    //   setState(() {
+    //     posts = sortedPosts;
+    //   });
+    // } catch (e) {
+    //   print("❌ 데이터 불러오기 실패: $e");
+    // } finally {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    // }
   }
 
   @override
@@ -29,6 +96,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 310,
             backgroundColor: Colors.white,
             flexibleSpace: Column(
@@ -38,26 +106,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   height: 265.h,
                   padding: EdgeInsets.only(top: (60.75).h),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: 815.50.w,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 12),
-                          child: Text(
-                            '탐색',
-                            style: TextStyle(
-                              color: const Color(0xFF1C1C1C) /* main-black */,
-                              fontSize: 60.sp,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w800,
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25),
+                        child: Text(
+                          '탐색',
+                          style: TextStyle(
+                            color: Color(0xFF1C1C1C),
+                            fontSize: 60.sp,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
-                      SizedBox(width: 40),
+                      Spacer(),
                       IconButton(
                         onPressed: () {
                           Navigator.push(
@@ -67,71 +128,18 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           );
                         },
-                        icon: Icon(CustomIcon.add),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 8),
-
-                Row(
-                  children: [
-                    SizedBox(width: 20),
-                    SizedBox(
-                      width: 993.w,
-                      height: 360.h,
-                      child: PageView(
-                        scrollDirection: Axis.horizontal,
-                        controller: _pageController,
-                        onPageChanged: ((index) {
-                          setState(() {
-                            currentCardIndex = index;
-                          });
-                        }),
-                        children: List.generate(
-                          4,
-                          (index) => Container(
-                            height: 389.h,
-                            width: 993.w,
-                            margin: EdgeInsets.only(right: 30.w),
-                            decoration: BoxDecoration(
-                              color: Color(0xffFF9F1C),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                            ),
-                          ),
+                        icon: Icon(
+                          CustomIcon.add,
+                          size: 27,
+                          color: Color(0xff1C1C1C),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 20),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    4,
-                    (index) => Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5),
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            currentCardIndex == index
-                                ? Colors
-                                    .black // 활성화된 페이지는 주황색
-                                : Color(0xffD9D9D9),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-
           SliverPersistentHeader(
             pinned: true,
             delegate: _SearchBar(
@@ -139,36 +147,62 @@ class _SearchScreenState extends State<SearchScreen> {
               onTagSelected: onTagSelected,
             ),
           ),
-          SliverToBoxAdapter(child: Column(children: [SizedBox(height: 10)])),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PostScreen()),
-                    );
-                  },
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      width: 992.w,
-                      height: 290.h, // 아이템 높이
-                      margin: EdgeInsets.symmetric(vertical: 20.h), // 아이템 사이 간격
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13),
-                        border: Border.all(
-                          color: Color(0xffECECEC),
-                        ), // 경계선 색과 두께 지정
+          SliverToBoxAdapter(child: SizedBox(height: 10)),
+          isLoading
+              ? SliverToBoxAdapter(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ), // 📌 로딩 상태 표시
+              )
+              : SliverList(
+                delegate: SliverChildBuilderDelegate((
+                  BuildContext context,
+                  int index,
+                ) {
+                  final post = posts[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PostScreen()),
+                      );
+                    },
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 992.w,
+                        height: 290.h,
+                        margin: EdgeInsets.symmetric(vertical: 20.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          border: Border.all(color: Color(0xffECECEC)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                post.title,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                post.content,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-              childCount: 10, // 리스트 아이템 개수
-            ),
-          ),
+                  );
+                }, childCount: posts.length),
+              ),
         ],
       ),
     );
@@ -178,24 +212,21 @@ class _SearchScreenState extends State<SearchScreen> {
 class _SearchBar extends SliverPersistentHeaderDelegate {
   final int selectedTagIndex;
   final Function(int) onTagSelected;
-  Map<int, Map<String, String>> categoryDict = {
-    0: {'icon': '🔥', 'text': '인기'},
-    1: {'icon': '⏱️', 'text': '최근'},
-    2: {'icon': '💻', 'text': '전공'},
-    3: {'icon': '📚', 'text': '학술'},
-    4: {'icon': '🎨', 'text': '예술'},
-    5: {'icon': '👥', 'text': '취미'},
-    6: {'icon': '☀️', 'text': '봉사'},
-    7: {'icon': '🔠', 'text': '어학'},
-    8: {'icon': '🤝', 'text': '창업'},
-    9: {'icon': '✈️', 'text': '여행'},
-  };
+
+  final List<Map<String, String>> categoryDict = [
+    {'icon': '🔥', 'text': '인기'},
+    {'icon': '⏱️', 'text': '최근'},
+    {'icon': '💻', 'text': '전공'},
+    {'icon': '📚', 'text': '학술'},
+    {'icon': '🎨', 'text': '예술'},
+    {'icon': '👥', 'text': '취미'},
+    {'icon': '☀️', 'text': '봉사'},
+    {'icon': '🔠', 'text': '어학'},
+    {'icon': '🤝', 'text': '창업'},
+    {'icon': '✈️', 'text': '여행'},
+  ];
 
   _SearchBar({required this.selectedTagIndex, required this.onTagSelected});
-  @override
-  double get minExtent => 95.0; // 최소 크기
-  @override
-  double get maxExtent => 95.00; // 최대 크기
 
   @override
   Widget build(
@@ -203,134 +234,47 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SearchBarScreen()),
-            );
-          },
-          child: Container(
-            height: 122.h,
-            margin: EdgeInsets.symmetric(horizontal: 13),
-            decoration: BoxDecoration(
-              color: Color(0xffECECEC),
-              borderRadius: BorderRadius.circular(22), // 둥글게 설정
-            ),
-            child: SizedBox(
-              child: Center(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 23),
-                    child: Row(
-                      children: [
-                        Text(
-                          '모집 중인 스터디, 공고 검색하기',
-                          style: TextStyle(
-                            color: const Color(0xFF6B6B6B) /* dark-gray */,
-                            fontSize: 29.sp,
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.36,
-                          ),
-                        ),
-                        SizedBox(width: 180),
-                        Icon(CustomIcon.search, color: Color(0XFF6B6B6B)),
-                      ],
-                    ),
-                  ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(categoryDict.length, (index) {
+          return GestureDetector(
+            onTap: () => onTagSelected(index),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color:
+                    selectedTagIndex == index
+                        ? Colors.orange.shade100
+                        : Colors.white,
+                border: Border.all(
+                  color:
+                      selectedTagIndex == index
+                          ? Colors.orange
+                          : Colors.grey.shade300,
                 ),
               ),
-            ),
-          ),
-        ),
-        SizedBox(height: 12),
-        SizedBox(
-          height: 95.h, // 가로 리스트 높이 지정
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal, // 가로 스크롤
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10),
               child: Row(
-                children: List.generate(9, (index) {
-                  return GestureDetector(
-                    onTap: () => onTagSelected(index),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 190.w,
-                          height: 100.h,
-                          decoration: ShapeDecoration(
-                            color:
-                                selectedTagIndex == index
-                                    ? Color(0x21FF9F1C) // 주황색
-                                    : Colors.white, // 회색
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 2.75.w, // 화면 밀도 적용
-                                color:
-                                    selectedTagIndex == index
-                                        ? Color(0xFFFF9F1C) // 주황색
-                                        : Color(0xFFECECEC), // 회색
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                36.r,
-                              ), // 화면 밀도 적용
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                categoryDict[index]!["icon"]!,
-                                style: TextStyle(
-                                  color:
-                                      selectedTagIndex == index
-                                          ? Color(0xFF1C1C1C)
-                                          : Color(0xFF6B6B6B),
-                                  fontSize: 36.sp, // 화면 밀도 적용
-                                  fontFamily: 'Wanted Sans',
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: -0.36,
-                                ),
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                categoryDict[index]!["text"]!,
-                                style: TextStyle(
-                                  color:
-                                      selectedTagIndex == index
-                                          ? Color(0xFF1C1C1C)
-                                          : Color(0xFF6B6B6B),
-                                  fontSize: 36.sp, // 화면 밀도 적용
-                                  fontFamily: 'Wanted Sans',
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: -0.36,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                      ],
-                    ),
-                  );
-                }),
+                children: [
+                  Text(categoryDict[index]["icon"]!),
+                  SizedBox(width: 5),
+                  Text(categoryDict[index]["text"]!),
+                ],
               ),
             ),
-          ),
-        ),
-      ],
+          );
+        }),
+      ),
     );
   }
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
+  double get minExtent => 50;
+  @override
+  double get maxExtent => 50;
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }

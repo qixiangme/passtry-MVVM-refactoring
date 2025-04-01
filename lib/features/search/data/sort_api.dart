@@ -5,10 +5,10 @@ import 'post_model.dart';
 class SortApi {
   final String baseUrl = "https://example.com/api"; // 후에 BaseUrl 설정
 
-  Future<List<PostModel>> sortPosts({int page = 1, String sort = "latest"}) async {
+  Future<List<PostModel>> sortPosts({int page = 1, String tag = "latest"}) async {
     final url = Uri.parse('$baseUrl/posts').replace(queryParameters: {
       'page': page.toString(),
-      'sort': sort,  //태그로 정렬
+      'tag': tag,  //태그로 정렬
     });
 
     final response = await http.get(url, headers: {'Content-Type': 'application/json'});

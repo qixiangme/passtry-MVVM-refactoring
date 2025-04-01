@@ -30,13 +30,43 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           color: const Color(0xffC4CAD4),
           fontSize: 33.sp,
         ),
-        selectedLabelStyle: const TextStyle(color: Colors.orange),
+        selectedLabelStyle: const TextStyle(color: Color(0xffFF9F1C)),
         items: [
-          BottomNavigationBarItem(icon: Icon(CustomIcon.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(CustomIcon.study), label: '스터디'),
-          BottomNavigationBarItem(icon: Icon(CustomIcon.baking), label: '베이킹'),
-          BottomNavigationBarItem(icon: Icon(CustomIcon.search), label: '탐색'),
-          BottomNavigationBarItem(icon: Icon(CustomIcon.my), label: '마이'),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.home),
+            ),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.study),
+            ),
+            label: '스터디',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.baking),
+            ),
+            label: '베이킹',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.search),
+            ),
+            label: '탐색',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Icon(CustomIcon.my),
+            ),
+            label: '마이',
+          ),
         ],
         onTap: widget.onTap,
       ),
