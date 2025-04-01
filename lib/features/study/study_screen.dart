@@ -152,12 +152,12 @@ class _StudyScreenState extends State<StudyScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 6),
+                        SizedBox(height: 5),
                         Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: SizedBox(
                             width: MediaQuery.sizeOf(context).width,
-                            height: 460.h,
+                            height: 430.h,
                             child:
                                 _studyGroups.isEmpty
                                     ? Center(
@@ -182,7 +182,7 @@ class _StudyScreenState extends State<StudyScreen> {
                                     ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
