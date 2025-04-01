@@ -12,16 +12,14 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
   Map<int, Map<String, String>> categoryDict = {
-    0: {'icon': '🔥', 'text': '인기'},
-    1: {'icon': '⏱️', 'text': '최근'},
-    2: {'icon': '💻', 'text': '전공'},
-    3: {'icon': '📚', 'text': '학술'},
-    4: {'icon': '🎨', 'text': '예술'},
-    5: {'icon': '👥', 'text': '취미'},
-    6: {'icon': '☀️', 'text': '봉사'},
-    7: {'icon': '🔠', 'text': '어학'},
-    8: {'icon': '🤝', 'text': '창업'},
-    9: {'icon': '✈️', 'text': '여행'},
+    0: {'icon': '💻', 'text': '전공'},
+    1: {'icon': '📚', 'text': '학술'},
+    2: {'icon': '🎨', 'text': '예술'},
+    3: {'icon': '👥', 'text': '취미'},
+    4: {'icon': '☀️', 'text': '봉사'},
+    5: {'icon': '🔠', 'text': '어학'},
+    6: {'icon': '🤝', 'text': '창업'},
+    7: {'icon': '✈️', 'text': '여행'},
   };
   List<bool> tagSelection = List.generate(8, (_) => false);
   @override
@@ -122,8 +120,8 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                     decoration: ShapeDecoration(
                       color:
                           tagSelection[index]
-                              ? Color(0xffFF9F1C) // 주황색
-                              : Color(0xFFECECEC), // 회색
+                              ? Color(0x21FF9F1C) // 주황색
+                              : Colors.white, // 회색
 
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
