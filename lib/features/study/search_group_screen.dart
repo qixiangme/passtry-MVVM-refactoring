@@ -125,10 +125,39 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                             width: MediaQuery.of(context).size.width,
                             child: Column(
                               children: [
-                                SizedBox(height: 300),
-                                Center(child: Text("면접 만점 암기빵 맛집을")),
-                                Center(child: Text("찾고 계셨군요!")),
-                                SizedBox(height: 30),
+                                SizedBox(height: 280),
+                                Center(
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "면접 만점 암기빵 맛집",
+                                          style: TextStyle(
+                                            fontSize: 23,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: "을",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Center(
+                                  child: Text(
+                                    "찾고 계셨군요!",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 50),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -147,6 +176,8 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                         child: Text(
                                           "다시 입력하기",
                                           style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
                                             color: Color(0xFFFF9F1C),
                                           ),
                                         ),
@@ -180,6 +211,8 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                           child: Text(
                                             "참여하기",
                                             style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
                                           ),
