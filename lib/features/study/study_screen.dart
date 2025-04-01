@@ -1,7 +1,7 @@
+import 'package:componentss/features/study/search_group_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/features/study/study_make_group_screen.dart';
-
 
 class Group {
   final String id;
@@ -21,12 +21,11 @@ class Group {
   });
 
   // JSON 변환 로직이 필요
-
 }
 
-
-
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -73,7 +72,7 @@ class _StudyScreenState extends State<StudyScreen> {
       id: '1',
       name: 'AI 트렌드 스터디',
       description: '머신러닝, 딥러닝 최신 논문 리뷰',
-      imageUrl: 'https://via.placeholder.com/150/FFA07A/FFFFFF?text=AI',
+      imageUrl: '',
       meetingInfo: '3/8',
       memberCount: '5명',
     ),
@@ -81,7 +80,7 @@ class _StudyScreenState extends State<StudyScreen> {
       id: '2',
       name: 'Flutter 앱 개발',
       description: '실전 앱 출시 목표 스터디',
-      imageUrl: 'https://via.placeholder.com/150/87CEFA/FFFFFF?text=Flutter',
+      imageUrl: '',
       meetingInfo: '5/10',
       memberCount: '8명',
     ),
@@ -89,7 +88,7 @@ class _StudyScreenState extends State<StudyScreen> {
       id: '3',
       name: 'UX/UI 디자인 워크샵',
       description: '피그마 활용, 프로토타이핑 실습',
-      imageUrl: 'https://via.placeholder.com/150/98FB98/FFFFFF?text=UX/UI',
+      imageUrl: '',
       meetingInfo: '매주 토',
       memberCount: '6명',
     ),
@@ -97,7 +96,7 @@ class _StudyScreenState extends State<StudyScreen> {
       id: '4',
       name: '코딩 테스트 준비반',
       description: '알고리즘 문제 풀이 및 코드 리뷰',
-      imageUrl: 'https://via.placeholder.com/150/DDA0DD/FFFFFF?text=Coding',
+      imageUrl: '',
       meetingInfo: '주 2회',
       memberCount: '10명',
     ),
@@ -119,18 +118,13 @@ class _StudyScreenState extends State<StudyScreen> {
                 SizedBox(height: 150.h),
                 Row(
                   children: [
-                    Text(
-                      '스터디',
-                      style:
-                          Theme.of(
-                            context,
-                          ).textTheme.titleLarge,
-                    ),
+                    Text('스터디', style: Theme.of(context).textTheme.titleLarge),
                     Spacer(),
-                    Container(
+                    SizedBox(
                       width: 55.w,
                       height: 54.h,
                       child: Image.asset(
+                        excludeFromSemantics: true,
                         'assets/icons/cup_star.png',
                         errorBuilder:
                             (context, error, stackTrace) => Icon(
@@ -176,12 +170,14 @@ class _StudyScreenState extends State<StudyScreen> {
               bottom: 70.0,
 
               child: FloatingActionButton(
+                heroTag: null,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(70.r),
                 ),
 
                 backgroundColor: Colors.grey[700],
                 child: Image.asset(
+                  excludeFromSemantics: true,
                   height: 80.h,
                   width: 80.w,
                   'assets/icons/search.png',
@@ -201,69 +197,82 @@ class _StudyScreenState extends State<StudyScreen> {
                 duration: Duration(milliseconds: 200),
                 opacity: isExpanded ? 1.0 : 0.0,
 
-                  child: Column(
-                    children: <Widget>[
-                      FloatingActionButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(70.r),
-                        ),
+                child: Column(
+                  children: <Widget>[
+                    FloatingActionButton(
+                      heroTag: null,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(70.r),
+                      ),
 
-                        backgroundColor: Colors.grey[900],
-                        child: Image.asset(
-                          height: 80.h,
-                          width: 80.w,
-                          'assets/icons/plus.png',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isExpanded = !isExpanded;
-                          });
+                      backgroundColor: Colors.grey[900],
+                      child: Image.asset(
+                        excludeFromSemantics: true,
+                        height: 80.h,
+                        width: 80.w,
+                        'assets/icons/plus.png',
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = !isExpanded;
+                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => StudyMakeGroup(),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 16.0),
+                    FloatingActionButton(
+                      heroTag: null,
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(70.r),
+                      ),
+
+                      backgroundColor: Colors.grey[900],
+                      child: Image.asset(
+                        excludeFromSemantics: true,
+                        height: 80.h,
+                        width: 80.w,
+                        'assets/icons/search.png',
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = !isExpanded;
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => StudyMakeGroup()),
+                            MaterialPageRoute(
+                              builder: (context) => SearchGroupScreen(),
+                            ),
                           );
-                        },
+                        });
+                      },
+                    ),
+                    SizedBox(height: 16.0),
+                    FloatingActionButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(70.r),
                       ),
-                      SizedBox(height: 16.0),
-                      FloatingActionButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(70.r),
-                        ),
 
-                        backgroundColor: Colors.grey[900],
-                        child: Image.asset(
-                          height: 80.h,
-                          width: 80.w,
-                          'assets/icons/search.png',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isExpanded = !isExpanded;
-                          });
+                      backgroundColor: Colors.grey[900],
+                      child: Image.asset(
+                        excludeFromSemantics: true,
 
-                        },
+                        height: 80.h,
+                        width: 80.w,
+                        'assets/icons/plus.png',
                       ),
-                      SizedBox(height: 16.0),
-                      FloatingActionButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(70.r),
-                        ),
-
-                        backgroundColor: Colors.grey[900],
-                        child: Image.asset(
-                          height: 80.h,
-                          width: 80.w,
-                          'assets/icons/plus.png',
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isExpanded = !isExpanded;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = !isExpanded;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -277,7 +286,7 @@ class _StudyScreenState extends State<StudyScreen> {
 class StudyGroupCard extends StatelessWidget {
   final Group group;
 
-  const StudyGroupCard({Key? key, required this.group}) : super(key: key);
+  const StudyGroupCard({super.key, required this.group});
 
   @override
   Widget build(BuildContext context) {
@@ -290,21 +299,14 @@ class StudyGroupCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(38.50.r),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(
-          horizontal: 50.w,
-          vertical: 50.h,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 50.h),
         decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 2.w,
-              color: const Color(0xFFD8DCE2),
-            ),
+            side: BorderSide(width: 2.w, color: const Color(0xFFD8DCE2)),
             borderRadius: BorderRadius.circular(38.50.r),
           ),
           shadows: [
-
             BoxShadow(
               color: Colors.grey.withOpacity(0.15),
               spreadRadius: 1,
@@ -360,46 +362,42 @@ class StudyGroupCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: const Color(0xFFD8DCE2),
                     borderRadius: BorderRadius.circular(75.r),
-                    image: DecorationImage(
-                      image: NetworkImage(group.imageUrl),
-                      fit: BoxFit.cover,
-                      onError: (exception, stackTrace) {
-                      },
-                    ),
+                    // image: DecorationImage(
+                    //   image: NetworkImage(group.imageUrl),
+                    //   fit: BoxFit.cover,
+                    //   onError: (exception, stackTrace) {},
+                    // ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(75.r),
-                    child: Image.network(
-                      group.imageUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.group,
-                          size: 80.sp,
-                          color: Colors.grey[400],
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.w,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.grey[300]!,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                  // child: ClipRRect(
+                  //   borderRadius: BorderRadius.circular(75.r),
+                  //   child: Image.network(
+                  //     group.imageUrl,
+                  //     fit: BoxFit.cover,
+                  //     errorBuilder: (context, error, stackTrace) {
+                  //       return Icon(
+                  //         Icons.group,
+                  //         size: 80.sp,
+                  //         color: Colors.grey[400],
+                  //       );
+                  //     },
+                  //     loadingBuilder: (context, child, loadingProgress) {
+                  //       if (loadingProgress == null) return child;
+                  //       return Center(
+                  //         child: CircularProgressIndicator(
+                  //           strokeWidth: 2.w,
+                  //           valueColor: AlwaysStoppedAnimation<Color>(
+                  //             Colors.grey[300]!,
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                 ),
               ],
             ),
             SizedBox(height: 30.h),
-            Divider(
-              color: Color(0xFFEAEAEA),
-              thickness: 1.5.h,
-            ),
+            Divider(color: Color(0xFFEAEAEA), thickness: 1.5.h),
             SizedBox(height: 30.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -433,10 +431,11 @@ class StudyGroupCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           width: 45.w,
           height: 45.h,
           child: Image.asset(
+            excludeFromSemantics: true,
             iconPath,
             errorBuilder:
                 (context, error, stackTrace) =>
@@ -456,4 +455,3 @@ class StudyGroupCard extends StatelessWidget {
     );
   }
 }
-
