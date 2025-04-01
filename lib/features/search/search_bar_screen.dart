@@ -1,3 +1,4 @@
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 
 class SearchBarScreen extends StatefulWidget {
@@ -73,7 +74,7 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.close),
+            icon: Icon(CustomIcon.back, size: 19),
           ),
         ),
         automaticallyImplyLeading: false,
