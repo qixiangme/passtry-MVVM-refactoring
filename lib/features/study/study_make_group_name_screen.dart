@@ -60,7 +60,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                 ),
                 SizedBox(height: 50.h),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 900.w,
                     height: 200.h,
                     child: Column(
@@ -152,7 +152,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
 class AddImageContainer extends StatefulWidget {
   final Function(File?) onImageSelected; // 콜백 함수 추가
 
-  AddImageContainer({required this.onImageSelected});
+  const AddImageContainer({super.key, required this.onImageSelected});
 
   @override
   _AddImageContainerState createState() => _AddImageContainerState();
@@ -163,16 +163,17 @@ class _AddImageContainerState extends State<AddImageContainer> {
   final picker = ImagePicker();
 
   Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        widget.onImageSelected(_image); // 콜백 함수 호출
-      } else {
-        print('이미지가 선택되지 않았습니다.');
-      }
-    });
+    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      File image = File(file.path);
+      setState(() {
+        _image = image;
+      });
+      widget.onImageSelected(image);
+    } else {
+      // Handle the case where no image was selected
+      print("No image selected.");
+    }
   }
 
   @override
