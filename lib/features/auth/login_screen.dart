@@ -80,21 +80,26 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 40),
-          Center(
-            child: Container(
-              width: 991.w,
-              height: 160.h,
-              decoration: BoxDecoration(
-                color: Color(0XFFFF9F1C),
-                borderRadius: BorderRadius.all(Radius.circular(38.5.r)),
-              ),
-              child: Center(
-                child: Text(
-                  "로그인",
-                  style: TextStyle(
-                    fontSize: 50.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              
+            },
+            child: Center(
+              child: Container(
+                width: 991.w,
+                height: 160.h,
+                decoration: BoxDecoration(
+                  color: Color(0XFFFF9F1C),
+                  borderRadius: BorderRadius.all(Radius.circular(38.5.r)),
+                ),
+                child: Center(
+                  child: Text(
+                    "로그인",
+                    style: TextStyle(
+                      fontSize: 50.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'user_model.dart';  
 
 class AuthApi {
-  final String baseUrl = "https://yourapi.com";  //후에 수정
+  final String baseUrl = "http://34.64.233.128:5200/";  //후에 수정
 
   // 회원가입 API
   Future<AuthResponse> registerUser(User user) async {
