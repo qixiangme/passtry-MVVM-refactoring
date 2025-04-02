@@ -3,7 +3,28 @@ import 'package:http/http.dart' as http;
 import 'post_model.dart';
 
 class PostApi {
-  final String baseUrl = "http://10.0.2.2:8000"; // 후에 설정정
+  final String baseUrl = "http://34.64.233.128:5200"; // 후에 설정정
+
+  Future<bool> increasedViewCount(int postId) async {
+    final url = Uri.parse("$baseUrl/posts/$postId/views");
+
+    try {
+      final response = await http.patch(
+        url,
+        headers: {"Content-Type": "application/json"},
+      );
+      if (response.statusCode == 200) {
+        print("✅ 조회수 증가 성공!");
+        return true;
+      } else {
+        print("❌ 조회수 증가 실패: ${response.body}");
+        return false;
+      }
+    } catch (e) {
+      print("🚨 오류 발생: $e");
+      return false;
+    }
+  }
 
   Future<bool> uploadPost(PostModel post) async {
     final url = Uri.parse("$baseUrl/posts");
