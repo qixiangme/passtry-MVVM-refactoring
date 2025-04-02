@@ -71,13 +71,18 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
               onChanged: _searchPosts,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           Expanded(
             child:
                 isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : searchResults.isEmpty
-                    ? const Center(child: Text("검색 결과가 없습니다."))
+                    ? const Center(
+                      child: Text(
+                        "검색 결과가 없습니다.",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
                     : ListView.builder(
                       itemCount: searchResults.length,
                       itemBuilder: (context, index) {
@@ -85,23 +90,36 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                         return Card(
                           margin: const EdgeInsets.symmetric(
                             horizontal: 16,
-                            vertical: 8,
+                            vertical: 5,
+                          ),
+                          color: Color(0xffFFFFFF),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                            side: BorderSide(
+                              color: Color(0xffECECEC),
+                              width: 1.5,
+                            ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  post.title,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                            padding: const EdgeInsets.all(18.0),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    post.title,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(post.content),
-                              ],
+                                  const SizedBox(height: 6),
+                                  Text(post.content),
+                                  Text(post.content),
+                                ],
+                              ),
                             ),
                           ),
                         );
