@@ -151,7 +151,7 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 77.w, vertical: 20.h),
+        padding: EdgeInsets.symmetric(horizontal: 77.w, vertical: 50.h),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
