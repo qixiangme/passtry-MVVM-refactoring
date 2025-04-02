@@ -14,49 +14,64 @@ class StudyMakeGroup extends StatefulWidget {
 class _StudyMakeGroupState extends State<StudyMakeGroup> {
   bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
 
+
   String? _selectedCategoryItemText;
   String? _selectedCategoryChipText;
+
+  bool _isNextButtonEnabled = false;
+  void _updateNextButtonState() {
+    setState(() {
+      _isNextButtonEnabled =
+          _selectedCategoryItemText != null && _selectedCategoryChipText != null;
+    });
+  }
 
   void _handleCategoryItemSelect(String itemText) {
     setState(() {
       _selectedCategoryItemText = itemText;
+      _updateNextButtonState(); // 버튼 상태 업데이트
     });
-    // 디버깅용 출력
   }
 
-  // CategoryChip 선택 시 호출될 콜백 함수
   void _handleCategoryChipSelect(String chipText) {
     setState(() {
       _selectedCategoryChipText = chipText;
+      _updateNextButtonState(); // 버튼 상태 업데이트
     });
-    // 디버깅용 출력
   }
+
 
   // 다음 버튼 탭 처리 및 네비게이션 함수
   void _handleNextButtonTap() {
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
-    print("--- 다음 버튼 클릭 ---");
-    print("선택된 단체: ${_selectedCategoryItemText ?? '선택되지 않음'}");
-    print("선택된 분야: ${_selectedCategoryChipText ?? '선택되지 않음'}");
-    print("--------------------");
-    setState(() {
-      _isNextButtonClicked = true;
-    });
 
-    // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
-    ).then((_) {
-      // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
-      // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
-      if (mounted) {
-        // 3. 버튼 상태를 다시 false로 초기화
-        setState(() {
-          _isNextButtonClicked = false;
-        });
-      }
-    });
+    if (_isNextButtonEnabled) {
+      print("--- 다음 버튼 클릭 ---");
+      print("선택된 단체: ${_selectedCategoryItemText ?? '선택되지 않음'}");
+      print("선택된 분야: ${_selectedCategoryChipText ?? '선택되지 않음'}");
+      print("--------------------");
+      setState(() {
+        _isNextButtonClicked = true;
+      });
+
+      // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
+      ).then((_) {
+        // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
+        // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
+        if (mounted) {
+          // 3. 버튼 상태를 다시 false로 초기화
+          setState(() {
+            _isNextButtonClicked = false;
+          });
+        }
+      });
+    }
+    else {
+      print("다음 버튼 클릭 불가");
+    }
   }
 
   @override
@@ -125,7 +140,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
                   padding: EdgeInsets.only(bottom: 200.h),
                 child : Center(
                   child: NextButton(
-                    isClicked: _isNextButtonClicked,
+                    isEnabled: _isNextButtonEnabled,
                     onTap: _handleNextButtonTap,
                   ),)
                 ),
@@ -397,17 +412,17 @@ class _CategoryChipGroupState extends State<CategoryChipGroup> {
 }
 
 class NextButton extends StatelessWidget {
-  final bool isClicked;
+  final bool isEnabled;
   final VoidCallback onTap;
 
-  const NextButton({required this.isClicked, required this.onTap, Key? key})
+  const NextButton({required this.isEnabled, required this.onTap, Key? key})
     : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = isClicked ? Color(0xFFFF9F1C) : Colors.white;
-    Color borderColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
-    Color textColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
+    Color bgColor = isEnabled ? Color(0xFFFF9F1C) : Colors.white;
+    Color borderColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
+    Color textColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
 
     return InkWell(
       onTap: onTap,

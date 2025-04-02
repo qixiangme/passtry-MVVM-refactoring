@@ -27,7 +27,14 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [Icon(CustomIcon.add)],
+        actions: [
+          GestureDetector(
+            child: Icon(CustomIcon.add),
+            onTap: () {
+              // 게시글 업로드 기능
+            },
+          ),
+        ],
         automaticallyImplyLeading: false,
         leading: GestureDetector(
           onTap: () {
@@ -239,7 +246,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(),
                         child: Center(
-                          child: Icon(Icons.add, color: Colors.white),
+                          child: GestureDetector(
+                            onTap: () {
+                              //사진추가 기능
+                            },
+
+                            child: Icon(Icons.add, color: Colors.white),
+                          ),
                         ),
                       ),
                     ),

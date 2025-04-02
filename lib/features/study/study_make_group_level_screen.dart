@@ -1,3 +1,4 @@
+import 'package:componentss/features/study/study_make_group_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -15,9 +16,18 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
   String? _selectedStudyLevelText;
   String? _selectedInclusionOptionText;
 
+  bool _isNextButtonEnabled = false;
+  void _updateNextButtonState() {
+    setState(() {
+      _isNextButtonEnabled =
+          _selectedStudyLevelText != null && _selectedInclusionOptionText != null;
+    });
+  }
+
   void _handleStudyLevelSelect(String itemText) {
     setState(() {
       _selectedStudyLevelText = itemText;
+      _updateNextButtonState();
     });
     // 디버깅용 출력
   }
@@ -25,6 +35,7 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
   void _handleInclusionOptionSelect(String itemText) {
     setState(() {
       _selectedInclusionOptionText = itemText;
+      _updateNextButtonState();
     });
     // 디버깅용 출력
   }
@@ -32,18 +43,19 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
 
   void _handleNextButtonTap() {
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
-    print("--- 다음 버튼 클릭 ---");
-    print("선택된 난이도: ${_selectedStudyLevelText ?? '선택되지 않음'}");
-    print("포함할까요?: ${_selectedInclusionOptionText ?? '선택되지 않음'}");
-    print("--------------------");
-    setState(() {
-      _isNextButtonClicked = true;
-    });
+    if (_isNextButtonEnabled) {
+      print("--- 다음 버튼 클릭 ---");
+      print("선택된 난이도: ${_selectedStudyLevelText ?? '선택되지 않음'}");
+      print("포함할까요?: ${_selectedInclusionOptionText ?? '선택되지 않음'}");
+      print("--------------------");
+      setState(() {
+        _isNextButtonClicked = true;
+      });
 
-    // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
-    /* Navigator.push(
+      // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
+       Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
+      MaterialPageRoute(builder: (context) => StudyMakeGroupName()),
     ).then((_) {
       // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
       // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -54,7 +66,11 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
         });
       }
     });
-     */
+
+    }
+    else {
+      print("다음 버튼 클릭 불가");
+    }
   }
 
   @override
@@ -166,7 +182,7 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
                 padding: EdgeInsets.only(bottom: 200.h),
                 child : Center(
                   child: NextButton(
-                    isClicked: _isNextButtonClicked,
+                    isEnabled: _isNextButtonEnabled,
                     onTap: _handleNextButtonTap,
                   ),)
             ),
@@ -408,6 +424,7 @@ class InclusionOptionInfo {
 }
 
 class _InclusionOptionsState extends State<InclusionOptions> {
+
   String? selectedText;
 
   final List<InclusionOptionInfo> items = [
@@ -443,17 +460,17 @@ class _InclusionOptionsState extends State<InclusionOptions> {
 }
 
 class NextButton extends StatelessWidget {
-  final bool isClicked;
+  final bool isEnabled;
   final VoidCallback onTap;
 
-  const NextButton({required this.isClicked, required this.onTap, Key? key})
+  const NextButton({required this.isEnabled, required this.onTap, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor = isClicked ? Color(0xFFFF9F1C) : Colors.white;
-    Color borderColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
-    Color textColor = isClicked ? Colors.white : Color(0xFFFF9F1C);
+    Color bgColor = isEnabled ? Color(0xFFFF9F1C) : Colors.white;
+    Color borderColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
+    Color textColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
 
     return InkWell(
       onTap: onTap,

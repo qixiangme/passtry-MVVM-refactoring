@@ -1,3 +1,6 @@
+import 'package:componentss/features/search/data/post_model.dart';
+import 'package:componentss/features/search/data/search_api.dart';
+import 'package:componentss/features/search/data/sort_api.dart';
 import 'package:componentss/features/search/post_screen.dart';
 import 'package:componentss/features/search/search_bar_screen.dart';
 import 'package:componentss/features/search/upload_post_screen.dart';
@@ -13,13 +16,89 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  SortApi sortApi = SortApi();
+  bool isLoading = false;
+  List<PostModel> posts = [];
+  bool isFetchingMore = false;
   int selectedTagIndex = 0;
+  int currentPage = 1;
+  final List<String> tagNames = [
+    "popular",
+    "recent",
+    "major",
+    "academic",
+    "art",
+    "hobby",
+    "volunteer",
+    "language",
+    "startup",
+    "travel",
+  ];
   int currentCardIndex = 0;
   final PageController _pageController = PageController(viewportFraction: 1);
-  void onTagSelected(int index) {
+  final ScrollController _scrollController = ScrollController();
+  void onTagSelected(int index) async {
     setState(() {
       selectedTagIndex = index;
     });
+
+    try {
+      List<PostModel> sortedPosts = await sortApi.sortPosts(
+        sort: tagNames[index],
+      );
+      print(sortedPosts);
+      setState(() {
+        posts = sortedPosts;
+      });
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    onTagSelected(0);
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // 컨트롤러 해제
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 100 &&
+        !isFetchingMore &&
+        !isLoading) {
+      _fetchMorePosts(); // 추가 데이터 로드
+    }
+  }
+
+  Future<void> _fetchMorePosts() async {
+    setState(() {
+      isFetchingMore = true;
+    });
+
+    try {
+      currentPage++; // 다음 페이지
+      List<PostModel> morePosts = await sortApi.sortPosts();
+      setState(() {
+        posts.addAll(morePosts); // 기존 데이터에 추가
+      });
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isFetchingMore = false;
+      });
+    }
   }
 
   @override
@@ -150,7 +229,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PostScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => PostScreen(post: posts[index]),
+                      ),
                     );
                   },
                   child: Align(
@@ -165,12 +246,80 @@ class _SearchScreenState extends State<SearchScreen> {
                           color: Color(0xffECECEC),
                         ), // 경계선 색과 두께 지정
                       ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 100,
+                            width: 700.w,
+                            child: Column(
+                              spacing: 32.r,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 15, top: 15),
+                                  child: Text(
+                                    posts[index].title,
+                                    style: TextStyle(
+                                      letterSpacing: -0.44,
+                                      fontSize: 44.sp,
+                                      fontFamily: "Wanted Sans",
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    posts[index].content,
+                                    style: TextStyle(
+                                      color: const Color(
+                                        0xFF6B6B6B,
+                                      ) /* dark-gray */,
+                                      fontSize: 35.sp,
+                                      fontFamily: 'Wanted Sans',
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: -0.35,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 3),
+                          posts[index].imageUrl != null
+                              ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.r),
+                                  ),
+                                ),
+                                child: Image.network(
+                                  posts[index].imageUrl!,
+                                  width: 168.w,
+                                  height: 168.h,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                              : Container(),
+                        ],
+                      ),
                     ),
                   ),
                 );
               },
-              childCount: 10, // 리스트 아이템 개수
+              childCount: posts.length, // 리스트 아이템 개수
             ),
+          ),
+          SliverToBoxAdapter(
+            child:
+                isFetchingMore
+                    ? Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.h),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                    : Container(),
           ),
         ],
       ),
@@ -281,7 +430,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
                                 color:
                                     selectedTagIndex == index
                                         ? Color(0xFFFF9F1C) // 주황색
-                                        : Color(0xFFECECEC), // 회색
+                                        : Color(0x0ffcecec), // 회색
                               ),
                               borderRadius: BorderRadius.circular(
                                 36.r,

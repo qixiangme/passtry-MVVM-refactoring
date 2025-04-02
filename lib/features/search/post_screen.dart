@@ -1,8 +1,26 @@
+import 'package:componentss/features/search/data/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PostScreen extends StatelessWidget {
-  const PostScreen({super.key});
+class PostScreen extends StatefulWidget {
+  final PostModel post;
+  const PostScreen({super.key, required this.post});
+
+  @override
+  State<PostScreen> createState() => _PostScreenState();
+}
+
+class _PostScreenState extends State<PostScreen> {
+  Map<int, Map<String, String>> categoryDict = {
+    0: {'icon': '💻', 'text': '전공'},
+    1: {'icon': '📚', 'text': '학술'},
+    2: {'icon': '🎨', 'text': '예술'},
+    3: {'icon': '👥', 'text': '취미'},
+    4: {'icon': '☀️', 'text': '봉사'},
+    5: {'icon': '🔠', 'text': '어학'},
+    6: {'icon': '🤝', 'text': '창업'},
+    7: {'icon': '✈️', 'text': '여행'},
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +37,7 @@ class PostScreen extends StatelessWidget {
               CircleAvatar(radius: 55.r),
               SizedBox(width: 10),
               Text(
-                "유저이름",
+                widget.post.userId,
                 style: TextStyle(fontSize: 45.sp, fontWeight: FontWeight.w600),
               ),
             ],
@@ -29,7 +47,7 @@ class PostScreen extends StatelessWidget {
             children: [
               SizedBox(width: 30),
               Text(
-                "게시물 제목",
+                widget.post.title,
                 style: TextStyle(fontSize: 58.sp, fontWeight: FontWeight.w600),
               ),
             ],
@@ -39,10 +57,11 @@ class PostScreen extends StatelessWidget {
           Row(
             children: [
               SizedBox(width: 30),
-              Expanded(child: Text("본문내용 \n본문내용")),
+              Expanded(child: Text(widget.post.content)),
             ],
           ),
           SizedBox(height: 20),
+
           Row(
             children: [
               SizedBox(width: 30),
@@ -52,91 +71,55 @@ class PostScreen extends StatelessWidget {
                   alignment: WrapAlignment.start,
                   runAlignment: WrapAlignment.center,
                   runSpacing: 18,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 36.r,
-                        vertical: 18.r,
-                      ),
-                      decoration: ShapeDecoration(
-                        color: Colors.white /* white */,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 3.w,
-                            color: const Color(0xFFEBEBEB) /* light-gray */,
+                  spacing: 6,
+                  children:
+                      widget.post.tags.map((tag) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 36.r,
+                            vertical: 18.r,
                           ),
-                          borderRadius: BorderRadius.circular(36.r),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '👥 ',
-                            style: TextStyle(
-                              color: const Color(0xFF6B6B6B) /* dark-gray */,
-                              fontSize: 36.sp,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w600,
+                          decoration: ShapeDecoration(
+                            color: Colors.white /* white */,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 3.w,
+                                color: const Color(0xFFEBEBEB) /* light-gray */,
+                              ),
+                              borderRadius: BorderRadius.circular(36.r),
                             ),
                           ),
-                          Text(
-                            '문화•취미',
-                            style: TextStyle(
-                              color: const Color(0xFF6B6B6B) /* dark-gray */,
-                              fontSize: 36.sp,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w600,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '🔖 ', // 태그 아이콘 (예시)
+                                style: TextStyle(
+                                  color: const Color(
+                                    0xFF6B6B6B,
+                                  ) /* dark-gray */,
+                                  fontSize: 36.sp,
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                tag, // 태그 텍스트
+                                style: TextStyle(
+                                  color: const Color(
+                                    0xFF6B6B6B,
+                                  ) /* dark-gray */,
+                                  fontSize: 36.sp,
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 36.r,
-                        vertical: 18.r,
-                      ),
-                      decoration: ShapeDecoration(
-                        color: Colors.white /* white */,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 3.w,
-                            color: const Color(0xFFEBEBEB) /* light-gray */,
-                          ),
-                          borderRadius: BorderRadius.circular(36.r),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '✈️ ',
-                            style: TextStyle(
-                              color: const Color(0xFF6B6B6B) /* dark-gray */,
-                              fontSize: 36.sp,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            '여행',
-                            style: TextStyle(
-                              color: const Color(0xFF6B6B6B) /* dark-gray */,
-                              fontSize: 36.sp,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                        );
+                      }).toList(), // map 결과를 리스트로 변환
                 ),
               ),
             ],
