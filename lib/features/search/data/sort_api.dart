@@ -3,21 +3,27 @@ import 'package:http/http.dart' as http;
 import 'post_model.dart';
 
 class SortApi {
-  final String baseUrl = "https://example.com/api"; // 후에 BaseUrl 설정
+  final String baseUrl = "http://34.64.233.128:5200"; // 후에 BaseUrl 설정
 
-  Future<List<PostModel>> sortPosts({int page = 1, String tag = "latest"}) async {
-    final url = Uri.parse('$baseUrl/posts').replace(queryParameters: {
-      'page': page.toString(),
-      'tag': tag,  //태그로 정렬
-    });
+  Future<List<PostModel>> sortPosts({
+    //기본값
+    int page = 0,
+    String sort = "recent",
+    int size = 5,
+  }) async {
+    final url = Uri.parse('$baseUrl/posts?sort=$sort&page=$page&size=5');
+    print("Request URL: $url");
 
-    final response = await http.get(url, headers: {'Content-Type': 'application/json'});
+    final response = await http.get(
+      url,
+      headers: {'Content-Type': 'application/json'},
+    );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       List<PostModel> sortedPosts = [];
-      for (var item in data['results']) {
-        sortedPosts.add(PostModel.fromJson(item)); 
+      for (var item in data) {
+        sortedPosts.add(PostModel.fromJson(item));
       }
       return sortedPosts;
     } else {

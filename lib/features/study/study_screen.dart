@@ -6,7 +6,6 @@ import 'package:componentss/features/study/widgets/study_group_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class StudyScreen extends StatefulWidget {
   const StudyScreen({super.key});
 
@@ -231,6 +230,7 @@ class _StudyScreenState extends State<StudyScreen> {
             bottom: 70.0,
 
             child: FloatingActionButton(
+              heroTag: null,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(70.r),
               ),
@@ -259,6 +259,7 @@ class _StudyScreenState extends State<StudyScreen> {
               child: Column(
                 children: <Widget>[
                   FloatingActionButton(
+                    heroTag: null,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(70.r),
                     ),
@@ -283,6 +284,8 @@ class _StudyScreenState extends State<StudyScreen> {
                   ),
                   SizedBox(height: 16.0),
                   FloatingActionButton(
+                    heroTag: null,
+
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(70.r),
                     ),
@@ -307,6 +310,8 @@ class _StudyScreenState extends State<StudyScreen> {
                   ),
                   SizedBox(height: 16.0),
                   FloatingActionButton(
+                    heroTag: null,
+
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(70.r),
                     ),
@@ -332,4 +337,3 @@ class _StudyScreenState extends State<StudyScreen> {
     );
   }
 }
-

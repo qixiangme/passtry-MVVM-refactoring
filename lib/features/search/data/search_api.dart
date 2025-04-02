@@ -3,43 +3,15 @@ import 'package:http/http.dart' as http;
 import 'post_model.dart';
 
 class SearchApi {
-
-
-
-
-
-
-
-
-  final String baseUrl = "https://example.com/api"; // 후에 설정정
-
-
-
+  final String baseUrl = "http://10.0.2.2:8000"; // 후에 설정정
 
   Future<List<PostModel>> searchPosts(
     String query, {
     int page = 1,
     String tag = "latest",
   }) async {
-
-
-
-
-
-
-
-
-    
-    final url = Uri.parse('$baseUrl/search').replace(   //후에 엔드포인트 설정
-
-
-
-
-
-
-
-
-
+    final url = Uri.parse('$baseUrl/search').replace(
+      //후에 엔드포인트 설정
       queryParameters: {'query': query, 'page': page.toString(), 'tag': tag},
     );
 

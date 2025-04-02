@@ -2,10 +2,10 @@ class PostModel {
   final String userId;
   final String title;
   final String content;
-  final String imageUrl;
+  final String? imageUrl;
   final String id;
   final String createdAt;
-  final String views;
+  final int views;
   final List<String> tags;
 
   PostModel(
@@ -15,7 +15,7 @@ class PostModel {
     this.tags, {
     required this.title,
     required this.content,
-    required this.imageUrl,
+    this.imageUrl,
     required this.id,
   });
 
@@ -24,11 +24,14 @@ class PostModel {
     return PostModel(
       json['userId'] as String,
       json['createdAt'] as String,
-      json['views'] as String,
+      json['views'] as int,
       List<String>.from(json['tags'] ?? []), // null이면 빈 리스트 반환
       title: json['title'] as String,
       content: json['content'] as String,
-      imageUrl: json['imageUrl'] as String,
+      imageUrl:
+          json['imageUrl'] != null
+              ? json['imageUrl'] as String
+              : null, // null 처리
       id: json['id'] as String,
     );
   }
