@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -11,6 +12,14 @@ class StudyMakeGroupName extends StatefulWidget {
 }
 
 class _StudyMakeGroupName extends State<StudyMakeGroupName> {
+  File? _selectedImage;
+
+  void _handleImageSelected(File? image) {
+    setState(() {
+      _selectedImage = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +54,8 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                 ),
                 SizedBox(height: 200.h),
                 Center(
-                  child: Container(
-                    width: 440.w,
-                    height: 440.h,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/add_image_circle.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                  child: AddImageContainer(
+                    onImageSelected: _handleImageSelected,
                   ),
                 ),
                 SizedBox(height: 50.h),
@@ -141,6 +143,56 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddImageContainer extends StatefulWidget {
+  final Function(File?) onImageSelected; // 콜백 함수 추가
+
+  AddImageContainer({required this.onImageSelected});
+
+  @override
+  _AddImageContainerState createState() => _AddImageContainerState();
+}
+
+class _AddImageContainerState extends State<AddImageContainer> {
+  File? _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        widget.onImageSelected(_image); // 콜백 함수 호출
+      } else {
+        print('이미지가 선택되지 않았습니다.');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: getImage,
+      child: Container(
+        width: 440.w,
+        height: 440.h,
+        decoration: BoxDecoration(
+          image:
+              _image != null
+                  ? DecorationImage(
+                    image: FileImage(_image!),
+                    fit: BoxFit.cover,
+                  )
+                  : DecorationImage(
+                    image: AssetImage('assets/images/add_image_circle.png'),
+                    fit: BoxFit.cover,
+                  ),
         ),
       ),
     );
