@@ -28,8 +28,8 @@ class RankingCard extends StatelessWidget {
               size: 100.w,
               color: Colors.amber,
             ), // 트로피 아이콘
-            SizedBox(width: 15.w), // 간격 조정
-            Icon(Icons.group, size: 100.w, color: Colors.blueAccent), // 그룹 아이콘
+            SizedBox(width: 19.w), // 간격 조정
+            CircleAvatar(),
             SizedBox(width: 30.w), // 간격 조정
             Text(
               group.name, // 그룹 이름

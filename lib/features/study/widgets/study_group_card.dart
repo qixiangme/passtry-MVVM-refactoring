@@ -16,7 +16,7 @@ class StudyGroupCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(35.r),
-        border: Border.all(color: Color(0XFFC4CAD4)),
+        border: Border.all(color: Color(0xFFECECEC), width: 2.75.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,6 +25,7 @@ class StudyGroupCard extends StatelessWidget {
             height: 255.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(35.r)),
+
               image:
                   group.imageUrl.isNotEmpty
                       ? DecorationImage(
@@ -34,6 +35,9 @@ class StudyGroupCard extends StatelessWidget {
                       : null,
             ),
           ),
+
+          SizedBox(height: 1.0, child: Divider(color: Color(0xFFECECEC))),
+
           Padding(
             padding: EdgeInsets.all(30.w),
             child: Column(
