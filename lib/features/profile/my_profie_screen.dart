@@ -22,7 +22,7 @@ class MyProfieScreen extends StatelessWidget {
                 width: 1080.w,
                 height: 1208.h,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEBEBEB) /* light-gray */,
+                  color: const Color(0xFFEBEBEB) /*light-gray */,
                 ),
               ),
             ),
@@ -108,7 +108,7 @@ class MyProfieScreen extends StatelessWidget {
             top: 791.h,
             child: Container(
               width: 992.w,
-              height: 152.h,
+              height: 151.h,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
@@ -122,7 +122,7 @@ class MyProfieScreen extends StatelessWidget {
                 children: [
                   Positioned(
                     left: 148.w,
-                    top: 52.h,
+                    top: 45.h,
                     child: Text(
                       '내가 작성한 예상 답안',
                       style: TextStyle(
@@ -135,7 +135,7 @@ class MyProfieScreen extends StatelessWidget {
                   ),
                   Positioned(
                     left: 805.w,
-                    top: 46.h,
+                    top: 40.h,
                     child: Text(
                       '20',
                       style: TextStyle(
@@ -175,7 +175,7 @@ class MyProfieScreen extends StatelessWidget {
             top: 967.h,
             child: Container(
               width: 992.w,
-              height: 152.h,
+              height: 151.h,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
@@ -189,7 +189,7 @@ class MyProfieScreen extends StatelessWidget {
                 children: [
                   Positioned(
                     left: 146.w,
-                    top: 52.h,
+                    top: 45.h,
                     child: Text(
                       '완성한 빵 레시피',
                       style: TextStyle(
@@ -202,7 +202,7 @@ class MyProfieScreen extends StatelessWidget {
                   ),
                   Positioned(
                     left: 836.w,
-                    top: 46.h,
+                    top: 40.h,
                     child: Text(
                       '3',
                       textAlign: TextAlign.center,
@@ -243,7 +243,7 @@ class MyProfieScreen extends StatelessWidget {
             top: 615.h,
             child: Container(
               width: 992.w,
-              height: 152.h,
+              height: 151.h,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
@@ -257,7 +257,7 @@ class MyProfieScreen extends StatelessWidget {
                 children: [
                   Positioned(
                     left: 146.w,
-                    top: 52.h,
+                    top: 45.h,
                     child: Text(
                       '목표',
                       style: TextStyle(
@@ -289,8 +289,8 @@ class MyProfieScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: 559.w,
-                    top: 55.h,
+                    left: 553.w,
+                    top: 65.h,
                     child: Text(
                       '#교내동아리',
                       style: TextStyle(
@@ -305,7 +305,7 @@ class MyProfieScreen extends StatelessWidget {
                   ),
                   Positioned(
                     left: 775.w,
-                    top: 55.h,
+                    top: 65.h,
                     child: Text(
                       '#학술',
                       style: TextStyle(
