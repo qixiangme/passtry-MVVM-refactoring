@@ -56,12 +56,15 @@ class _StudyScreenState extends State<StudyScreen> {
     return Scaffold(
       backgroundColor: Color(0xFF6B6B6B),
       appBar: AppBar(
-        title: Text(
-          "스터디",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        title: Padding(
+          padding: EdgeInsets.only(top: 8, left: 5),
+          child: Text(
+            "스터디",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         backgroundColor: Color(0xFF6B6B6B),
@@ -77,19 +80,53 @@ class _StudyScreenState extends State<StudyScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Container(
-                      width: 992.w,
-                      height: 112.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.r),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Center(
+                      child: Container(
+                        width: 992.w,
+                        height: 100.h,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.35),
+                          borderRadius: BorderRadius.circular(35.r),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "알림",
+                                style: TextStyle(
+                                  color: Color(0xffFF9F1C),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(width: 23),
+                              Text(
+                                "실시간 멤버들의 현황을 확인할 수 있는 텍스트입니다.",
+                                style: TextStyle(
+                                  color: Color(0xffFFFFFF),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      child: Center(child: Text("알림")),
                     ),
                   ),
-                  Text("모시기모시기", style: TextStyle(color: Colors.white)),
-                  Text("응원의 모시기멘트멘트", style: TextStyle(color: Colors.white)),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, top: 30),
+                    child: Container(
+                      width: 1000,
+                      child: Text(
+                        "모시기모시기\n응원의 모시기멘트",
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 160),
                 ],
               ),
