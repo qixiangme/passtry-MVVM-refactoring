@@ -166,7 +166,7 @@ class _StudyScreenState extends State<StudyScreen>
                           ),
                         ),
                       ),
-                      SizedBox(height: 160),
+                      SizedBox(height: 180),
                     ],
                   ),
                 ),
@@ -179,9 +179,9 @@ class _StudyScreenState extends State<StudyScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 30),
+                        SizedBox(height: 40),
                         Padding(
-                          padding: const EdgeInsets.only(left: 21),
+                          padding: const EdgeInsets.only(left: 26),
                           child: Text(
                             "참여중인 스터디",
                             style: TextStyle(
@@ -192,9 +192,9 @@ class _StudyScreenState extends State<StudyScreen>
                         ),
                         SizedBox(height: 15),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 17),
                           child: SizedBox(
-                            height: 454.h, // 🟢 높이 제한 추가
+                            height: 455.h, // 🟢 높이 제한 추가
                             child:
                                 _studyGroups.isEmpty
                                     ? Center(
@@ -220,7 +220,7 @@ class _StudyScreenState extends State<StudyScreen>
                         ),
                         SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 26),
                           child: Text(
                             "스터디 랭킹",
                             style: TextStyle(
@@ -316,61 +316,102 @@ class _StudyScreenState extends State<StudyScreen>
             opacity: isExpanded ? 1.0 : 0.0,
             child: Column(
               children: [
-                FloatingActionButton(
-                  elevation: 0,
-                  heroTag: 'create_group',
-                  backgroundColor: Colors.white,
-                  shape: CircleBorder(),
-                  child: Icon(Icons.group_add, color: Color(0xffFF9F1C)),
-                  onPressed: () {
-                    setState(() {
-                      isExpanded = false;
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => StudyMakeGroup()),
-                    );
-                  },
-                ),
-                SizedBox(height: 10),
-                FloatingActionButton(
-                  elevation: 0,
-                  heroTag: 'search_group',
-                  backgroundColor: Colors.white,
-                  shape: CircleBorder(),
-                  child: Icon(Icons.search, color: Color(0xffFF9F1C)),
-                  onPressed: () {
-                    setState(() {
-                      isExpanded = false;
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SearchGroupScreen(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (isExpanded)
+                      Text(
+                        "그룹 만들기",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 44.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    );
-                  },
+                    SizedBox(width: 15),
+                    FloatingActionButton(
+                      elevation: 0,
+                      heroTag: 'create_group',
+                      backgroundColor: Colors.white,
+                      shape: CircleBorder(),
+                      child: Icon(Icons.group_add, color: Color(0xffFF9F1C)),
+                      onPressed: () {
+                        if (isExpanded) {
+                          setState(() {
+                            isExpanded = false;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudyMakeGroup(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "그룹 찾기",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 44.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(width: 15),
+
+                    FloatingActionButton(
+                      elevation: 0,
+                      heroTag: 'search_group',
+                      backgroundColor: Colors.white,
+                      shape: CircleBorder(),
+                      child: Icon(Icons.search, color: Color(0xffFF9F1C)),
+                      onPressed: () {
+                        if (isExpanded) {
+                          setState(() {
+                            isExpanded = false;
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudyMakeGroup(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
               ],
             ),
           ),
 
           // 메인 플로팅 버튼 (토글 기능)
-          FloatingActionButton(
-            elevation: 0,
-            heroTag: 'main_fab',
-            backgroundColor: Color(0xffFF9F1C),
-            shape: CircleBorder(),
-            child: Icon(
-              isExpanded ? Icons.close : Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              setState(() {
-                isExpanded = !isExpanded;
-              });
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                elevation: 0,
+                heroTag: 'main_fab',
+                backgroundColor: Color(0xffFF9F1C),
+                shape: CircleBorder(),
+                child: Icon(
+                  isExpanded ? Icons.close : Icons.add,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isExpanded = !isExpanded;
+                  });
+                },
+              ),
+            ],
           ),
         ],
       ),
