@@ -237,6 +237,7 @@ class _StudyScreenState extends State<StudyScreen> {
             bottom: 290.0,
 
             child: FloatingActionButton(
+              heroTag: null,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100.r),
               ),
@@ -265,6 +266,7 @@ class _StudyScreenState extends State<StudyScreen> {
               child: Column(
                 children: <Widget>[
                   FloatingActionButton(
+                    heroTag: null,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(90.r),
                     ),
@@ -290,6 +292,8 @@ class _StudyScreenState extends State<StudyScreen> {
                   ),
                   SizedBox(height: 14.0),
                   FloatingActionButton(
+                    heroTag: null,
+
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(90.r),
                     ),
@@ -315,6 +319,8 @@ class _StudyScreenState extends State<StudyScreen> {
                   ),
                   SizedBox(height: 14.0),
                   FloatingActionButton(
+                    heroTag: null,
+
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(90.r),
                     ),
