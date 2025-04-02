@@ -17,7 +17,20 @@ class RankingCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(35.r),
         border: Border.all(color: Color(0XFFC4CAD4), width: 1.2),
       ),
-      child: Text("data"), // 이미지 연결되면 설정할게요,,,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start, // 가로 정렬 (중앙 정렬)
+        crossAxisAlignment: CrossAxisAlignment.center, // 세로 정렬 (중앙 정렬)
+        children: [
+          Icon(Icons.emoji_events, size: 100.w, color: Colors.amber), // 트로피 아이콘
+          SizedBox(width: 15.w), // 간격 조정
+          Icon(Icons.group, size: 100.w, color: Colors.blueAccent), // 그룹 아이콘
+          SizedBox(width: 15.w), // 간격 조정
+          Text(
+            group.name, // 그룹 이름
+            style: TextStyle(fontSize: 45.sp, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }

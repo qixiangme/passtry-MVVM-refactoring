@@ -11,7 +11,7 @@ class InterviewSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 302.w,
-      height: 210.h,
+      height: 300.h,
       margin: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
         color: Colors.white,
