@@ -239,7 +239,9 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                       );
                     }
                   },
-                  child: Container(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+
                     width: 991.w,
                     height: 160.h,
                     decoration: BoxDecoration(

@@ -379,7 +379,7 @@ class _StudyScreenState extends State<StudyScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StudyMakeGroup(),
+                              builder: (context) => SearchGroupScreen(),
                             ),
                           );
                         }
