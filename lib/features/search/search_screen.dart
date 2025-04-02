@@ -430,7 +430,7 @@ class _SearchBar extends SliverPersistentHeaderDelegate {
                                 color:
                                     selectedTagIndex == index
                                         ? Color(0xFFFF9F1C) // 주황색
-                                        : Color(0x0ffcecec), // 회색
+                                        : Color(0xFFECECEC), // 회색
                               ),
                               borderRadius: BorderRadius.circular(
                                 36.r,

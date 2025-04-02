@@ -10,12 +10,12 @@ class InterviewSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 302.w,
-      height: 300.h,
+      width: 317.w,
+      height: 350.h,
       margin: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15.r),
+        borderRadius: BorderRadius.circular(38.5.r),
         border: Border.all(color: Color(0XFFC4CAD4)),
       ),
       child: Text("data"), // 이미지 연결되면 설정할게요,,,

@@ -25,7 +25,6 @@ class StudyGroupCard extends StatelessWidget {
             height: 255.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(35.r)),
-              color: Colors.blueAccent,
               image:
                   group.imageUrl.isNotEmpty
                       ? DecorationImage(
