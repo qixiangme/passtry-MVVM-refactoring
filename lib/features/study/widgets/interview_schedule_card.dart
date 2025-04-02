@@ -18,7 +18,26 @@ class InterviewSchedule extends StatelessWidget {
         borderRadius: BorderRadius.circular(38.5.r),
         border: Border.all(color: Color(0XFFC4CAD4)),
       ),
-      child: Text("data"), // 이미지 연결되면 설정할게요,,,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 10),
+          CircleAvatar(radius: 70.r),
+          SizedBox(height: 20),
+          Text(
+            "D-15",
+            style: TextStyle(
+              fontSize: 44.sp,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Wanted sans",
+            ),
+          ),
+          Text(
+            "Groupname",
+            style: TextStyle(fontSize: 36.sp, color: Color(0xFF6B6B6B)),
+          ),
+        ],
+      ),
     );
   }
 }

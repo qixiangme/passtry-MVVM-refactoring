@@ -14,7 +14,44 @@ class StudyScreen extends StatefulWidget {
   State<StudyScreen> createState() => _StudyScreenState();
 }
 
-class _StudyScreenState extends State<StudyScreen> {
+class _StudyScreenState extends State<StudyScreen>
+    with SingleTickerProviderStateMixin {
+  final ScrollController _scrollController = ScrollController();
+  bool _showButton = true;
+  final bool _showAdditionalButtons = false; // 추가 버튼 표시 여부
+  double _lastOffset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    double currentOffset = _scrollController.offset;
+    if (currentOffset > _lastOffset && currentOffset > 50) {
+      // 아래로 스크롤 시 버튼 숨김 (50px 이상 스크롤해야 적용)
+      if (_showButton) {
+        setState(() {
+          _showButton = false;
+        });
+      }
+    } else if (currentOffset < _lastOffset) {
+      // 위로 스크롤 시 버튼 다시 표시
+      if (!_showButton) {
+        setState(() {
+          _showButton = true;
+        });
+      }
+    }
+    _lastOffset = currentOffset; // 현재 스크롤 위치 저장
+  }
+
   bool isExpanded = false;
   final List<Group> _studyGroups = [
     Group(
@@ -54,203 +91,288 @@ class _StudyScreenState extends State<StudyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Color(0xFF6B6B6B), toolbarHeight: 1),
       backgroundColor: Color(0xFF6B6B6B),
-      appBar: AppBar(
-        title: Padding(
-          padding: EdgeInsets.only(top: 8, left: 5),
-          child: Text(
-            "스터디",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        backgroundColor: Color(0xFF6B6B6B),
-      ),
-      body: SingleChildScrollView(
-        // 🟢 추가
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(color: Color(0xFF6B6B6B)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Center(
-                      child: Container(
-                        width: 992.w,
-                        height: 100.h,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.35),
-                          borderRadius: BorderRadius.circular(35.r),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "알림",
-                                style: TextStyle(
-                                  color: Color(0xffFF9F1C),
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 23),
-                              Text(
-                                "실시간 멤버들의 현황을 확인할 수 있는 텍스트입니다.",
-                                style: TextStyle(
-                                  color: Color(0xffFFFFFF),
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            controller: _scrollController,
+            // 🟢 추가
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: Color(0xFF6B6B6B)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 30, left: 20),
+                        child: Text(
+                          "스터디",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, top: 30),
-                    child: Container(
-                      width: 1000,
-                      child: Text(
-                        "모시기모시기\n응원의 모시기멘트",
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 160),
-                ],
-              ),
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(40.r)),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 21),
-                      child: Text(
-                        "참여중인 스터디",
-                        style: TextStyle(
-                          fontSize: 45.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SizedBox(
-                        height: 454.h, // 🟢 높이 제한 추가
-                        child:
-                            _studyGroups.isEmpty
-                                ? Center(
-                                  child: Text(
-                                    '참여 가능한 스터디가 없습니다.',
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Center(
+                          child: Container(
+                            width: 992.w,
+                            height: 100.h,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.35),
+                              borderRadius: BorderRadius.circular(35.r),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "알림",
                                     style: TextStyle(
-                                      fontSize: 35.sp,
-                                      color: Colors.grey,
+                                      color: Color(0xffFF9F1C),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                )
-                                : ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: _studyGroups.length,
-                                  shrinkWrap: true, // 🟢 크기 제한
-                                  itemBuilder: (context, index) {
-                                    return StudyGroupCard(
-                                      group: _studyGroups[index],
-                                    );
-                                  },
-                                ),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        "스터디 랭킹",
-                        style: TextStyle(
-                          fontSize: 45.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SizedBox(
-                        height: 400.h, // 🟢 높이 제한 추가
-                        child: ListView.builder(
-                          itemCount: _studyGroups.length,
-                          shrinkWrap: true, // 🟢 크기 제한
-                          itemBuilder: (context, index) {
-                            return RankingCard(group: _studyGroups[index]);
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        "다가오는 면접 일정",
-                        style: TextStyle(
-                          fontSize: 45.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 6),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: SizedBox(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: 380.h,
-                        child:
-                            _studyGroups.isEmpty
-                                ? Center(
-                                  child: Text(
-                                    '참여 가능한 스터디가 없습니다.',
+                                  SizedBox(width: 23),
+                                  Text(
+                                    "실시간 멤버들의 현황을 확인할 수 있는 텍스트입니다.",
                                     style: TextStyle(
-                                      fontSize: 35.sp,
-                                      color: Colors.grey,
+                                      color: Color(0xffFFFFFF),
+                                      fontSize: 12,
                                     ),
                                   ),
-                                )
-                                : SizedBox(
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: _studyGroups.length,
-                                    itemBuilder: (context, index) {
-                                      return InterviewSchedule(
-                                        group: _studyGroups[index],
-                                      );
-                                    },
-                                  ),
-                                ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 80),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, top: 30),
+                        child: SizedBox(
+                          width: 1000,
+                          child: Text(
+                            "모시기모시기\n응원의 모시기멘트",
+                            style: TextStyle(color: Colors.white, fontSize: 25),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 160),
+                    ],
+                  ),
                 ),
+                ClipRRect(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(40.r),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 21),
+                          child: Text(
+                            "참여중인 스터디",
+                            style: TextStyle(
+                              fontSize: 45.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SizedBox(
+                            height: 454.h, // 🟢 높이 제한 추가
+                            child:
+                                _studyGroups.isEmpty
+                                    ? Center(
+                                      child: Text(
+                                        '참여 가능한 스터디가 없습니다.',
+                                        style: TextStyle(
+                                          fontSize: 35.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                    : ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: _studyGroups.length,
+                                      shrinkWrap: true, // 🟢 크기 제한
+                                      itemBuilder: (context, index) {
+                                        return StudyGroupCard(
+                                          group: _studyGroups[index],
+                                        );
+                                      },
+                                    ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "스터디 랭킹",
+                            style: TextStyle(
+                              fontSize: 45.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SizedBox(
+                            height: 410.h, // 🟢 높이 제한 추가
+                            child: ListView.builder(
+                              itemCount: _studyGroups.length,
+                              shrinkWrap: true, // 🟢 크기 제한
+                              itemBuilder: (context, index) {
+                                return RankingCard(group: _studyGroups[index]);
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            "다가오는 면접 일정",
+                            style: TextStyle(
+                              fontSize: 45.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 6),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 11, right: 20),
+                          child: SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: 380.h,
+                            child:
+                                _studyGroups.isEmpty
+                                    ? Center(
+                                      child: Text(
+                                        '참여 가능한 스터디가 없습니다.',
+                                        style: TextStyle(
+                                          fontSize: 35.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                    : SizedBox(
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: _studyGroups.length,
+                                        itemBuilder: (context, index) {
+                                          return InterviewSchedule(
+                                            group: _studyGroups[index],
+                                          );
+                                        },
+                                      ),
+                                    ),
+                          ),
+                        ),
+                        SizedBox(height: 80),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          if (isExpanded)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isExpanded = false; // 배경을 클릭하면 닫힘
+                });
+              },
+              child: Container(
+                color: Colors.black.withOpacity(0.7), // 반투명 검정색 배경
+                width: double.infinity,
+                height: double.infinity,
               ),
             ),
-            
-          ],
-        ),
+        ],
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // 추가 버튼들 (애니메이션 적용)
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 200),
+            opacity: isExpanded ? 1.0 : 0.0,
+            child: Column(
+              children: [
+                FloatingActionButton(
+                  elevation: 0,
+                  heroTag: 'create_group',
+                  backgroundColor: Colors.white,
+                  shape: CircleBorder(),
+                  child: Icon(Icons.group_add, color: Color(0xffFF9F1C)),
+                  onPressed: () {
+                    setState(() {
+                      isExpanded = false;
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StudyMakeGroup()),
+                    );
+                  },
+                ),
+                SizedBox(height: 10),
+                FloatingActionButton(
+                  elevation: 0,
+                  heroTag: 'search_group',
+                  backgroundColor: Colors.white,
+                  shape: CircleBorder(),
+                  child: Icon(Icons.search, color: Color(0xffFF9F1C)),
+                  onPressed: () {
+                    setState(() {
+                      isExpanded = false;
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchGroupScreen(),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+
+          // 메인 플로팅 버튼 (토글 기능)
+          FloatingActionButton(
+            elevation: 0,
+            heroTag: 'main_fab',
+            backgroundColor: Color(0xffFF9F1C),
+            shape: CircleBorder(),
+            child: Icon(
+              isExpanded ? Icons.close : Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                isExpanded = !isExpanded;
+              });
+            },
+          ),
+        ],
       ),
     );
   }

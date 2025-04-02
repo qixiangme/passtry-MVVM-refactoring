@@ -8,9 +8,13 @@ class AuthRepository {
   AuthRepository({required this.authApi});
 
   // 회원가입
-  Future<AuthResponse> register(User user) async {
+  Future<String> register(User user) async {
     try {
-      final response = await authApi.registerUser(user);
+      final response = await authApi.registerUser(
+        user.username,
+        user.email,
+        user.password,
+      );
       return response;
     } catch (e) {
       throw Exception("회원가입 실패: $e");
@@ -18,7 +22,7 @@ class AuthRepository {
   }
 
   // 로그인
-  Future<AuthResponse> login(String username, String password) async {
+  Future<String> login(String username, String password) async {
     try {
       final response = await authApi.loginUser(username, password);
       return response;

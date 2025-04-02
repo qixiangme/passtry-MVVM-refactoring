@@ -82,7 +82,7 @@ class LoginScreen extends StatelessWidget {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              
+              // 로그인 API 
             },
             child: Center(
               child: Container(
