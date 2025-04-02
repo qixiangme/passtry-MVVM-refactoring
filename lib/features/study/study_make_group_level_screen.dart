@@ -1,3 +1,4 @@
+import 'package:componentss/features/study/study_make_group_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -52,9 +53,9 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
       });
 
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
-      /* Navigator.push(
+       Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
+      MaterialPageRoute(builder: (context) => StudyMakeGroupName()),
     ).then((_) {
       // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
       // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -65,7 +66,7 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
         });
       }
     });
-     */
+
     }
     else {
       print("다음 버튼 클릭 불가");
