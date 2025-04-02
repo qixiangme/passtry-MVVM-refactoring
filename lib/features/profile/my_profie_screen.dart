@@ -31,7 +31,7 @@ class MyProfieScreen extends StatelessWidget {
             left: 80.w,
             top: 1252.h,
             child: Container(
-              width: 193.w,
+              width: 250.w,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -63,7 +63,7 @@ class MyProfieScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 193.w,
+                    width: 250.w,
                     child: Text(
                       '약관 및 정책',
                       style: TextStyle(
@@ -92,7 +92,7 @@ class MyProfieScreen extends StatelessWidget {
           ),
           Positioned(
             left: 918.w,
-            top: 1579.h,
+            top: 1615.h,
             child: Text(
               '1.0.0',
               style: TextStyle(
@@ -112,10 +112,10 @@ class MyProfieScreen extends StatelessWidget {
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    width: 1,
+                    width: 1.w,
                     color: const Color(0xFFC4CAD4) /* gray */,
                   ),
-                  borderRadius: BorderRadius.circular(38.50),
+                  borderRadius: BorderRadius.circular(38.50.w),
                 ),
               ),
               child: Stack(
@@ -179,10 +179,10 @@ class MyProfieScreen extends StatelessWidget {
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    width: 1,
+                    width: 1.w,
                     color: const Color(0xFFC4CAD4) /* gray */,
                   ),
-                  borderRadius: BorderRadius.circular(38.50),
+                  borderRadius: BorderRadius.circular(38.50.w),
                 ),
               ),
               child: Stack(
@@ -247,10 +247,10 @@ class MyProfieScreen extends StatelessWidget {
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    width: 1,
+                    width: 1.w,
                     color: const Color(0xFFC4CAD4) /* gray */,
                   ),
-                  borderRadius: BorderRadius.circular(38.50),
+                  borderRadius: BorderRadius.circular(38.50.w),
                 ),
               ),
               child: Stack(
@@ -579,8 +579,8 @@ class MyProfieScreen extends StatelessWidget {
               width: 1080.w,
               height: 120.h,
               padding: const EdgeInsets.only(
-                top: 13.75,
-                left: 55,
+                top: 5,
+                left: 21,
                 right: 77,
                 bottom: 13.75,
               ),
@@ -790,10 +790,7 @@ class MyProfieScreen extends StatelessWidget {
             left: 361.w,
             top: 442.h,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 23.65,
-                vertical: 11.83,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
                 color: const Color(0x21FF9F1C),
@@ -802,7 +799,7 @@ class MyProfieScreen extends StatelessWidget {
                     width: 2.96.w,
                     color: const Color(0xFFFF9F1C) /* main-orange */,
                   ),
-                  borderRadius: BorderRadius.circular(29.57),
+                  borderRadius: BorderRadius.circular(13),
                 ),
               ),
               child: Row(
@@ -826,13 +823,10 @@ class MyProfieScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 510.w,
+            left: 530.w,
             top: 442.h,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 23.65,
-                vertical: 11.83,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
                 color: const Color(0x21FF9F1C),
@@ -841,7 +835,7 @@ class MyProfieScreen extends StatelessWidget {
                     width: 2.96.w,
                     color: const Color(0xFFFF9F1C) /* main-orange */,
                   ),
-                  borderRadius: BorderRadius.circular(29.57),
+                  borderRadius: BorderRadius.circular(13),
                 ),
               ),
               child: Row(
