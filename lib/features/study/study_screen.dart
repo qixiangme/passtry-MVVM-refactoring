@@ -54,7 +54,14 @@ class _StudyScreenState extends State<StudyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("스터디", style: TextStyle(color: Colors.white)),
+        title: Text(
+          "스터디",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Color(0xFF6B6B6B),
       ),
       body: Stack(
@@ -77,9 +84,9 @@ class _StudyScreenState extends State<StudyScreen> {
                     child: Center(child: Text("알림")),
                   ),
                 ),
-                SizedBox(height: 20),
-                Text("모시기모시기"),
-                Text("모시기모시기"),
+                Text("모시기모시기", style: TextStyle(color: Color(0xffFFFFFF))),
+                Text("응원의 모시기멘트멘트", style: TextStyle(color: Color(0xffFFFFFF))),
+                SizedBox(height: 30),
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -94,18 +101,18 @@ class _StudyScreenState extends State<StudyScreen> {
                       children: [
                         SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 21),
                           child: Text(
                             "참여중인 스터디",
                             style: TextStyle(
-                              fontSize: 50.sp,
+                              fontSize: 45.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 15),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          padding: const EdgeInsets.only(left: 15, right: 20),
                           child: SizedBox(
                             width: MediaQuery.sizeOf(context).width,
                             height: 460.h,
@@ -140,17 +147,17 @@ class _StudyScreenState extends State<StudyScreen> {
                           child: Text(
                             "스터디 랭킹",
                             style: TextStyle(
-                              fontSize: 50.sp,
+                              fontSize: 45.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 5),
                         Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: SizedBox(
                             width: MediaQuery.sizeOf(context).width,
-                            height: 460.h,
+                            height: 430.h,
                             child:
                                 _studyGroups.isEmpty
                                     ? Center(
@@ -175,18 +182,18 @@ class _StudyScreenState extends State<StudyScreen> {
                                     ),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
                             "다가오는 면접 일정",
                             style: TextStyle(
-                              fontSize: 50.sp,
+                              fontSize: 45.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 6),
 
                         Padding(
                           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -227,18 +234,18 @@ class _StudyScreenState extends State<StudyScreen> {
           ),
           Positioned(
             right: 5.0,
-            bottom: 70.0,
+            bottom: 290.0,
 
             child: FloatingActionButton(
               heroTag: null,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(70.r),
+                borderRadius: BorderRadius.circular(100.r),
               ),
 
-              backgroundColor: Colors.grey[700],
+              backgroundColor: Color(0xffFF9F1C),
               child: Image.asset(
-                height: 80.h,
-                width: 80.w,
+                height: 75.h,
+                width: 75.w,
                 'assets/icons/search.png',
               ),
               onPressed: () {
@@ -251,7 +258,7 @@ class _StudyScreenState extends State<StudyScreen> {
 
           Positioned(
             right: 5.0,
-            bottom: 70.0,
+            bottom: 290.0,
             child: AnimatedOpacity(
               duration: Duration(milliseconds: 200),
               opacity: isExpanded ? 1.0 : 0.0,
@@ -261,14 +268,15 @@ class _StudyScreenState extends State<StudyScreen> {
                   FloatingActionButton(
                     heroTag: null,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(70.r),
+                      borderRadius: BorderRadius.circular(90.r),
                     ),
 
-                    backgroundColor: Colors.grey[900],
+                    backgroundColor: Color(0xffFFFFFF),
                     child: Image.asset(
-                      height: 80.h,
-                      width: 80.w,
+                      height: 75.h,
+                      width: 75.w,
                       'assets/icons/plus.png',
+                      color: Color(0xffFF9F1C),
                     ),
                     onPressed: () {
                       setState(() {
@@ -282,19 +290,20 @@ class _StudyScreenState extends State<StudyScreen> {
                       );
                     },
                   ),
-                  SizedBox(height: 16.0),
+                  SizedBox(height: 14.0),
                   FloatingActionButton(
                     heroTag: null,
 
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(70.r),
+                      borderRadius: BorderRadius.circular(90.r),
                     ),
 
-                    backgroundColor: Colors.grey[900],
+                    backgroundColor: Color(0xffFFFFFF),
                     child: Image.asset(
-                      height: 80.h,
-                      width: 80.w,
+                      height: 75.h,
+                      width: 75.w,
                       'assets/icons/search.png',
+                      color: Color(0xffFF9F1C),
                     ),
                     onPressed: () {
                       setState(() {
@@ -308,19 +317,23 @@ class _StudyScreenState extends State<StudyScreen> {
                       });
                     },
                   ),
-                  SizedBox(height: 16.0),
+                  SizedBox(height: 14.0),
                   FloatingActionButton(
                     heroTag: null,
 
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(70.r),
+                      borderRadius: BorderRadius.circular(90.r),
                     ),
 
-                    backgroundColor: Colors.grey[900],
-                    child: Image.asset(
-                      height: 80.h,
-                      width: 80.w,
-                      'assets/icons/plus.png',
+                    backgroundColor: Color(0xffFF9F1C),
+                    child: Transform.rotate(
+                      angle: 3.14 / 4,
+                      child: Image.asset(
+                        height: 75.h,
+                        width: 75.w,
+                        'assets/icons/plus.png',
+                        color: Color(0xffFFFFFF),
+                      ),
                     ),
                     onPressed: () {
                       setState(() {
