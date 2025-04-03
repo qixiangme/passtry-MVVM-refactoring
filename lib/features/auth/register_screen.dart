@@ -1,3 +1,5 @@
+import 'package:componentss/features/auth/data/auth_api.dart';
+import 'package:componentss/features/auth/data/user_model.dart';
 import 'package:componentss/features/auth/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +14,7 @@ class RegisterScreen extends StatefulWidget {
 //UI 작업할때 신경 안써도 되는 부분~
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final AuthApi _authApi = AuthApi();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -56,6 +59,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _idError == null &&
         _passwordError == null &&
         _confirmPasswordError == null) {
+      User user = User(
+        username: _idController.text,
+        email: _nameController.text,
+        password: _passwordController.text,
+      );
+
+      _authApi.registerUser(user);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("회원가입 성공!")));

@@ -10,11 +10,7 @@ class AuthRepository {
   // 회원가입
   Future<String> register(User user) async {
     try {
-      final response = await authApi.registerUser(
-        user.username,
-        user.email,
-        user.password,
-      );
+      final response = await authApi.registerUser(user);
       return response;
     } catch (e) {
       throw Exception("회원가입 실패: $e");

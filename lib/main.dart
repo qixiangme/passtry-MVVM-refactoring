@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, designSize: Size(1080, 2400));
     return MaterialApp(
-      home: const MainScreen(goToPage: 0),
+      home: const OnboardingScreen(),
       theme: ThemeData(
         fontFamily: "Wanted Sans",
         scaffoldBackgroundColor: Colors.white,

@@ -1,3 +1,4 @@
+import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -46,13 +47,23 @@ class WelcomeScreen extends StatelessWidget {
 
                     borderRadius: BorderRadius.all(Radius.circular(33.r)),
                   ),
-                  child: Center(
-                    child: Text(
-                      "시작하기",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 50.sp,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MainScreen(goToPage: 0),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: Text(
+                        "시작하기",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 50.sp,
+                        ),
                       ),
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'post_model.dart';
 
@@ -46,6 +47,31 @@ class PostApi {
     } catch (e) {
       print("게시글 업로드 실패: $e");
       return false;
+    }
+  }
+
+  Future<String?> uploadImage(File image) async {
+    try {
+      // 서버에 이미지 업로드 요청
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse("$baseUrl/posts"), // 서버 URL로 변경
+      );
+      request.files.add(await http.MultipartFile.fromPath('image', image.path));
+      request.headers.addAll({'Content-Type': 'multipart/form-data'});
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final jsonResponse = jsonDecode(responseBody);
+        return jsonResponse['imageUrl']; // 서버에서 반환된 이미지 URL
+      } else {
+        print("이미지 업로드 실패: ${response.statusCode}");
+        return null;
+      }
+    } catch (e) {
+      print("이미지 업로드 중 오류 발생: $e");
+      return null;
     }
   }
 }

@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:componentss/features/search/data/post_api.dart';
+import 'package:componentss/features/search/data/post_model.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UploadPostScreen extends StatefulWidget {
   const UploadPostScreen({super.key});
@@ -10,6 +15,39 @@ class UploadPostScreen extends StatefulWidget {
 }
 
 class _UploadPostScreenState extends State<UploadPostScreen> {
+  final List<File> _selectedImages = [];
+  String? imageUrl;
+  Future<void> getImage() async {
+    if (_selectedImages.length >= 2) {
+      // 최대 2장 제한
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("최대 2장까지 업로드할 수 있습니다.")));
+      return;
+    }
+
+    XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      File image = File(file.path);
+
+      // UI에 선택된 이미지 추가
+      setState(() {
+        _selectedImages.add(image);
+      });
+
+      // 서버에 이미지 업로드
+      imageUrl = await _postApi.uploadImage(image);
+      if (imageUrl != null) {
+        print("이미지 업로드 성공: $imageUrl");
+      } else {
+        print("이미지 업로드 실패");
+      }
+    } else {
+      print("No image selected.");
+    }
+  }
+
+  final PostApi _postApi = PostApi();
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _textController = TextEditingController();
   Map<int, Map<String, String>> categoryDict = {
@@ -31,7 +69,24 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
           GestureDetector(
             child: Icon(CustomIcon.add),
             onTap: () {
-              // 게시글 업로드 기능
+              final List<String> selectedTags = [];
+              for (int i = 0; i < tagSelection.length; i++) {
+                if (tagSelection[i]) {
+                  selectedTags.add(categoryDict[i]!['text']!);
+                }
+              }
+              final DateTime now = DateTime.now();
+              final post = PostModel(
+                "0",
+                now.toString(),
+                0,
+                selectedTags,
+                title: _titleTextController.text,
+                content: _textController.text,
+                id: "0",
+              );
+
+              _postApi.uploadPost(post);
             },
           ),
         ],
@@ -248,7 +303,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                         child: Center(
                           child: GestureDetector(
                             onTap: () {
-                              //사진추가 기능
+                              getImage();
                             },
 
                             child: Icon(Icons.add, color: Colors.white),
