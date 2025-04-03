@@ -91,6 +91,7 @@ class _DetailRankingState extends State<DetailRanking> {
             ),
           ),
           Positioned(
+            // 첫 번째 박스
             left: 44.w,
             top: 228.h,
             child: Opacity(
@@ -108,6 +109,7 @@ class _DetailRankingState extends State<DetailRanking> {
             ),
           ),
           Positioned(
+            // 세 번째 박스
             left: 44.w,
             top: 1312.h,
             child: Opacity(
@@ -125,6 +127,7 @@ class _DetailRankingState extends State<DetailRanking> {
             ),
           ),
           Positioned(
+            // 두 번째 박스
             left: 44.w,
             top: 516.h,
             child: Opacity(
@@ -142,6 +145,7 @@ class _DetailRankingState extends State<DetailRanking> {
             ),
           ),
           Positioned(
+            //네 번째 박스
             left: 44.w,
             top: 1600.h,
             child: Opacity(
@@ -191,12 +195,11 @@ class _DetailRankingState extends State<DetailRanking> {
             child: Opacity(
               opacity: 0.50.w,
               child: Container(
-                width: 781.w,
+                width: 800.w,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 315.w,
                   children: [
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -243,8 +246,8 @@ class _DetailRankingState extends State<DetailRanking> {
                                 width: 123.31.w,
                                 height: 66.65.h,
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 23.65,
-                                  vertical: 11.83,
+                                  horizontal: 10,
+                                  vertical: 4,
                                 ),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
@@ -272,9 +275,9 @@ class _DetailRankingState extends State<DetailRanking> {
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: const Color(
-                                          0xFFC4CAD4,
+                                          0xFFffffff,
                                         ) /* gray */,
-                                        fontSize: 36.w,
+                                        fontSize: 30.w,
                                         fontFamily: 'Wanted Sans',
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -307,12 +310,11 @@ class _DetailRankingState extends State<DetailRanking> {
             left: 193.w,
             top: 1366.h,
             child: Container(
-              width: 781.w,
+              width: 800.w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 315.w,
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -361,8 +363,8 @@ class _DetailRankingState extends State<DetailRanking> {
                               width: 123.31.w,
                               height: 66.65.h,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 23.65,
-                                vertical: 11.83,
+                                horizontal: 10,
+                                vertical: 4,
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
@@ -387,8 +389,8 @@ class _DetailRankingState extends State<DetailRanking> {
                                     'level',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: const Color(0xFFC4CAD4) /* gray */,
-                                      fontSize: 36.w,
+                                      color: const Color(0xFFFFFFFF),
+                                      fontSize: 30.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -420,12 +422,11 @@ class _DetailRankingState extends State<DetailRanking> {
             left: 193.w,
             top: 570.h,
             child: Container(
-              width: 781.w,
+              width: 800.w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 315.w,
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -470,8 +471,8 @@ class _DetailRankingState extends State<DetailRanking> {
                               width: 123.31.w,
                               height: 66.65.h,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 23.65,
-                                vertical: 11.83,
+                                horizontal: 10,
+                                vertical: 4,
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
@@ -496,8 +497,8 @@ class _DetailRankingState extends State<DetailRanking> {
                                     'level',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: const Color(0xFFC4CAD4) /* gray */,
-                                      fontSize: 36.w,
+                                      color: const Color(0xFFFFFFFF) /* gray */,
+                                      fontSize: 30.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -529,12 +530,11 @@ class _DetailRankingState extends State<DetailRanking> {
             left: 193.w,
             top: 1654.h,
             child: Container(
-              width: 781.w,
+              width: 800.w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 315.w,
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -583,8 +583,8 @@ class _DetailRankingState extends State<DetailRanking> {
                               width: 123.31.w,
                               height: 66.65.h,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 23.65,
-                                vertical: 11.83,
+                                horizontal: 10,
+                                vertical: 4,
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
@@ -609,8 +609,8 @@ class _DetailRankingState extends State<DetailRanking> {
                                     'level',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: const Color(0xFFC4CAD4) /* gray */,
-                                      fontSize: 36.w,
+                                      color: const Color(0xFFFfffff) /* gray */,
+                                      fontSize: 30.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
