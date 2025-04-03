@@ -15,35 +15,18 @@ class UploadPostScreen extends StatefulWidget {
 }
 
 class _UploadPostScreenState extends State<UploadPostScreen> {
-  final List<File> _selectedImages = [];
-  String? imageUrl;
-  Future<void> getImage() async {
-    if (_selectedImages.length >= 2) {
-      // 최대 2장 제한
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("최대 2장까지 업로드할 수 있습니다.")));
-      return;
-    }
+  File? _selectedImage;
 
+  Future<void> getImage() async {
     XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (file != null) {
       File image = File(file.path);
-
-      // UI에 선택된 이미지 추가
       setState(() {
-        _selectedImages.add(image);
+        _selectedImage = image;
       });
-
-      // 서버에 이미지 업로드
-      imageUrl = await _postApi.uploadImage(image);
-      if (imageUrl != null) {
-        print("이미지 업로드 성공: $imageUrl");
-      } else {
-        print("이미지 업로드 실패");
-      }
+      print("이미지 선택 성공: ${image.path}");
     } else {
-      print("No image selected.");
+      print("이미지 선택 취소");
     }
   }
 
@@ -68,7 +51,7 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
         actions: [
           GestureDetector(
             child: Icon(CustomIcon.add),
-            onTap: () {
+            onTap: () async {
               final List<String> selectedTags = [];
               for (int i = 0; i < tagSelection.length; i++) {
                 if (tagSelection[i]) {
@@ -83,10 +66,13 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 selectedTags,
                 title: _titleTextController.text,
                 content: _textController.text,
+                images: _selectedImage,
                 id: "0",
               );
 
-              _postApi.uploadPost(post);
+              final isSuccess = await _postApi.uploadPostWithFile(post);
+
+              Navigator.pop(context);
             },
           ),
         ],
@@ -282,30 +268,43 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
                 height: 242.h,
                 child: Stack(
                   children: [
-                    Container(
-                      width: 242.w,
-                      height: 242.h,
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFFC4CAD4) /* gray */,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r),
+                    GestureDetector(
+                      onTap: () async {
+                        await getImage();
+                      },
+                      child: Container(
+                        width: 242.w,
+                        height: 242.h,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFC4CAD4) /* gray */,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
                         ),
+                        child:
+                            _selectedImage != null
+                                ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  child: Image.file(
+                                    _selectedImage!,
+                                    fit: BoxFit.cover, // 이미지가 박스에 맞게 표시되도록 설정
+                                  ),
+                                )
+                                : null,
                       ),
                     ),
-                    Positioned(
-                      left: 95.r,
-                      top: 95.r,
-                      child: Container(
-                        width: 53.w,
-                        height: 53.h,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              getImage();
-                            },
 
+                    Visibility(
+                      visible: _selectedImage == null,
+                      child: Positioned(
+                        left: 95.r,
+                        top: 95.r,
+                        child: Container(
+                          width: 53.w,
+                          height: 53.h,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(),
+                          child: Center(
                             child: Icon(Icons.add, color: Colors.white),
                           ),
                         ),
