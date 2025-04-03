@@ -229,18 +229,18 @@ class _AddImageContainerState extends State<AddImageContainer> {
     return GestureDetector(
       onTap: getImage,
       child: Container(
-        width: 440.w,
-        height: 440.h,
+        width: 450.w,
+        height: 450.h,
         decoration: BoxDecoration(
           image:
               _image != null
                   ? DecorationImage(
                     image: FileImage(_image!),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   )
                   : DecorationImage(
                     image: AssetImage('assets/images/add_image_circle.png'),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
         ),
       ),

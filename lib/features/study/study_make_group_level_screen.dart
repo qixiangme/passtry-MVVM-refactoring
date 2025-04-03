@@ -380,8 +380,8 @@ class _InclusionOptionState extends State<InclusionOption> {
 
           children: [
             Container(
-              width: 100.w,
-              height: 100.h,
+              width: 80.w,
+              height: 80.h,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(widget.assetPath),
@@ -392,6 +392,7 @@ class _InclusionOptionState extends State<InclusionOption> {
             SizedBox(width: 30.w),
             Text(
               widget.text,
+
               style: TextStyle(
                 color: const Color(0xFF434343),
                 fontSize: 30.sp,
