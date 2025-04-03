@@ -40,6 +40,23 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
   }
 
   void _handleNextButtonTap() {
+
+    final Map<String, dynamic> args =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String category = args['category'];
+    final String category2 = args['category2'];
+    final String date = args['date'];
+    final String time = args['time'];
+    final String studyLevel = args['studyLevel'];
+    final String inclusionOption = args['inclusionOption'];
+
+    print('category: $category');
+    print('category2: $category2');
+    print('Selected Date: $date');
+    print('Selected Time: $time');
+    print('Selected Study Level: $studyLevel');
+    print('Selected Inclusion Option: $inclusionOption');
+
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
     if (_isNextButtonEnabled) {
       print("--- 다음 버튼 클릭 ---");
@@ -53,7 +70,21 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudyMakeGroupComplete()),
+        MaterialPageRoute(builder: (context) => StudyMakeGroupComplete(),
+          settings: RouteSettings(
+          arguments: {
+          'category': category,
+          'category2': category2,
+          'date': date,
+          'time': time,
+          'studyLevel': studyLevel,
+          'inclusionOption': inclusionOption,
+            'groupName': _GroupName,
+          'imagePath': _selectedImage?.path,
+          },
+        ),
+        ),
+
       ).then((_) {
         // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
         // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -10,8 +11,71 @@ class StudyMakeGroupComplete extends StatefulWidget {
 }
 
 class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
+
+  Widget _buildGroupImage(Map<String, dynamic> args) {
+    try {
+      if (args.containsKey('imagePath') && args['imagePath'] is String) {
+        final String imagePath = args['imagePath'] as String;
+        final File groupImageFile = File(imagePath);
+
+        if (groupImageFile.existsSync()) {
+          print('Image file exists: ${groupImageFile.path}');
+          return Container(
+            width: 538.w,
+            height: 538.h,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(groupImageFile), // FileImage 사용
+                fit: BoxFit.contain,
+              ),
+            ),
+          );
+        } else {
+          print('Image file does not exist: $imagePath');
+          return Container(
+            width: 538.w,
+            height: 538.h,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/add_image_circle.png'), // AssetImage 사용
+                fit: BoxFit.contain,
+              ),
+            ),
+          );
+        }
+      } else {
+        print('Invalid or missing image path.');
+        return Container(
+          width: 538.w,
+          height: 538.h,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/add_image_circle.png'), // AssetImage 사용
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error loading image: $e');
+      return Container(
+        width: 538.w,
+        height: 538.h,
+        child: Center(
+          child: Text('이미지 로드 실패'), // 오류 메시지 표시
+        ),
+      );
+    }
+  }
+
   @override
+
   Widget build(BuildContext context) {
+    final Map<String, dynamic> args =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String groupName = args['groupName'];
+
+
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -20,14 +84,10 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 538.w,
-              height: 538.h,
-              decoration: BoxDecoration(color: const Color(0xFFD9D9D9)),
-            ),
+            _buildGroupImage(args),
             SizedBox(height: 100.h),
             Text(
-              '면접 만점 암기빵 맛집 을 \n오픈했어요!',
+              '$groupName 을 \n오픈했어요!',
               style: TextStyle(
                 color: const Color(0xFF1F1F1F),
                 fontSize: 70.sp,
