@@ -23,18 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       final response = await _authRepository.login(username, password);
 
-      if (response == "로그인 성공! 토큰") {
-        // 로그인 성공 시 메인 화면으로 이동
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => MainScreen(goToPage: 0)),
-        );
-      } else {
-        // 로그인 실패 시 에러 메시지 표시
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(response)));
-      }
+      // 로그인 성공 시 메인 화면으로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen(goToPage: 0)),
+      );
     } catch (e) {
       // 예외 처리
       ScaffoldMessenger.of(
