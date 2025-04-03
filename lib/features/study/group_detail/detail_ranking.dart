@@ -92,7 +92,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 44.w,
-            top: 200.h,
+            top: 228.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
@@ -109,7 +109,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 44.w,
-            top: 1100.h,
+            top: 1312.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
@@ -126,7 +126,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 44.w,
-            top: 500.h,
+            top: 516.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
@@ -143,7 +143,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 44.w,
-            top: 1400.h,
+            top: 1600.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
@@ -158,9 +158,10 @@ class _DetailRankingState extends State<DetailRanking> {
               ),
             ),
           ),
+
           Positioned(
             left: 66.w,
-            top: 80.h,
+            top: 100.h,
             child: Text(
               '우리 스터디 순위는?',
               style: TextStyle(
@@ -173,7 +174,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 66.w,
-            top: 1000.h,
+            top: 1184.h,
             child: Text(
               '오늘 제일 열심히 준비한 팀원은?',
               style: TextStyle(
@@ -186,7 +187,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 215.h,
+            top: 282.h,
             child: Opacity(
               opacity: 0.50.w,
               child: Container(
@@ -248,7 +249,7 @@ class _DetailRankingState extends State<DetailRanking> {
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
                                   color: const Color(
-                                    0xFF6B6B6B,
+                                    0xFF6B6B6B, //첫번째 level 박스
                                   ) /* dark-gray */,
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
@@ -304,7 +305,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 1150.h,
+            top: 1366.h,
             child: Container(
               width: 781.w,
               child: Row(
@@ -365,7 +366,9 @@ class _DetailRankingState extends State<DetailRanking> {
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
-                                color: const Color(0xFF6B6B6B) /* dark-gray */,
+                                color: const Color(
+                                  0xFF6B6B6B,
+                                ) /* dark-gray */, // 세 번째 level 박스
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
                                     width: 2.96.w,
@@ -415,7 +418,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 500.h,
+            top: 570.h,
             child: Container(
               width: 781.w,
               child: Row(
@@ -472,7 +475,9 @@ class _DetailRankingState extends State<DetailRanking> {
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
-                                color: const Color(0xFF6B6B6B) /* dark-gray */,
+                                color: const Color(
+                                  0xFF6B6B6B,
+                                ) /* dark-gray */, // 두번째 level 박스
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
                                     width: 2.96.w,
@@ -522,7 +527,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 1450.h,
+            top: 1654.h,
             child: Container(
               width: 781.w,
               child: Row(
@@ -583,7 +588,9 @@ class _DetailRankingState extends State<DetailRanking> {
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
-                                color: const Color(0xFF6B6B6B) /* dark-gray */,
+                                color: const Color(
+                                  0xFF6B6B6B,
+                                ) /* dark-gray */, // 네 번째 level 박스
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
                                     width: 2.96.w,
@@ -633,7 +640,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 85.w,
-            top: 300.h,
+            top: 324.h,
             child: Opacity(
               opacity: 0.50.w,
               child: Text(
@@ -651,7 +658,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 104.w,
-            top: 1200.h,
+            top: 1408.h,
             child: Text(
               '1',
               textAlign: TextAlign.center,
@@ -681,7 +688,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 100.w,
-            top: 1500.h,
+            top: 1696.h,
             child: Text(
               '2',
               textAlign: TextAlign.center,
