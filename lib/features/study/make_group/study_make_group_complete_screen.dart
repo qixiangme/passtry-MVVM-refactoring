@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
+import 'package:componentss/features/study/study_screen.dart';
+import 'package:componentss/features/search/search_screen.dart';
+
 
 class StudyMakeGroupComplete extends StatefulWidget {
   const StudyMakeGroupComplete({super.key});
@@ -173,12 +176,19 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
               ),
             ),
             SizedBox(height: 200.h),
+
             Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StudyScreen()), // 이동할 페이지
+                    );
+                  }, child: Container(
                   width: 486.w,
                   height: 160.h,
                   padding: const EdgeInsets.all(10),
@@ -207,9 +217,16 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
                       ),
                     ],
                   ),
-                ),
+                ),),
+
                 SizedBox(width: 20.w,),
-                Container(
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()), // 이동할 페이지
+                    );
+                  }, child: Container(
                   width: 486.w,
                   height: 160.h,
                   padding: const EdgeInsets.all(10),
@@ -243,6 +260,8 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
                     ],
                   ),
                 ),
+                ),
+
               ],
             ),
           ],
