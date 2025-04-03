@@ -19,7 +19,17 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+
             SizedBox(height: 100.h),
+
+            Center(
+                child : Container(
+                  width: 538.w,
+                  height: 538.h,
+                  decoration: BoxDecoration(color: const Color(0xFFD9D9D9)),
+                ),
+            ),
             Text(
               '면접 만점 암기빵 맛집 을 오픈했어요!',
               style: TextStyle(
@@ -35,3 +45,4 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
     );
   }
 }
+
