@@ -16,12 +16,12 @@ class PostApi {
       request.fields['title'] = post.title;
       request.fields['content'] = post.content;
       request.fields['createdAt'] = post.createdAt;
-      request.fields['views'] = post.views.toString();
-      request.fields['tags'] = json.encode(post.tags); // 태그를 JSON 문자열로 변환
+      request.fields['views'] = jsonEncode(post.views);
+      request.fields['tags'] = jsonEncode(post.tags); // 태그를 JSON 문자열로 변환
 
       if (post.images != null && post.images!.existsSync()) {
         request.files.add(
-          await http.MultipartFile.fromPath('images', post.images!.path),
+          await http.MultipartFile.fromPath('image', post.images!.path),
         );
         print("이미지 파일 추가됨: ${post.images!.path}");
       } else {

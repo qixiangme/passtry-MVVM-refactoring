@@ -49,7 +49,6 @@ class PostModel {
       'createdAt': createdAt,
       'views': views,
       'tags': tags,
-      'image': images?.path, // 이미지 파일 경로
     };
   }
 }

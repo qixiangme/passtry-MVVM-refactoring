@@ -62,6 +62,18 @@ class _PostScreenState extends State<PostScreen> {
           ),
           SizedBox(height: 20),
 
+          Center(
+            child: SizedBox(
+              width: 935.w,
+              height: 800.h,
+              child: Image.network(
+                widget.post.imageUrl ?? '',
+                fit: BoxFit.contain,
+              ),
+            ), // 이미지 URL을 사용하여 이미지를 표시
+          ),
+          SizedBox(height: 40),
+
           Row(
             children: [
               SizedBox(width: 30),
