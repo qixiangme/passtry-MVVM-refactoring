@@ -121,7 +121,11 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
 
   @override
   Widget build(BuildContext context) {
-    // 날짜/시간 포맷터
+    final Map<String, dynamic> args =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String category = args['category'];
+    final String category2 = args['category2'];
+
     final DateFormat dateFormatter = DateFormat('yyyy.MM.dd');
     final DateFormat timeFormatter = DateFormat('HH:mm');
 
@@ -243,12 +247,24 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
                   onPressed:
                       (_selectedDate != null && _selectedTime != null)
                           ? () {
+                            print('category: $category');
+                            print('category2: $category2');
                             print('Selected Date: $displayDate');
                             print('Selected Time: $displayTime');
                             print('Remaining Days: $remainingDays');
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => StudyMakeGroupLevel()),
+                              MaterialPageRoute(builder: (context) => StudyMakeGroupLevel(),
+                                settings: RouteSettings(
+                                arguments: {
+                                'category': category,
+                                'category2': category2,
+                                  'date': displayDate,
+                                  'time': displayTime,
+                                }, // 전달할 데이터
+                              ),
+                            ),
+
                             );
                           }
                           : null,

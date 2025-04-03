@@ -17,6 +17,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
   String? _GroupName;
   bool _isNextButtonClicked = false;
   bool _isNextButtonEnabled = false;
+
   void _updateNextButtonState() {
     setState(() {
       _isNextButtonEnabled =
@@ -39,6 +40,23 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
   }
 
   void _handleNextButtonTap() {
+
+    final Map<String, dynamic> args =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String category = args['category'];
+    final String category2 = args['category2'];
+    final String date = args['date'];
+    final String time = args['time'];
+    final String studyLevel = args['studyLevel'];
+    final String inclusionOption = args['inclusionOption'];
+
+    print('category: $category');
+    print('category2: $category2');
+    print('Selected Date: $date');
+    print('Selected Time: $time');
+    print('Selected Study Level: $studyLevel');
+    print('Selected Inclusion Option: $inclusionOption');
+
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
     if (_isNextButtonEnabled) {
       print("--- 다음 버튼 클릭 ---");
@@ -52,7 +70,21 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudyMakeGroupComplete()),
+        MaterialPageRoute(builder: (context) => StudyMakeGroupComplete(),
+          settings: RouteSettings(
+          arguments: {
+          'category': category,
+          'category2': category2,
+          'date': date,
+          'time': time,
+          'studyLevel': studyLevel,
+          'inclusionOption': inclusionOption,
+            'groupName': _GroupName,
+          'imagePath': _selectedImage?.path,
+          },
+        ),
+        ),
+
       ).then((_) {
         // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
         // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -63,9 +95,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
           });
         }
       });
-
-    }
-    else {
+    } else {
       print("다음 버튼 클릭 불가");
     }
   }
@@ -85,112 +115,117 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 77.w),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 100.h),
-                Text(
-                  '빵집 이름을 지어주세요',
-                  style: TextStyle(
-                    color: const Color(0xFF1F1F1F),
-                    fontSize: 70.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 200.h),
-                Center(
-                  child: AddImageContainer(
-                    onImageSelected: _handleImageSelected,
-                  ),
-                ),
-                SizedBox(height: 50.h),
-                Center(
-                  child: SizedBox(
-                    width: 900.w,
-                    height: 200.h,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      spacing: 110.h,
-                      children: [
-                        Center(
-                          child: Container(
-                            width: 904.75.w,
-                            padding: const EdgeInsets.only(top: 15),
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 27.50.h,
-                              children: [
-                                SizedBox(
-                                  width: 900.w,
-                                  child: TextField(
-                                    onChanged: (text) {
-                                      _handleNameSelected(text);
-                                      print("입력된 텍스트: $text");
-                                    },
-                                    decoration: InputDecoration(
-                                      hintText: 'ex) 면접 만점 암기빵 맛집',
-                                      hintStyle: TextStyle(
-                                        color: const Color(0xFF8E95A2),
-                                        fontSize: 44.sp,
-                                        fontFamily: 'Wanted Sans',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 0.44,
-                                      ),
-                                      border: UnderlineInputBorder(
-                                        // 밑줄 테두리 추가
-                                        borderSide: BorderSide(
-                                          color:
-                                              Colors.grey.shade200, // 테두리 색상 설정
-                                        ),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.shade900,
-                                        ), // 원하는 색상으로 변경
-                                      ),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    keyboardType: TextInputType.text,
-                                    // 키보드 타입 설정
-                                    obscureText: false,
-                                    // 비밀번호 입력 모드 여부
-                                    maxLines: 1,
-                                    // 최대 줄 수
-                                    autocorrect: false,
 
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 77.w),
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 100.h),
+                  Text(
+                    '빵집 이름을 지어주세요',
+                    style: TextStyle(
+                      color: const Color(0xFF1F1F1F),
+                      fontSize: 70.sp,
+                      fontFamily: 'Wanted Sans',
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-                Spacer(),
-                Padding(
+                  SizedBox(height: 200.h),
+                  Center(
+                    child: AddImageContainer(
+                      onImageSelected: _handleImageSelected,
+                    ),
+                  ),
+                  SizedBox(height: 50.h),
+                  Center(
+                    child: SizedBox(
+                      width: 900.w,
+                      height: 200.h,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 110.h,
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 904.75.w,
+                              padding: const EdgeInsets.only(top: 15),
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 27.50.h,
+                                children: [
+                                  SizedBox(
+                                    width: 900.w,
+                                    child: TextField(
+                                      onChanged: (text) {
+                                        _handleNameSelected(text);
+                                        print("입력된 텍스트: $text");
+                                      },
+                                      decoration: InputDecoration(
+                                        hintText: 'ex) 면접 만점 암기빵 맛집',
+                                        hintStyle: TextStyle(
+                                          color: const Color(0xFF8E95A2),
+                                          fontSize: 44.sp,
+                                          fontFamily: 'Wanted Sans',
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 0.44,
+                                        ),
+                                        border: UnderlineInputBorder(
+                                          // 밑줄 테두리 추가
+                                          borderSide: BorderSide(
+                                            color:
+                                                Colors
+                                                    .grey
+                                                    .shade200, // 테두리 색상 설정
+                                          ),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey.shade900,
+                                          ), // 원하는 색상으로 변경
+                                        ),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      keyboardType: TextInputType.text,
+                                      // 키보드 타입 설정
+                                      obscureText: false,
+                                      // 비밀번호 입력 모드 여부
+                                      maxLines: 1,
+                                      // 최대 줄 수
+                                      autocorrect: false,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 680.h,),
+                  Padding(
                     padding: EdgeInsets.only(bottom: 200.h),
-                    child : Center(
+                    child: Center(
                       child: NextButton(
                         isEnabled: _isNextButtonEnabled,
                         onTap: _handleNextButtonTap,
-                      ),)
-                ),
-              ],
-            ),
-          ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -253,13 +288,15 @@ class NextButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const NextButton({required this.isEnabled, required this.onTap, Key? key})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color bgColor = isEnabled ? Color(0xFFFF9F1C) : Colors.white;
     Color borderColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
     Color textColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
+
+
 
     return InkWell(
       onTap: onTap,
@@ -276,7 +313,7 @@ class NextButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          '다음',
+          isEnabled ? '만들기' : '다음',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textColor,

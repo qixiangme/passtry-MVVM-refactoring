@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/features/study/make_group/study_make_group_screen2.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 
-
 class StudyMakeGroup extends StatefulWidget {
   const StudyMakeGroup({super.key});
 
@@ -14,15 +13,16 @@ class StudyMakeGroup extends StatefulWidget {
 class _StudyMakeGroupState extends State<StudyMakeGroup> {
   bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
 
-
   String? _selectedCategoryItemText;
   String? _selectedCategoryChipText;
 
   bool _isNextButtonEnabled = false;
+
   void _updateNextButtonState() {
     setState(() {
       _isNextButtonEnabled =
-          _selectedCategoryItemText != null && _selectedCategoryChipText != null;
+          _selectedCategoryItemText != null &&
+          _selectedCategoryChipText != null;
     });
   }
 
@@ -40,7 +40,6 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
     });
   }
 
-
   // 다음 버튼 탭 처리 및 네비게이션 함수
   void _handleNextButtonTap() {
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
@@ -57,7 +56,15 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudyMakeGroup2()),
+        MaterialPageRoute(
+          builder: (context) => StudyMakeGroup2(),
+          settings: RouteSettings(
+            arguments: {
+              'category': _selectedCategoryItemText,
+              'category2': _selectedCategoryChipText,
+            }, // 전달할 데이터
+          ),
+        ),
       ).then((_) {
         // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
         // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -68,8 +75,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
           });
         }
       });
-    }
-    else {
+    } else {
       print("다음 버튼 클릭 불가");
     }
   }
@@ -96,7 +102,6 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 SizedBox(height: 100.h),
                 Text(
                   '어떤 면접을 앞두고 계신가요?',
@@ -138,11 +143,12 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
                 Spacer(),
                 Padding(
                   padding: EdgeInsets.only(bottom: 200.h),
-                child : Center(
-                  child: NextButton(
-                    isEnabled: _isNextButtonEnabled,
-                    onTap: _handleNextButtonTap,
-                  ),)
+                  child: Center(
+                    child: NextButton(
+                      isEnabled: _isNextButtonEnabled,
+                      onTap: _handleNextButtonTap,
+                    ),
+                  ),
                 ),
               ],
             ),
