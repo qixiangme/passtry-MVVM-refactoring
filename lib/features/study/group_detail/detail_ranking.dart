@@ -93,12 +93,12 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             // 첫 번째 박스
             left: 44.w,
-            top: 228.h,
+            top: 208.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
                 width: 992.w,
-                height: 258.h,
+                height: 240.h,
                 decoration: ShapeDecoration(
                   color: const Color(0xFFD9D9D9),
                   shape: RoundedRectangleBorder(
@@ -111,12 +111,12 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             // 세 번째 박스
             left: 44.w,
-            top: 1312.h,
+            top: 1128.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
                 width: 992.w,
-                height: 258.h,
+                height: 240.h,
                 decoration: ShapeDecoration(
                   color: const Color(0xFFD9D9D9),
                   shape: RoundedRectangleBorder(
@@ -129,12 +129,12 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             // 두 번째 박스
             left: 44.w,
-            top: 516.h,
+            top: 480.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
                 width: 992.w,
-                height: 258.h,
+                height: 240.h,
                 decoration: ShapeDecoration(
                   color: const Color(0xFFD9D9D9),
                   shape: RoundedRectangleBorder(
@@ -147,12 +147,12 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             //네 번째 박스
             left: 44.w,
-            top: 1600.h,
+            top: 1400.h,
             child: Opacity(
               opacity: 0.10.w,
               child: Container(
                 width: 992.w,
-                height: 258.h,
+                height: 240.h,
                 decoration: ShapeDecoration(
                   color: const Color(0xFFD9D9D9),
                   shape: RoundedRectangleBorder(
@@ -165,7 +165,7 @@ class _DetailRankingState extends State<DetailRanking> {
 
           Positioned(
             left: 66.w,
-            top: 100.h,
+            top: 80.h,
             child: Text(
               '우리 스터디 순위는?',
               style: TextStyle(
@@ -178,7 +178,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 66.w,
-            top: 1184.h,
+            top: 1000.h,
             child: Text(
               '오늘 제일 열심히 준비한 팀원은?',
               style: TextStyle(
@@ -191,7 +191,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 282.h,
+            top: 248.h,
             child: Opacity(
               opacity: 0.50.w,
               child: Container(
@@ -308,7 +308,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 1366.h,
+            top: 1168.h,
             child: Container(
               width: 800.w,
               child: Row(
@@ -420,7 +420,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 570.h,
+            top: 520.h,
             child: Container(
               width: 800.w,
               child: Row(
@@ -528,7 +528,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 193.w,
-            top: 1654.h,
+            top: 1440.h,
             child: Container(
               width: 800.w,
               child: Row(
@@ -640,7 +640,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 85.w,
-            top: 324.h,
+            top: 290.h,
             child: Opacity(
               opacity: 0.50.w,
               child: Text(
@@ -658,7 +658,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 104.w,
-            top: 1408.h,
+            top: 1210.h,
             child: Text(
               '1',
               textAlign: TextAlign.center,
@@ -673,7 +673,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 85.w,
-            top: 600.h,
+            top: 562.h,
             child: Text(
               '27',
               textAlign: TextAlign.center,
@@ -688,7 +688,7 @@ class _DetailRankingState extends State<DetailRanking> {
           ),
           Positioned(
             left: 100.w,
-            top: 1696.h,
+            top: 1482.h,
             child: Text(
               '2',
               textAlign: TextAlign.center,
