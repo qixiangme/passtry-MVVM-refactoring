@@ -246,8 +246,8 @@ class _DetailRankingState extends State<DetailRanking> {
                                 width: 123.31.w,
                                 height: 66.65.h,
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 4,
+                                  horizontal: 5,
+                                  vertical: 3,
                                 ),
                                 clipBehavior: Clip.antiAlias,
                                 decoration: ShapeDecoration(
@@ -277,7 +277,7 @@ class _DetailRankingState extends State<DetailRanking> {
                                         color: const Color(
                                           0xFFffffff,
                                         ) /* gray */,
-                                        fontSize: 30.w,
+                                        fontSize: 36.w,
                                         fontFamily: 'Wanted Sans',
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -363,8 +363,8 @@ class _DetailRankingState extends State<DetailRanking> {
                               width: 123.31.w,
                               height: 66.65.h,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
+                                horizontal: 5,
+                                vertical: 3,
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
@@ -390,7 +390,7 @@ class _DetailRankingState extends State<DetailRanking> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: const Color(0xFFFFFFFF),
-                                      fontSize: 30.w,
+                                      fontSize: 36.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -471,8 +471,8 @@ class _DetailRankingState extends State<DetailRanking> {
                               width: 123.31.w,
                               height: 66.65.h,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
+                                horizontal: 5,
+                                vertical: 3,
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
@@ -498,7 +498,7 @@ class _DetailRankingState extends State<DetailRanking> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: const Color(0xFFFFFFFF) /* gray */,
-                                      fontSize: 30.w,
+                                      fontSize: 36.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -583,8 +583,8 @@ class _DetailRankingState extends State<DetailRanking> {
                               width: 123.31.w,
                               height: 66.65.h,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
+                                horizontal: 5,
+                                vertical: 3,
                               ),
                               clipBehavior: Clip.antiAlias,
                               decoration: ShapeDecoration(
@@ -610,7 +610,7 @@ class _DetailRankingState extends State<DetailRanking> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: const Color(0xFFFfffff) /* gray */,
-                                      fontSize: 30.w,
+                                      fontSize: 36.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w400,
                                     ),
