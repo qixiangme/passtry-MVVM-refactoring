@@ -1,4 +1,6 @@
 import 'package:componentss/features/study/group_detail/detail_home.dart';
+import 'package:componentss/features/study/group_detail/detail_live.dart';
+import 'package:componentss/features/study/group_detail/detail_ranking.dart';
 import 'package:flutter/material.dart';
 
 class GroupDetaill extends StatefulWidget {
@@ -12,11 +14,7 @@ class _GroupDetaillState extends State<GroupDetaill> {
   int _currentIndex = 0; // 현재 선택된 탭 인덱스
 
   // 탭에 따라 다른 화면을 표시하기 위한 위젯 리스트
-  final List<Widget> _pages = [
-    DetailHome(),
-    Center(child: Text('채팅 화면')),
-    Center(child: Text('설정 화면')),
-  ];
+  final List<Widget> _pages = [DetailHome(), DetailLive(), DetailRanking()];
 
   @override
   Widget build(BuildContext context) {
