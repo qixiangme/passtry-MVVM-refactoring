@@ -576,14 +576,9 @@ class MyProfieScreen extends StatelessWidget {
             left: 0.w,
             top: 135.h,
             child: Container(
-              width: 1080.w,
+              width: 1010.w,
               height: 120.h,
-              padding: const EdgeInsets.only(
-                top: 5,
-                left: 21,
-                right: 77,
-                bottom: 13.75,
-              ),
+              padding: const EdgeInsets.only(top: 5, bottom: 13.75),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
