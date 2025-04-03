@@ -1,7 +1,9 @@
 import 'package:componentss/features/search/data/post_model.dart';
 import 'package:componentss/features/search/data/search_api.dart';
+import 'package:componentss/features/search/post_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchBarScreen extends StatefulWidget {
   const SearchBarScreen({super.key});
@@ -87,39 +89,70 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                       itemCount: searchResults.length,
                       itemBuilder: (context, index) {
                         final post = searchResults[index];
-                        return Card(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 5,
-                          ),
-                          color: Color(0xffFFFFFF),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13),
-                            side: BorderSide(
-                              color: Color(0xffECECEC),
-                              width: 1.5,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PostScreen(post: post),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 5,
                             ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    post.title,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w800,
+                            color: Color(0xffFFFFFF),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(13),
+                              side: BorderSide(
+                                color: Color(0xffECECEC),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          post.title,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Text(post.content),
+                                        Text(post.content),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(height: 6),
-                                  Text(post.content),
-                                  Text(post.content),
-                                ],
-                              ),
+                                ),
+                                SizedBox(width: 130),
+                                post.imageUrl != null
+                                    ? Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10.r),
+                                        ),
+                                      ),
+                                      child: Image.network(
+                                        post.imageUrl!,
+                                        width: 168.w,
+                                        height: 168.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                    : Container(),
+                              ],
                             ),
                           ),
                         );
