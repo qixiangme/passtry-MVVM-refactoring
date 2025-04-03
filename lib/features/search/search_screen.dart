@@ -73,12 +73,12 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 100 &&
-        !isFetchingMore &&
-        !isLoading) {
-      _fetchMorePosts(); // 추가 데이터 로드
-    }
+    // if (_scrollController.position.pixels >=
+    //         _scrollController.position.maxScrollExtent - 100 &&
+    //     !isFetchingMore &&
+    //     !isLoading) {
+    //   _fetchMorePosts(); // 추가 데이터 로드
+    // }
   }
 
   Future<void> _fetchMorePosts() async {

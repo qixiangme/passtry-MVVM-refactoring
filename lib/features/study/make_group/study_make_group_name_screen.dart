@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:componentss/features/study/study_make_group_complete_screen.dart';
+import 'package:componentss/features/study/make_group/study_make_group_complete_screen.dart';
 
 class StudyMakeGroupName extends StatefulWidget {
   const StudyMakeGroupName({super.key});
