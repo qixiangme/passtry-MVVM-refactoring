@@ -1,22 +1,22 @@
+
 import 'package:componentss/features/baking/data/mission_model.dart';
 
-
 class MissionResponse {
-  final Mission oddMission;
-  final Mission evenMission;
-  final String? question;
+  final Mission nextOddMission;
+  final Mission nextEvenMission;
+  final String? randomAnsweredOddQuestion;
 
   MissionResponse({
-    required this.oddMission,
-    required this.evenMission,
-    required this.question,
+    required this.nextOddMission,
+    required this.nextEvenMission,
+    required this.randomAnsweredOddQuestion,
   });
 
   factory MissionResponse.fromJson(Map<String, dynamic> json) {
     return MissionResponse(
-      oddMission: Mission.fromJson(json['oddMission']),
-      evenMission: Mission.fromJson(json['evenMission']),
-      question: json['question'],
+      nextOddMission: Mission.fromJson(json['nextOddMission']),
+      nextEvenMission: Mission.fromJson(json['nextEvenMission']),
+      randomAnsweredOddQuestion: json['randomAnsweredOddQuestion'],
     );
   }
 }

@@ -1,9 +1,14 @@
 import 'dart:math';
 
-
+import 'package:componentss/core/user_provider.dart';
+import 'package:componentss/features/baking/data/attendance_api.dart';
+import 'package:componentss/features/baking/data/attendance_model.dart';
+import 'package:componentss/features/baking/data/mission_api.dart';
+import 'package:componentss/features/baking/data/mission_response_model.dart';
 import 'package:componentss/features/baking/questions/even/answer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class BakingScreen extends StatefulWidget {
   const BakingScreen({super.key});
@@ -13,242 +18,474 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
-  final List<Quest> dailyQuests = [
-    Quest(
-      title: '모범 답안 작성하기',
-      subtitle: '프로젝트 경험 관련 최다 빈출 답변하기',
-      stage: 'Stage 1-1',
-      isCompleted: true,
-    ),
-    Quest(
-      title: '면접 질문 답변 연습하기',
-      subtitle: '듣기/태도/역량 관련 답변 연습하기',
-      stage: 'Stage 1-2',
-      isCompleted: true,
-    ),
-    Quest(
-      title: '경제 관련 시사 트렌드 학습하기',
-      subtitle: '트랜드 질문',
-      stage: '최근 트랜드 학습하기',
-      isCompleted: false,
-    ),
-    // Quest(title: '새로운 퀘스트', subtitle: '간단 설명', stage: 'Stage 2-1'),
-  ];
+  late MissionResponse? _missionResponse;
+  bool _isLoading = true; // 로딩 상태를 관리
+  final List<Quest> dailyQuests = [];
+  late List<Attendance> _attendanceHistory;
+
+  @override
+  void initState() {
+    super.initState();
+    // _loadMissionData();
+    _attendanceHistory = []; // 초기화
+    _loadMissionAndAttendanceData(); // 미션과
+    // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
+  }
+
+  Future<void> _loadMissionAndAttendanceData() async {
+    try {
+      // 미션 데이터와 출석 데이터를 병렬로 가져옴
+      final missionResponseFuture = fetchNextMissions(
+        "asd",
+      ); // 유저 ID를 실제 값으로 대체
+      final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
+        "0",
+      );
+
+      final results = await Future.wait([
+        missionResponseFuture,
+        attendanceHistoryFuture,
+      ]);
+
+      final missionResponse = results[0] as MissionResponse;
+      final attendanceHistory = results[1] as List<Attendance>;
+
+      setState(() {
+        _missionResponse = missionResponse;
+        _attendanceHistory = attendanceHistory;
+        _isLoading = false;
+
+        // 출석 데이터와 미션 데이터를 매칭하여 Quest의 isCompleted 설정
+        final attendance =
+            attendanceHistory.isNotEmpty ? attendanceHistory.first : null;
+        print(attendanceHistory.length);
+
+        dailyQuests.add(
+          Quest(
+            title: "모범답안 작성하기",
+            subtitle: missionResponse.nextOddMission.question ?? "질문 없음",
+            stage:
+                "Stage ${missionResponse.nextOddMission.stage}-${missionResponse.nextOddMission.index}",
+            isCompleted: attendance?.oddMissionCompleted ?? false,
+          ),
+        );
+
+        dailyQuests.add(
+          Quest(
+            title: "랜덤질문에 답변 연습하기",
+            subtitle: missionResponse.nextEvenMission.question ?? "질문 없음",
+            stage:
+                "Stage ${missionResponse.nextEvenMission.stage}-${missionResponse.nextEvenMission.index}",
+            isCompleted: attendance?.evenMissionCompleted ?? false,
+          ),
+        );
+      });
+    } catch (error) {
+      print("Error loading mission or attendance data: $error");
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _loadMissionData() async {
+    try {
+      // MissionResponse 데이터를 가져옴
+      final missionResponse = await fetchNextMissions(
+        "asd",
+      ); // 유저 ID를 실제 값으로 대체
+      setState(() {
+        _missionResponse = missionResponse;
+        _isLoading = false;
+
+        // ODD 미션과 EVEN 미션을 Quest로 변환하여 dailyQuests에 추가
+        dailyQuests.add(
+          Quest(
+            title: "모범답안 작성하기",
+            subtitle: missionResponse.nextOddMission.question ?? "질문 없음",
+            stage:
+                "Stage ${missionResponse.nextOddMission.stage}-${missionResponse.nextOddMission.index}",
+            isCompleted: false,
+          ),
+        );
+        dailyQuests.add(
+          Quest(
+            title: "랜덤질문에 답변 연습하기",
+            subtitle: missionResponse.nextEvenMission.question ?? "질문 없음",
+            stage:
+                "Stage ${missionResponse.nextEvenMission.stage}-${missionResponse.nextEvenMission.index}",
+            isCompleted: false,
+          ),
+        );
+      });
+    } catch (error) {
+      print("Error fetching missions: $error");
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Widget _buildAttendanceSection() {
+    if (_attendanceHistory.isEmpty) {
+      return Center(
+        child: Text(
+          "출석 기록이 없습니다.",
+          style: TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+      );
+    }
+
+    // 요일 이름과 날짜를 매핑
+    List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
+    DateTime startOfWeek = DateTime.now().subtract(
+      Duration(days: DateTime.now().weekday - 1),
+    );
+
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 1000.w,
+            height: 300.h,
+            decoration: BoxDecoration(
+              border: Border.all(color: const Color(0xFFD9D9D9)),
+              borderRadius: BorderRadius.circular(38.50.w),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(7, (index) {
+                // 현재 주의 날짜 계산
+                DateTime currentDate = startOfWeek.add(Duration(days: index));
+                String formattedDate =
+                    currentDate.toIso8601String().split('T').first;
+
+                // 출석 여부 확인
+                bool isAttended = _attendanceHistory.any(
+                  (attendance) => attendance.date == formattedDate,
+                );
+                bool isToday =
+                    currentDate.day == DateTime.now().day &&
+                    currentDate.month == DateTime.now().month &&
+                    currentDate.year == DateTime.now().year;
+
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      isToday
+                          ? Text(
+                            days[index], // 요일 표시
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 36.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                          : Text(
+                            days[index], // 요일 표시
+                            style: TextStyle(
+                              color: Color(0xFF6B6B6B),
+                              fontSize: 36.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: 100.w,
+                        height: 100.h,
+                        margin: EdgeInsets.symmetric(horizontal: 20.w),
+                        decoration: BoxDecoration(
+                          color:
+                              isAttended ? Colors.orange : Colors.grey.shade300,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            isAttended ? Icons.check : null,
+                            color: Colors.white,
+                            // 출석 여부 표시
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuestItem(Quest quest) {
+    return GestureDetector(
+      onTap: () {
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        width: 1000.w,
+        decoration: BoxDecoration(
+          color: quest.isCompleted ? const Color(0x21FF9F1C) : Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: quest.isCompleted ? Colors.orange : Colors.grey.shade300,
+          ),
+        ),
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Quest 객체의 데이터를 사용
+            const SizedBox(height: 4),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                quest.stage,
+                style: TextStyle(
+                  fontSize: 10,
+                  color:
+                      quest.isCompleted ? Colors.white : Colors.grey.shade800,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+            Text(
+              quest.title,
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 3),
+            Divider(
+              color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
+              thickness: 1.0,
+              indent: 0.5,
+              endIndent: 0.5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  quest.subtitle,
+                  style: const TextStyle(fontSize: 12, color: Colors.black54),
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    print("object");
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        quest.isCompleted
+                            ? Colors.orange
+                            : Colors.grey.shade800,
+
+                    elevation: 0,
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(65, 30),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    visualDensity: VisualDensity.compact,
+                  ),
+
+                  child: Text(
+                    quest.isCompleted ? '완료' : '바로가기',
+                    style: TextStyle(fontSize: 10, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 100),
-                  Text('logo'),
-                  Center(
-                    child: Container(
-                      width: 1000.w,
-                      height: 200.h,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: ShapeDecoration(
-                        color: const Color(0x21FF9F1C),
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 2.96.w,
-                            color: const Color(0xFFFF9F1C) /* main-orange */,
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 100),
+                      Text('logo'),
+                      Center(
+                        child: Container(
+                          width: 1000.w,
+                          height: 200.h,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
                           ),
-                          borderRadius: BorderRadius.circular(29.57.w),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 29.57.w,
-                        children: [
-                          Text(
-                            '동아리 면접',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 36.w,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w400,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: ShapeDecoration(
+                            color: Color(0x21FF9F1C), // 주황색
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 2.96.w,
+                                color: const Color(
+                                  0xFFFF9F1C,
+                                ) /* main-orange */,
+                              ),
+                              borderRadius: BorderRadius.circular(29.57.w),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  Row(
-                    children: [
-                      Container(
-                        width: 130.w,
-                        height: 154.h,
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35.r),
-                        ),
-                      ),
-
-                      Container(
-                        width: 130.w,
-                        height: 154.h,
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35.r),
-                        ),
-                      ),
-
-                      Container(
-                        width: 130.w,
-                        height: 154.h,
-                        margin: EdgeInsets.symmetric(horizontal: 8.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35.r),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Center(child: AnimatedHalfCircleProgress()),
-                      Padding(
-                        padding: EdgeInsets.only(top: 90),
-                        child: Center(
-                          child: Container(
-                            width: 611.w,
-                            height: 500.h,
-                            decoration: BoxDecoration(color: Color(0XFF6B6B6B)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Center(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: ShapeDecoration(
-                        color: const Color(0x21FF9F1C),
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 2.96.w,
-                            color: const Color(0xFFFF9F1C) /* main-orange */,
-                          ),
-                          borderRadius: BorderRadius.circular(29.57.w),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 29.57.w,
-                        children: [
-                          Text(
-                            'Lv.0',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: const Color(0xFFFF9F1C) /* main-orange */,
-                              fontSize: 36.w,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 6),
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AnswerScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        '따끈따끈한 반죽',
-                        style: TextStyle(
-                          color: Colors.black /* white */,
-                          fontSize: 66.w,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 200.h),
-
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      '이번 주 출석 현황',
-                      style: TextStyle(
-                        color: Colors.black /* white */,
-                        fontSize: 50.w,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _buildAttendanceSection(),
-
-                  SizedBox(height: 40),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text(
-                      '일일 퀘스트',
-                      style: TextStyle(
-                        color: Colors.black /* white */,
-                        fontSize: 50.w,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Column(
-                      // map을 사용하여 각 Quest 객체를 _buildQuestItem 위젯으로 변환
-                      // .toList()로 위젯 리스트 생성
-                      children:
-                          dailyQuests
-                              .map(
-                                (quest) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 10.0),
-                                  child: _buildQuestItem(quest),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 29.57.w,
+                            children: [
+                              Text(
+                                '동아리 면접',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 36.w,
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w400,
                                 ),
-                              )
-                              .toList(),
-                    ),
-                  ),
-                  SizedBox(height: 50),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '나만의 모범 답안',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      Row(
+                        children: [
+                          Container(
+                            width: 130.w,
+                            height: 154.h,
+                            margin: EdgeInsets.symmetric(horizontal: 8.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(35.r),
+                            ),
+                          ),
+
+                          Container(
+                            width: 130.w,
+                            height: 154.h,
+                            margin: EdgeInsets.symmetric(horizontal: 8.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(35.r),
+                            ),
+                          ),
+
+                          Container(
+                            width: 130.w,
+                            height: 154.h,
+                            margin: EdgeInsets.symmetric(horizontal: 8.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(35.r),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          Center(child: AnimatedHalfCircleProgress()),
+                          Padding(
+                            padding: EdgeInsets.only(top: 90),
+                            child: Center(
+                              child: Container(
+                                width: 611.w,
+                                height: 500.h,
+                                decoration: BoxDecoration(
+                                  color: Color(0XFF6B6B6B),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          decoration: ShapeDecoration(
+                            color: const Color(0x21FF9F1C),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 2.96.w,
+                                color: const Color(
+                                  0xFFFF9F1C,
+                                ) /* main-orange */,
+                              ),
+                              borderRadius: BorderRadius.circular(29.57.w),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 29.57.w,
+                            children: [
+                              Text(
+                                'Lv.0',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: const Color(
+                                    0xFFFF9F1C,
+                                  ) /* main-orange */,
+                                  fontSize: 36.w,
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AnswerScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            '따끈따끈한 반죽',
+                            style: TextStyle(
+                              color: Colors.black /* white */,
+                              fontSize: 66.w,
+                              fontFamily: 'Wanted Sans',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 200.h),
+
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          '이번 주 출석 현황',
                           style: TextStyle(
                             color: Colors.black /* white */,
                             fontSize: 50.w,
@@ -256,32 +493,85 @@ class _BakingScreenState extends State<BakingScreen> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            //Navigator.push(
-                            //  context,
-                            //  MaterialPageRoute(
-                            //    builder: (context) {}
-                          },
-                          child: Row(
-                            children: [
-                              const Text('전체보기'),
-                              Icon(Icons.arrow_forward_ios, size: 15),
-                            ],
+                      ),
+                      const SizedBox(height: 12),
+                      _buildAttendanceSection(),
+
+                      SizedBox(height: 40),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          '일일 퀘스트',
+                          style: TextStyle(
+                            color: Colors.black /* white */,
+                            fontSize: 50.w,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  //Padding(
-                  //  padding: EdgeInsets.only(left: 20, right: 20),
-                  //  child: Column(
-                  //    children: [
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Column(
+                          // map을 사용하여 각 Quest 객체를 _buildQuestItem 위젯으로 변환
+                          // .toList()로 위젯 리스트 생성
+                          children:
+                              dailyQuests
+                                  .map(
+                                    (quest) => Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 10.0,
+                                      ),
+                                      child: _buildQuestItem(quest),
+                                    ),
+                                  )
+                                  .toList(),
+                        ),
+                      ),
+                      SizedBox(height: 50),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '나만의 모범 답안',
+                              style: TextStyle(
+                                color: Colors.black /* white */,
+                                fontSize: 50.w,
+                                fontFamily: 'Wanted Sans',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                //Navigator.push(
+                                //  context,
+                                //  MaterialPageRoute(
+                                //    builder: (context) {}
+                              },
+                              child: Row(
+                                children: [
+                                  const Text('전체보기'),
+                                  Icon(Icons.arrow_forward_ios, size: 15),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20),
 
-                  SizedBox(height: 100),
-                ],
-              ),
+                      //Padding(
+                      //  padding: EdgeInsets.only(left: 20, right: 20),
+                      //  child: Column(
+                      //    children: [
+                      SizedBox(height: 100),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -367,71 +657,6 @@ class HalfCircleProgressPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
 
-Widget _buildAttendanceSection() {
-  List<bool> attendance = [
-    true,
-    true,
-    true,
-    false,
-    false,
-    true,
-    false,
-  ]; // 예시 출석 데이터 (월~일)
-  List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
-
-  return Center(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-
-      children: [
-        Container(
-          width: 1000.w,
-          height: 300.h,
-          decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xFFD9D9D9)),
-            borderRadius: BorderRadius.circular(38.50.w),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(days.length, (index) {
-              // Replace this with your logic to check if the day is attended
-              bool isAttended = Random().nextBool(); // Example logic
-              return Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Container(
-                  width: 100.w,
-                  height: 300.h,
-                  margin: EdgeInsets.symmetric(horizontal: 20.w),
-                  decoration: BoxDecoration(
-                    color:
-                        attendance[index]
-                            ? Colors.orange
-                            : Colors.grey.shade300,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 70),
-                    child: Center(
-                      child: Text(
-                        days[index],
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30.w,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 class Quest {
   final String title;
   final String subtitle;
@@ -444,89 +669,4 @@ class Quest {
     required this.stage,
     required this.isCompleted,
   });
-}
-
-Widget _buildQuestItem(Quest quest) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-    width: 1000.w,
-    decoration: BoxDecoration(
-      color: quest.isCompleted ? Colors.orange.shade100 : Colors.white,
-      borderRadius: BorderRadius.circular(8.0),
-      border: Border.all(
-        color: quest.isCompleted ? Colors.orange : Colors.grey.shade300,
-      ),
-    ),
-
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Quest 객체의 데이터를 사용
-        const SizedBox(height: 4),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-          decoration: BoxDecoration(
-            color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Text(
-            quest.stage,
-            style: TextStyle(
-              fontSize: 10,
-              color: Colors.grey.shade800,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 10),
-        Text(
-          quest.title,
-          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 3),
-        Divider(
-          color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
-          thickness: 1.0,
-          indent: 0.5,
-          endIndent: 0.5,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              quest.subtitle,
-              style: const TextStyle(fontSize: 12, color: Colors.black54),
-            ),
-
-            ElevatedButton(
-              onPressed: () {
-                quest.isCompleted
-                    ? print('완료 버튼 클릭: ${quest.title}')
-                    : print('바로가기 버튼 클릭: ${quest.title}');
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    quest.isCompleted ? Colors.orange : Colors.grey.shade800,
-
-                elevation: 0,
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(65, 30),
-
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                visualDensity: VisualDensity.compact,
-              ),
-
-              child: Text(
-                quest.isCompleted ? '완료' : '바로가기',
-                style: TextStyle(fontSize: 10, color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
 }
