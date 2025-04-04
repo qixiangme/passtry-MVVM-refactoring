@@ -1,8 +1,12 @@
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailLive extends StatefulWidget {
-  const DetailLive({super.key});
+  final GroupModel groupModel;
+
+  const DetailLive({super.key, required this.groupModel});
+  
 
   @override
   State<DetailLive> createState() => _DetailLiveState();

@@ -1,8 +1,11 @@
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailRanking extends StatefulWidget {
-  const DetailRanking({super.key});
+  final GroupModel groupModel;
+
+  const DetailRanking({super.key, required this.groupModel});
 
   @override
   State<DetailRanking> createState() => _DetailRankingState();
@@ -24,7 +27,7 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             left: 0.w,
             top: 0.h,
-            child: Container(
+            child: SizedBox(
               width: 1080.w,
               height: 105.h,
               child: Stack(
@@ -194,7 +197,7 @@ class _DetailRankingState extends State<DetailRanking> {
             top: 248.h,
             child: Opacity(
               opacity: 0.50.w,
-              child: Container(
+              child: SizedBox(
                 width: 800.w,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -225,7 +228,7 @@ class _DetailRankingState extends State<DetailRanking> {
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           width: 300.w,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -309,7 +312,7 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             left: 193.w,
             top: 1168.h,
-            child: Container(
+            child: SizedBox(
               width: 800.w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -338,7 +341,7 @@ class _DetailRankingState extends State<DetailRanking> {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 241.w,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -421,7 +424,7 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             left: 193.w,
             top: 520.h,
-            child: Container(
+            child: SizedBox(
               width: 800.w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -450,7 +453,7 @@ class _DetailRankingState extends State<DetailRanking> {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 300.w,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -529,7 +532,7 @@ class _DetailRankingState extends State<DetailRanking> {
           Positioned(
             left: 193.w,
             top: 1440.h,
-            child: Container(
+            child: SizedBox(
               width: 800.w,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -558,7 +561,7 @@ class _DetailRankingState extends State<DetailRanking> {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 241.w,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
