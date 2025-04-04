@@ -230,7 +230,10 @@ class _StudyScreenState extends State<StudyScreen>
                                               context,
                                               MaterialPageRoute(
                                                 builder:
-                                                    (context) => GroupDetaill(),
+                                                    (context) => GroupDetaill(
+                                                      groupModel:
+                                                          _studyGroups[index],
+                                                    ), // 그룹 상세 페이지로 이동
                                               ),
                                             );
                                           },

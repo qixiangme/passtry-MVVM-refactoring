@@ -1,10 +1,13 @@
 import 'dart:math';
 
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailHome extends StatefulWidget {
-  const DetailHome({super.key});
+  final GroupModel groupModel;
+
+  const DetailHome({super.key, required this.groupModel});
 
   @override
   State<DetailHome> createState() => _DetailHomeState();
@@ -151,7 +154,7 @@ class _DetailHomeState extends State<DetailHome> {
                     Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: 15),
-                        child: Container(
+                        child: SizedBox(
                           width: 868.w,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -185,7 +188,7 @@ class _DetailHomeState extends State<DetailHome> {
                                       ),
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 241.w,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -282,7 +285,7 @@ class _DetailHomeState extends State<DetailHome> {
                     Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: 120),
-                        child: Container(
+                        child: SizedBox(
                           width: 868.w,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -316,7 +319,7 @@ class _DetailHomeState extends State<DetailHome> {
                                       ),
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: 241.w,
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -423,7 +426,7 @@ class _DetailHomeState extends State<DetailHome> {
         ),
         Positioned(
           right: 20,
-          child: Container(
+          child: SizedBox(
             width: 120.w,
             height: 120.h,
             child: Stack(
