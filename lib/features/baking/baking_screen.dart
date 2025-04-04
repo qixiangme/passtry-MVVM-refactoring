@@ -31,7 +31,6 @@ class _BakingScreenState extends State<BakingScreen> {
       subtitle: '트랜드 질문',
       stage: '최근 트랜드 학습하기',
       isCompleted: false,
-
     ),
     // Quest(title: '새로운 퀘스트', subtitle: '간단 설명', stage: 'Stage 2-1'),
   ];
@@ -39,7 +38,6 @@ class _BakingScreenState extends State<BakingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: Text("logo")),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -49,6 +47,8 @@ class _BakingScreenState extends State<BakingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 100),
+                  Text('logo'),
                   Center(
                     child: Container(
                       width: 1000.w,
@@ -228,7 +228,7 @@ class _BakingScreenState extends State<BakingScreen> {
                   ),
                   SizedBox(height: 20),
                   Padding(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.only(left: 20, right: 20),
                     child: Column(
                       // map을 사용하여 각 Quest 객체를 _buildQuestItem 위젯으로 변환
                       // .toList()로 위젯 리스트 생성
@@ -243,13 +243,47 @@ class _BakingScreenState extends State<BakingScreen> {
                               .toList(),
                     ),
                   ),
-                  SizedBox(height: 100),
+                  SizedBox(height: 50),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '나만의 모범 답안',
+                          style: TextStyle(
+                            color: Colors.black /* white */,
+                            fontSize: 50.w,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            //Navigator.push(
+                            //  context,
+                            //  MaterialPageRoute(
+                            //    builder: (context) {}
+                          },
+                          child: Row(
+                            children: [
+                              const Text('전체보기'),
+                              Icon(Icons.arrow_forward_ios, size: 15),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  //Padding(
+                  //  padding: EdgeInsets.only(left: 20, right: 20),
+                  //  child: Column(
+                  //    children: [
 
                 ],
               ),
             ),
-
-
           ],
         ),
       ),
@@ -347,8 +381,10 @@ Widget _buildAttendanceSection() {
   List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
 
   return Center(
+
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+
 
       children: [
         Container(
@@ -394,8 +430,6 @@ Widget _buildAttendanceSection() {
             }),
           ),
         ),
-
-
       ],
     ),
   );
@@ -418,12 +452,13 @@ class Quest {
 Widget _buildQuestItem(Quest quest) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-    width: 950.w,
+    width: 1000.w,
     decoration: BoxDecoration(
-      color: quest.isCompleted ? Colors.orange.shade100 :Colors.white,
+      color: quest.isCompleted ? Colors.orange.shade100 : Colors.white,
       borderRadius: BorderRadius.circular(8.0),
-      border: Border.all(color: quest.isCompleted ? Colors.orange : Colors.grey.shade300),
-
+      border: Border.all(
+        color: quest.isCompleted ? Colors.orange : Colors.grey.shade300,
+      ),
     ),
 
     child: Column(
@@ -436,7 +471,6 @@ Widget _buildQuestItem(Quest quest) {
           decoration: BoxDecoration(
             color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
             borderRadius: BorderRadius.circular(20),
-
           ),
           child: Text(
             quest.stage,
@@ -470,12 +504,13 @@ Widget _buildQuestItem(Quest quest) {
 
             ElevatedButton(
               onPressed: () {
-                quest.isCompleted ?
-                print('완료 버튼 클릭: ${quest.title}') :
-                print('바로가기 버튼 클릭: ${quest.title}');
+                quest.isCompleted
+                    ? print('완료 버튼 클릭: ${quest.title}')
+                    : print('바로가기 버튼 클릭: ${quest.title}');
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: quest.isCompleted ? Colors.orange : Colors.grey.shade800,
+                backgroundColor:
+                    quest.isCompleted ? Colors.orange : Colors.grey.shade800,
 
                 elevation: 0,
                 padding: EdgeInsets.zero,
@@ -487,7 +522,7 @@ Widget _buildQuestItem(Quest quest) {
                 visualDensity: VisualDensity.compact,
               ),
 
-              child:  Text(
+              child: Text(
                 quest.isCompleted ? '완료' : '바로가기',
                 style: TextStyle(fontSize: 10, color: Colors.white),
               ),
