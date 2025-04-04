@@ -18,13 +18,21 @@ class _BakingScreenState extends State<BakingScreen> {
       title: '모범 답안 작성하기',
       subtitle: '프로젝트 경험 관련 최다 빈출 답변하기',
       stage: 'Stage 1-1',
+      isCompleted: true,
     ),
     Quest(
       title: '면접 질문 답변 연습하기',
       subtitle: '듣기/태도/역량 관련 답변 연습하기',
       stage: 'Stage 1-2',
+      isCompleted: true,
     ),
-    Quest(title: '경제 관련 시사 트렌드 학습하기', subtitle: '트랜드 질문', stage: '최근 트랜드 학습하기'),
+    Quest(
+      title: '경제 관련 시사 트렌드 학습하기',
+      subtitle: '트랜드 질문',
+      stage: '최근 트랜드 학습하기',
+      isCompleted: false,
+
+    ),
     // Quest(title: '새로운 퀘스트', subtitle: '간단 설명', stage: 'Stage 2-1'),
   ];
 
@@ -235,40 +243,13 @@ class _BakingScreenState extends State<BakingScreen> {
                               .toList(),
                     ),
                   ),
+                  SizedBox(height: 100),
+
                 ],
               ),
             ),
 
-            Positioned(
-              right: 24,
-              top: 7,
-              child: Icon(Icons.circle, size: 40, color: Color(0xffFF9F1C)),
-            ),
-            Positioned(
-              right: 20,
-              child: SizedBox(
-                width: 120.w,
-                height: 120.h,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 31.20.w,
-                      top: 34.80.h,
-                      child: Text(
-                        '27',
-                        style: TextStyle(
-                          color: Colors.white /* white */,
-                          fontSize: 48.w,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.48.w,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
@@ -365,11 +346,12 @@ Widget _buildAttendanceSection() {
   ]; // 예시 출석 데이터 (월~일)
   List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Center(
-        child: Container(
+  return Center(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: [
+        Container(
           width: 1000.w,
           height: 300.h,
           decoration: BoxDecoration(
@@ -381,24 +363,29 @@ Widget _buildAttendanceSection() {
             children: List.generate(days.length, (index) {
               // Replace this with your logic to check if the day is attended
               bool isAttended = Random().nextBool(); // Example logic
-              return Container(
-                width: 100.w,
-                height: 230.h,
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                decoration: BoxDecoration(
-                  color:
-                      attendance[index] ? Colors.orange : Colors.grey.shade300,
-                  shape: BoxShape.circle,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 70),
-                  child: Center(
-                    child: Text(
-                      days[index],
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 36.w,
-                        fontWeight: FontWeight.bold,
+              return Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Container(
+                  width: 100.w,
+                  height: 300.h,
+                  margin: EdgeInsets.symmetric(horizontal: 20.w),
+                  decoration: BoxDecoration(
+                    color:
+                        attendance[index]
+                            ? Colors.orange
+                            : Colors.grey.shade300,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 70),
+                    child: Center(
+                      child: Text(
+                        days[index],
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 30.w,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -407,8 +394,10 @@ Widget _buildAttendanceSection() {
             }),
           ),
         ),
-      ),
-    ],
+
+
+      ],
+    ),
   );
 }
 
@@ -416,8 +405,14 @@ class Quest {
   final String title;
   final String subtitle;
   final String stage;
+  final bool isCompleted;
 
-  Quest({required this.title, required this.subtitle, required this.stage});
+  Quest({
+    required this.title,
+    required this.subtitle,
+    required this.stage,
+    required this.isCompleted,
+  });
 }
 
 Widget _buildQuestItem(Quest quest) {
@@ -425,34 +420,45 @@ Widget _buildQuestItem(Quest quest) {
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
     width: 950.w,
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: quest.isCompleted ? Colors.orange.shade100 :Colors.white,
       borderRadius: BorderRadius.circular(8.0),
-      border: Border.all(color: Colors.grey.shade300),
+      border: Border.all(color: quest.isCompleted ? Colors.orange : Colors.grey.shade300),
+
     ),
 
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Quest 객체의 데이터를 사용
-        Text(
-          quest.stage,
-          style: TextStyle(
-            fontSize: 10,
-            color: Colors.orange.shade700,
-            fontWeight: FontWeight.bold,
+        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          decoration: BoxDecoration(
+            color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
+            borderRadius: BorderRadius.circular(20),
+
+          ),
+          child: Text(
+            quest.stage,
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey.shade800,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        const SizedBox(height: 4),
+
+        const SizedBox(height: 10),
         Text(
           quest.title,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 2),
+        const SizedBox(height: 3),
         Divider(
-          color: Colors.grey,
+          color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
           thickness: 1.0,
-          indent: 1.0,
-          endIndent: 1.0,
+          indent: 0.5,
+          endIndent: 0.5,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -464,13 +470,16 @@ Widget _buildQuestItem(Quest quest) {
 
             ElevatedButton(
               onPressed: () {
+                quest.isCompleted ?
+                print('완료 버튼 클릭: ${quest.title}') :
                 print('바로가기 버튼 클릭: ${quest.title}');
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey.shade800,
+                backgroundColor: quest.isCompleted ? Colors.orange : Colors.grey.shade800,
 
                 elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(65, 30),
 
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -478,8 +487,8 @@ Widget _buildQuestItem(Quest quest) {
                 visualDensity: VisualDensity.compact,
               ),
 
-              child: const Text(
-                '바로가기',
+              child:  Text(
+                quest.isCompleted ? '완료' : '바로가기',
                 style: TextStyle(fontSize: 10, color: Colors.white),
               ),
             ),
