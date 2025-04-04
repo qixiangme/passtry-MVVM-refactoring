@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:componentss/features/auth/data/user_provider.dart';
 import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +10,7 @@ import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_complete_screen.dart';
+import 'package:provider/provider.dart';
 
 class StudyMakeGroupName extends StatefulWidget {
   const StudyMakeGroupName({super.key});
@@ -45,19 +48,22 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
 
   /// 그룹 업로드 메서드
   Future<void> _uploadGroup(Map<String, dynamic> args) async {
-
-
     final String groupName = args['name'] ?? '그룹 이름 없음';
     final String? imagePath = args['imagePath'] as String?;
     final File? imageFile = imagePath != null ? File(imagePath) : null;
 
     var uri = Uri.parse("http://34.64.233.128:5200/groups"); // 🔥 엔드포인트 설정
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final user = userProvider.user;
+    final String category = args['category'] ?? "";
+    final String category2 = args['category2'] ?? "";
 
+    final List<String> tags = [category, category2];
     var request =
         http.MultipartRequest("POST", uri)
-          ..fields['authorId'] = "1234"
+          ..fields['authorId'] = user!.email
           ..fields['name'] = groupName
-          ..fields['tags'] = '["tag1", "tag2"]'; // JSON 문자열 형태
+          ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
 
     if (imageFile != null) {
       request.files.add(
@@ -66,6 +72,15 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
           imageFile.path,
           filename: path.basename(imageFile.path),
           contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+
+      user.joinedGroups.add(
+        GroupModel(
+          authorId: user.email,
+          name: groupName,
+          tags: tags,
+          imageUrl: imagePath,
         ),
       );
 
@@ -88,28 +103,18 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     final String time = args['time'];
     final String studyLevel = args['studyLevel'];
     final String inclusionOption = args['inclusionOption'];
-
-    print('category: $category');
-    print('category2: $category2');
-    print('Selected Date: $date');
-    print('Selected Time: $time');
-    print('Selected Study Level: $studyLevel');
-    print('Selected Inclusion Option: $inclusionOption');
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final user = userProvider.user;
 
     await _uploadGroup({
       'name': _GroupName,
       'imagePath': _selectedImage?.path,
-      'authorId' : "1234",
-      "tags" : ["tag1", "tag2"],
-
+      'authorId': user!.email,
+      "tags": ["tag1", "tag2"],
     });
 
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
     if (_isNextButtonEnabled) {
-      print("--- 다음 버튼 클릭 ---");
-      print("이미지 : ${_selectedImage ?? '선택되지 않음'}");
-      print("그룹 이름 : ${_GroupName ?? '선택되지 않음'}");
-      print("--------------------");
       setState(() {
         _isNextButtonClicked = true;
       });

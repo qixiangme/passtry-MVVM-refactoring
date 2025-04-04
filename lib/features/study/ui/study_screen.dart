@@ -2,12 +2,12 @@ import 'package:componentss/features/auth/data/user_provider.dart';
 import 'package:componentss/features/study/data/group_api.dart';
 import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/data/tempGroup.dart';
-import 'package:componentss/features/study/group_detail/group_detaill.dart';
-import 'package:componentss/features/study/search_group/search_group_screen.dart';
+import 'package:componentss/features/study/ui/group_detail/group_detaill.dart';
+import 'package:componentss/features/study/ui/search_group/search_group_screen.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
-import 'package:componentss/features/study/widgets/interview_schedule_card.dart';
-import 'package:componentss/features/study/widgets/ranking_card.dart';
-import 'package:componentss/features/study/widgets/study_group_card.dart';
+import 'package:componentss/features/study/ui/widgets/interview_schedule_card.dart';
+import 'package:componentss/features/study/ui/widgets/ranking_card.dart';
+import 'package:componentss/features/study/ui/widgets/study_group_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +34,21 @@ class _StudyScreenState extends State<StudyScreen>
   @override
   void initState() {
     super.initState();
-    fetchGroups();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // UserProvider를 통해 사용자 정보 가져오기
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    final joinedGroups = user?.joinedGroups ?? [];
+
+    // 스터디 그룹 초기화
+    setState(() {
+      _studyGroups = joinedGroups;
+    });
   }
 
   Future<void> fetchGroups() async {

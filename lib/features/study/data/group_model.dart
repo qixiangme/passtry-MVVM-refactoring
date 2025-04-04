@@ -3,16 +3,17 @@ import 'dart:convert';
 class GroupModel {
   final String authorId;
   final String name;
-  final String joinCode;
+  final String? joinCode;
   final List<String> tags;
   final String? imageUrl;
 
   GroupModel({
     required this.authorId,
     required this.name,
-    required this.joinCode,
+  
     required this.tags,
     this.imageUrl,
+     this.joinCode,
   });
 
   // JSON → 객체 변환

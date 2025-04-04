@@ -1,6 +1,6 @@
-import 'package:componentss/features/study/group_detail/detail_home.dart';
-import 'package:componentss/features/study/group_detail/detail_live.dart';
-import 'package:componentss/features/study/group_detail/detail_ranking.dart';
+import 'package:componentss/features/study/ui/group_detail/detail_home.dart';
+import 'package:componentss/features/study/ui/group_detail/detail_live.dart';
+import 'package:componentss/features/study/ui/group_detail/detail_ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

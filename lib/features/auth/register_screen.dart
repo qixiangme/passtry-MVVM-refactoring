@@ -25,9 +25,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _register() async {
     bool success = await AuthApi.registerUser(
       context,
+      _nameController.text,
       _idController.text,
       _passwordController.text,
-      _nameController.text,
     );
 
     if (success) {

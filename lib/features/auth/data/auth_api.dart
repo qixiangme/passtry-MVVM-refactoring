@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthApi {
-  static const String baseUrl = 'http://your-server.com/auth'; // 서버 주소 변경
+  static const String baseUrl = 'http://34.64.233.128:5200/auth'; // 서버 주소 변경
 
   // 회원가입 API 호출
   static Future<bool> registerUser(
@@ -48,11 +48,7 @@ class AuthApi {
       );
 
       // User 객체 생성
-      final user = User(
-        username: username,
-        email: "data['email']",
-        joinedGroups: [],
-      );
+      final user = User(username: username, email: username, joinedGroups: []);
 
       // UserProvider를 통해 사용자 정보 설정
       Provider.of<UserProvider>(context, listen: false).setUser(user);
