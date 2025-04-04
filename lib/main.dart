@@ -1,7 +1,7 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/onboarding_screen.dart';
 import 'package:componentss/features/main_screen.dart';
-import 'package:componentss/psy.dart';
+import 'package:componentss/trend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           // ScreenUtil 초기화
           ScreenUtil.init(context, designSize: Size(1080, 2400));
           return MaterialApp(
-            home: const OnboardingScreen(),
+            home: const MainScreen(goToPage: 0),
             theme: ThemeData(
               fontFamily: "Wanted Sans",
               scaffoldBackgroundColor: Colors.white,
