@@ -35,13 +35,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(bottom: 4),
-              child: Icon(CustomIcon.home),
-            ),
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(bottom: 4),
               child: Icon(CustomIcon.study),
             ),
             label: '스터디',

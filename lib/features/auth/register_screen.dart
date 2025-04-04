@@ -83,13 +83,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String? _validateName(String value) {
     if (value.isEmpty) return "이름을 입력해주세요.";
-    if (!RegExp(r"^[가-힣]+$").hasMatch(value)) return "한글만 입력 가능합니다.";
+
     return null;
   }
 
   String? _validateId(String value) {
-    if (value.isEmpty) return "아이디를 입력해주세요.";
-    if (!RegExp(r"^[a-zA-Z0-9]+$").hasMatch(value)) return "영문과 숫자만 입력 가능합니다.";
+    if (value.isEmpty) return "이메일을 입력해주세요.";
     return null;
   }
 
@@ -125,9 +124,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 style: TextStyle(fontSize: 76.sp, fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 40),
-              _buildInputField("이름", "한글만 입력", _nameController, _nameError),
+              _buildInputField(
+                "닉네임",
+                "닉네임을 적어주세요",
+                _nameController,
+                _nameError,
+              ),
               SizedBox(height: 30),
-              _buildInputField("아이디", "영문, 숫자 조합", _idController, _idError),
+              _buildInputField("이메일", "이메일을 적어주세요", _idController, _idError),
               SizedBox(height: 30),
               _buildInputField(
                 "비밀번호",

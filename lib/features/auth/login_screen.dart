@@ -1,6 +1,5 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/data/auth_api.dart';
-import 'package:componentss/features/auth/repository/auth_repository.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   controller: _idController,
                   decoration: InputDecoration(
-                    hintText: "한글로 입력",
+                    hintText: "닉네임을 입력하세요",
                     hintStyle: TextStyle(color: Color(0xFFC4CAD4)),
                     border: InputBorder.none,
                   ),
