@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           // ScreenUtil 초기화
           ScreenUtil.init(context, designSize: Size(1080, 2400));
           return MaterialApp(
-            home: const OnboardingScreen(),
+            home: const TrendScreen(),
             theme: ThemeData(
               fontFamily: "Wanted Sans",
               scaffoldBackgroundColor: Colors.white,
