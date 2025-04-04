@@ -4,7 +4,7 @@ import 'package:componentss/features/study/data/tempGroup.dart';
 class User {
   final String username;
   final String email;
-  final List<GroupModel> joinedGroups;
+  List<GroupModel> joinedGroups;
   final int score; // 참가 그룹 리스트
 
   User({
