@@ -172,7 +172,7 @@ class _BakingScreenState extends State<BakingScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const TrendScreen();
+                              return const TrendQuiz();
                             },
                           ),
                         );
