@@ -454,20 +454,22 @@ Widget _buildQuestItem(Quest quest) {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey.shade800,
-                foregroundColor: Colors.black54,
+
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 2,
-                  vertical: 2,
+                  horizontal: 0,
+                  vertical: 0,
                 ),
-                textStyle: const TextStyle(fontSize: 7),
+
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
+                visualDensity: VisualDensity.compact,
               ),
+
               child: const Text(
                 '바로가기',
-                style: TextStyle(fontSize: 7, color: Colors.white),
+                style: TextStyle(fontSize: 10, color: Colors.white),
               ),
             ),
           ],
