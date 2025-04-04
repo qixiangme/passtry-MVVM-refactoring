@@ -5,9 +5,9 @@ import 'group_model.dart'; // GroupModel 파일 import
 class GroupApi {
   final String baseUrl = "http://34.64.233.128:5200";
 
-  // 그룹 정보 가져오기
-  Future<GroupModel?> getGroup(String Id) async {
-    final url = Uri.parse("$baseUrl/groups");
+  // 그룹 정보 가져오기 (joinCode 기반)
+  Future<GroupModel?> getGroupByJoinCode(String joinCode) async {
+    final url = Uri.parse("$baseUrl/groups/joinCode/$joinCode");
 
     try {
       final response = await http.get(url);
@@ -15,6 +15,26 @@ class GroupApi {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return GroupModel.fromJson(data);
+      } else {
+        print("Error: ${response.statusCode}, ${response.body}");
+        return null;
+      }
+    } catch (e) {
+      print("GET 요청 실패: $e");
+      return null;
+    }
+  }
+
+  Future<List<GroupModel>?> getGroupsById(String Id) async {
+    final url = Uri.parse("$baseUrl/groups/userId/$Id");
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+
+        return data.map((group) => GroupModel.fromJson(group)).toList();
       } else {
         print("Error: ${response.statusCode}, ${response.body}");
         return null;
@@ -56,6 +76,4 @@ class GroupApi {
       return false;
     }
   }
-
-  
 }

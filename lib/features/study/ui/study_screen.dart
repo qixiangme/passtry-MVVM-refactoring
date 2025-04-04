@@ -43,27 +43,25 @@ class _StudyScreenState extends State<StudyScreen>
     // UserProvider를 통해 사용자 정보 가져오기
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
-    final joinedGroups = user?.joinedGroups ?? [];
-
-    // 스터디 그룹 초기화
-    setState(() {
-      _studyGroups = joinedGroups;
-    });
+    if (user != null) {
+      // 사용자 ID로 그룹 목록 가져오기
+      fetchGroupsByUserId(user.email);
+    }
   }
 
-  Future<void> fetchGroups() async {
+  Future<void> fetchGroupsByUserId(String userId) async {
     try {
-      final groups = await groupApi.getGroups(); // GroupApi 활용
+      final groups = await groupApi.getGroupsById(userId); // GroupApi 활용
       if (groups != null) {
         setState(() {
           _studyGroups = groups;
           isLoading = false;
         });
       } else {
-        throw Exception('Failed to load groups');
+        throw Exception('Failed to load groups for user $userId');
       }
     } catch (e) {
-      print("Error fetching groups: $e");
+      print("Error fetching groups for user $userId: $e");
       setState(() {
         isLoading = false;
       });
@@ -232,7 +230,10 @@ class _StudyScreenState extends State<StudyScreen>
                                               context,
                                               MaterialPageRoute(
                                                 builder:
-                                                    (context) => GroupDetaill(),
+                                                    (context) => GroupDetaill(
+                                                      groupModel:
+                                                          _studyGroups[index],
+                                                    ), // 그룹 상세 페이지로 이동
                                               ),
                                             );
                                           },

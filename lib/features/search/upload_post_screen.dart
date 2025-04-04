@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/search/data/post_api.dart';
 import 'package:componentss/features/search/data/post_model.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class UploadPostScreen extends StatefulWidget {
   const UploadPostScreen({super.key});
@@ -46,6 +48,9 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
   List<bool> tagSelection = List.generate(8, (_) => false);
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -60,14 +65,14 @@ class _UploadPostScreenState extends State<UploadPostScreen> {
               }
               final DateTime now = DateTime.now();
               final post = PostModel(
-                "0",
+                user!.username,
                 now.toString(),
                 0,
                 selectedTags,
                 title: _titleTextController.text,
                 content: _textController.text,
                 images: _selectedImage,
-                id: "0",
+                id: user.username,
               );
 
               final isSuccess = await _postApi.uploadPostWithFile(post);

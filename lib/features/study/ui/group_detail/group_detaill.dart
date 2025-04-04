@@ -1,3 +1,4 @@
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/ui/group_detail/detail_home.dart';
 import 'package:componentss/features/study/ui/group_detail/detail_live.dart';
 import 'package:componentss/features/study/ui/group_detail/detail_ranking.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GroupDetaill extends StatefulWidget {
-  const GroupDetaill({super.key});
+  final GroupModel groupModel;
+  const GroupDetaill({super.key, required this.groupModel});
 
   @override
   State<GroupDetaill> createState() => _GroupDetaillState();
@@ -13,9 +15,19 @@ class GroupDetaill extends StatefulWidget {
 
 class _GroupDetaillState extends State<GroupDetaill> {
   int _currentIndex = 0; // 현재 선택된 탭 인덱스
-
+  late List<Widget> _pages; // `late` 키워드로 선언
   // 탭에 따라 다른 화면을 표시하기 위한 위젯 리스트
-  final List<Widget> _pages = [DetailHome(), DetailLive(), DetailRanking()];
+
+  @override
+  void initState() {
+    super.initState();
+    // `widget.groupModel`을 사용하여 `_pages` 초기화
+    _pages = [
+      DetailHome(groupModel: widget.groupModel),
+      DetailLive(groupModel: widget.groupModel),
+      DetailRanking(groupModel: widget.groupModel),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +38,7 @@ class _GroupDetaillState extends State<GroupDetaill> {
           child: Padding(
             padding: const EdgeInsets.only(right: 65),
             child: Text(
-              "groupName",
+              widget.groupModel.name,
               style: TextStyle(
                 fontSize: 55.sp,
                 fontFamily: "Wanted Sans",
