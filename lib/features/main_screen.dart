@@ -1,9 +1,11 @@
+import 'package:componentss/features/auth/data/user_model.dart';
 import 'package:componentss/features/pages_list.dart';
 import 'package:flutter/material.dart';
 import 'package:componentss/core/widgets/customBottomNavigationBar.dart';
 
 class MainScreen extends StatefulWidget {
   final int goToPage;
+  
   const MainScreen({super.key, required this.goToPage});
 
   @override

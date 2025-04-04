@@ -1,14 +1,17 @@
+import 'package:componentss/features/auth/data/user_provider.dart';
 import 'package:componentss/features/study/data/group_api.dart';
 import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/data/tempGroup.dart';
-import 'package:componentss/features/study/ui/group_detail/group_detaill.dart';
-import 'package:componentss/features/study/ui/search_group/search_group_screen.dart';
+import 'package:componentss/features/study/group_detail/group_detaill.dart';
+import 'package:componentss/features/study/search_group/search_group_screen.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
-import 'package:componentss/features/study/ui/widgets/interview_schedule_card.dart';
-import 'package:componentss/features/study/ui/widgets/ranking_card.dart';
-import 'package:componentss/features/study/ui/widgets/study_group_card.dart';
+import 'package:componentss/features/study/widgets/interview_schedule_card.dart';
+import 'package:componentss/features/study/widgets/ranking_card.dart';
+import 'package:componentss/features/study/widgets/study_group_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class StudyScreen extends StatefulWidget {
   const StudyScreen({super.key});
@@ -22,7 +25,6 @@ class _StudyScreenState extends State<StudyScreen>
   final ScrollController _scrollController = ScrollController();
   GroupApi groupApi = GroupApi();
 
-
   List<GroupModel> _studyGroups = []; // 스터디 그룹 목록
   bool isLoading = true; // 데이터 로딩 상태
   bool _showButton = true;
@@ -35,24 +37,24 @@ class _StudyScreenState extends State<StudyScreen>
     fetchGroups();
   }
 
-Future<void> fetchGroups() async {
-  try {
-    final groups = await groupApi.getGroups(); // GroupApi 활용
-    if (groups != null) {
+  Future<void> fetchGroups() async {
+    try {
+      final groups = await groupApi.getGroups(); // GroupApi 활용
+      if (groups != null) {
+        setState(() {
+          _studyGroups = groups;
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load groups');
+      }
+    } catch (e) {
+      print("Error fetching groups: $e");
       setState(() {
-        _studyGroups = groups;
         isLoading = false;
       });
-    } else {
-      throw Exception('Failed to load groups');
     }
-  } catch (e) {
-    print("Error fetching groups: $e");
-    setState(() {
-      isLoading = false;
-    });
   }
-}
 
   @override
   void dispose() {
@@ -81,10 +83,14 @@ Future<void> fetchGroups() async {
   }
 
   bool isExpanded = false;
-  
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    if (user != null) {
+      print("사용자 이름: ${user.username}");
+    }
     return Scaffold(
       appBar: AppBar(backgroundColor: Color(0xFF6B6B6B), toolbarHeight: 1),
       backgroundColor: Color(0xFF6B6B6B),
@@ -105,7 +111,7 @@ Future<void> fetchGroups() async {
                       Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Text(
-                          "스터디",
+                          user != null ? "${user.username}님, 안녕하세요!" : "안녕하세요!",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,

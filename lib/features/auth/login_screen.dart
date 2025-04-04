@@ -12,29 +12,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthRepository _authRepository = AuthRepository(authApi: AuthApi());
-  final TextEditingController _idController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  Future<void> _handleLogin() async {
+  void _login(BuildContext context) async {
     final username = _idController.text;
     final password = _passwordController.text;
 
-    try {
-      final response = await _authRepository.login(username, password);
+    final success = await AuthApi.loginUser(context, username, password);
 
-      // 로그인 성공 시 메인 화면으로 이동
+    if (success) {
+      print("로그인 성공");
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainScreen(goToPage: 0)),
+        MaterialPageRoute(builder: (context) => MainScreen(goToPage: 1)),
       );
-    } catch (e) {
-      // 예외 처리
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("로그인 중 오류가 발생했습니다.")));
+    } else {
+      print("로그인 실패");
     }
   }
+
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SizedBox(height: 40),
           GestureDetector(
-            onTap: _handleLogin,
+            onTap: () => _login(context),
             child: Center(
               child: Container(
                 width: 991.w,

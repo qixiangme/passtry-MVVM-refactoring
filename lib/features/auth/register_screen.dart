@@ -1,6 +1,8 @@
 import 'package:componentss/features/auth/data/auth_api.dart';
 import 'package:componentss/features/auth/data/user_model.dart';
+import 'package:componentss/features/auth/login_screen.dart';
 import 'package:componentss/features/auth/welcome_screen.dart';
+import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,12 +16,34 @@ class RegisterScreen extends StatefulWidget {
 //UI 작업할때 신경 안써도 되는 부분~
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final AuthApi _authApi = AuthApi();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+  void _register() async {
+    bool success = await AuthApi.registerUser(
+      context,
+      _idController.text,
+      _passwordController.text,
+      _nameController.text,
+    );
+
+    if (success) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("회원가입 성공! 로그인 해주세요.")));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      ); // 로그인 화면으로 이동
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("회원가입 실패! 다시 시도해주세요.")));
+    }
+  }
 
   String? _nameError;
   String? _idError;
@@ -59,20 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _idError == null &&
         _passwordError == null &&
         _confirmPasswordError == null) {
-      User user = User(
-        username: _idController.text,
-        email: _nameController.text,
-        password: _passwordController.text,
-      );
-
-      _authApi.registerUser(user);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("회원가입 성공!")));
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-      );
+      _register();
     }
   }
 
