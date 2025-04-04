@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:componentss/trend_ox.dart';
-import 'package:componentss/trend_quiz.dart';
-import 'package:componentss/trend_screen.dart';
+import 'package:componentss/features/baking/questions/trend/trend_ox.dart';
+import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
+import 'package:componentss/features/baking/questions/trend/trend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -244,9 +244,6 @@ class _BakingScreenState extends State<BakingScreen> {
                               .toList(),
                     ),
                   ),
-<<<<<<< HEAD
-                  SizedBox(height: 100),
-=======
                   SizedBox(height: 50),
                   Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),
@@ -285,7 +282,6 @@ class _BakingScreenState extends State<BakingScreen> {
                   //  child: Column(
                   //    children: [
 
->>>>>>> 1bd4c220c4279ad6966e8b9fa3db3849c39b28b0
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:componentss/features/baking/baking_screen.dart';
+import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -104,34 +105,46 @@ class _trendScreenState extends State<TrendScreen> {
             Positioned(
               left: 44.w,
               top: 2032.h,
-              child: Container(
-                width: 993.w,
-                height: 160.h,
-                padding: const EdgeInsets.all(10),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFFF9F1C) /* main-orange */,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(33.w),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  //spacing: 27.50.w,
-                  children: [
-                    Text(
-                      '문제 풀기',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white /* white */,
-                        fontSize: 50.w,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.50.w,
-                      ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              TrendQuiz(), // Replace with your actual screen
                     ),
-                  ],
+                  );
+                },
+                child: Container(
+                  width: 993.w,
+                  height: 160.h,
+                  padding: const EdgeInsets.all(10),
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFFFF9F1C) /* main-orange */,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(33.w),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    //spacing: 27.50.w,
+                    children: [
+                      Text(
+                        '문제 풀기',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white /* white */,
+                          fontSize: 50.w,
+                          fontFamily: 'Wanted Sans',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.50.w,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
