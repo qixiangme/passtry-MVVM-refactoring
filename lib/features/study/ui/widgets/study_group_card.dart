@@ -57,11 +57,11 @@ class StudyGroupCard extends StatelessWidget {
                   children: [
                     Icon(Icons.calendar_today, color: Colors.black54, size: 18),
                     SizedBox(width: 5),
-                    Text("멤버수"),
+                    Text("수"),
                     SizedBox(width: 15),
                     Icon(Icons.calendar_today, color: Colors.black54, size: 18),
                     SizedBox(width: 5),
-                    Text("스터디 주제"),
+                    Text("스"),
                   ],
                 ),
               ],

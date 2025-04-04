@@ -13,204 +13,440 @@ class DetailHome extends StatefulWidget {
 class _DetailHomeState extends State<DetailHome> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        color: Color(0xFF434343),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '면접까지',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 50.sp,
-                fontFamily: 'Wanted Sans',
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Row(
+    return Stack(
+      children: [
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            color: Color(0xFF434343),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 130.w,
-                  height: 154.h,
-                  margin: EdgeInsets.symmetric(horizontal: 8.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.r),
-                  ),
-                  child: Stack(
-                    children: [
-                      // 상단 영역
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            color: Color(0XFFF3F3F3), // 상단 색상
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(35.r),
-                            ),
-                          ),
-                        ),
+                Row(
+                  children: [
+                    Container(
+                      width: 130.w,
+                      height: 154.h,
+                      margin: EdgeInsets.symmetric(horizontal: 8.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35.r),
                       ),
-                      // 하단 영역
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 80.h, // 하단 영역 높이
-                          decoration: BoxDecoration(
-                            color: Colors.white, // 하단 색상
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(35.r),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'D',
-                          style: TextStyle(
-                            color: Color(0XFFFF9F1C),
-                            fontSize: 88.sp,
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
 
-                Text(
-                  '-',
-                  style: TextStyle(
-                    color: Color(0XFFFF9F1C),
-                    fontSize: 88.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                    Container(
+                      width: 130.w,
+                      height: 154.h,
+                      margin: EdgeInsets.symmetric(horizontal: 8.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35.r),
+                      ),
+                    ),
 
-                Container(
-                  width: 130.w,
-                  height: 154.h,
-                  margin: EdgeInsets.symmetric(horizontal: 8.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.r),
-                  ),
-                  child: Stack(
-                    children: [
-                      // 상단 영역
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            color: Color(0XFFF3F3F3), // 상단 색상
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(35.r),
-                            ),
-                          ),
-                        ),
+                    Container(
+                      width: 130.w,
+                      height: 154.h,
+                      margin: EdgeInsets.symmetric(horizontal: 8.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35.r),
                       ),
-                      // 하단 영역
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 80.h, // 하단 영역 높이
-                          decoration: BoxDecoration(
-                            color: Colors.white, // 하단 색상
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(35.r),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'D',
-                          style: TextStyle(
-                            color: Color(0XFFFF9F1C),
-                            fontSize: 88.sp,
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
-                Container(
-                  width: 130.w,
-                  height: 154.h,
-                  margin: EdgeInsets.symmetric(horizontal: 8.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.r),
-                  ),
-                  child: Stack(
-                    children: [
-                      // 상단 영역
-                      Align(
-                        alignment: Alignment.topCenter,
+                Stack(
+                  children: [
+                    Center(child: AnimatedHalfCircleProgress()),
+                    Padding(
+                      padding: EdgeInsets.only(top: 90),
+                      child: Center(
                         child: Container(
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            color: Color(0XFFF3F3F3), // 상단 색상
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(35.r),
-                            ),
-                          ),
+                          width: 611.w,
+                          height: 500.h,
+                          decoration: BoxDecoration(color: Color(0XFF6B6B6B)),
                         ),
                       ),
-                      // 하단 영역
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: 80.h, // 하단 영역 높이
-                          decoration: BoxDecoration(
-                            color: Colors.white, // 하단 색상
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(35.r),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'D',
-                          style: TextStyle(
-                            color: Color(0XFFFF9F1C),
-                            fontSize: 88.sp,
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Stack(
-              children: [
+                SizedBox(height: 20),
                 Center(
                   child: Container(
-                    width: 611.w,
-                    height: 530.h,
-                    decoration: BoxDecoration(color: Color(0XFFD9D9D9)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: const Color(0x21FF9F1C),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.96.w,
+                          color: const Color(0xFFFF9F1C) /* main-orange */,
+                        ),
+                        borderRadius: BorderRadius.circular(29.57.w),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 29.57.w,
+                      children: [
+                        Text(
+                          'Lv.0',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: const Color(0xFFFF9F1C) /* main-orange */,
+                            fontSize: 36.w,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Center(child: AnimatedHalfCircleProgress()),
+                SizedBox(height: 6),
+                Center(
+                  child: Text(
+                    '따끈따끈한 반죽',
+                    style: TextStyle(
+                      color: Colors.white /* white */,
+                      fontSize: 66.w,
+                      fontFamily: 'Wanted Sans',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 40),
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    '오늘 획득한 그룹 포인트',
+                    style: TextStyle(
+                      color: Colors.white /* white */,
+                      fontSize: 50.w,
+                      fontFamily: 'Wanted Sans',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Stack(
+                  children: [
+                    Center(
+                      child: Opacity(
+                        opacity: 0.10.w,
+                        child: Container(
+                          width: 992.w,
+                          height: 522.h,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFD9D9D9),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(38.50.w),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Container(
+                          width: 868.w,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 315.w,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                spacing: 42.w,
+                                children: [
+                                  Container(
+                                    width: 150.w,
+                                    height: 150.h,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          "https://placehold.co/150x150",
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      shape: OvalBorder(
+                                        side: BorderSide(
+                                          width: 1.68.w,
+                                          color: const Color(
+                                            0xFFC4CAD4,
+                                          ) /* gray */,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 241.w,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      spacing: 23.w,
+                                      children: [
+                                        SizedBox(
+                                          width: 241.w,
+                                          height: 60.h,
+                                          child: Text(
+                                            'Username',
+                                            style: TextStyle(
+                                              color: Colors.white /* white */,
+                                              fontSize: 50.w,
+                                              fontFamily: 'Wanted Sans',
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 123.31.w,
+                                          height: 66.65.h,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 5,
+                                            vertical: 3,
+                                          ),
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: ShapeDecoration(
+                                            color: const Color(
+                                              0xFF6B6B6B,
+                                            ) /* dark-gray */,
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                width: 2.96.w,
+                                                color: const Color(
+                                                  0xFFC4CAD4,
+                                                ) /* gray */,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    29.57.w,
+                                                  ),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            spacing: 29.57.w,
+                                            children: [
+                                              Text(
+                                                'level',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: const Color(
+                                                    0xFFC4CAD4,
+                                                  ) /* gray */,
+                                                  fontSize: 36.w,
+                                                  fontFamily: 'Wanted Sans',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                '20 p',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: const Color(
+                                    0xFFFF9F1C,
+                                  ) /* main-orange */,
+                                  fontSize: 55.w,
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: -0.55.w,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 120),
+                        child: Container(
+                          width: 868.w,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 31.w,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                spacing: 42.w,
+                                children: [
+                                  Container(
+                                    width: 150.w,
+                                    height: 150.h,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          "https://placehold.co/150x150",
+                                        ),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      shape: OvalBorder(
+                                        side: BorderSide(
+                                          width: 1.68.w,
+                                          color: const Color(
+                                            0xFFC4CAD4,
+                                          ) /* gray */,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 241.w,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      spacing: 23.w,
+                                      children: [
+                                        SizedBox(
+                                          width: 241.w,
+                                          height: 60.h,
+                                          child: Text(
+                                            'Username',
+                                            style: TextStyle(
+                                              color: Colors.white /* white */,
+                                              fontSize: 50.w,
+                                              fontFamily: 'Wanted Sans',
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 123.31.w,
+                                          height: 66.65.h,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 5,
+                                            vertical: 3,
+                                          ),
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: ShapeDecoration(
+                                            color: const Color(
+                                              0xFF6B6B6B,
+                                            ) /* dark-gray */,
+                                            shape: RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                width: 2.96.w,
+                                                color: const Color(
+                                                  0xFFC4CAD4,
+                                                ) /* gray */,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    29.57.w,
+                                                  ),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            spacing: 29.57.w,
+                                            children: [
+                                              Text(
+                                                'level',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: const Color(
+                                                    0xFFC4CAD4,
+                                                  ) /* gray */,
+                                                  fontSize: 36.w,
+                                                  fontFamily: 'Wanted Sans',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                '20 p',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: const Color(
+                                    0xFFFF9F1C,
+                                  ) /* main-orange */,
+                                  fontSize: 55.w,
+                                  fontFamily: 'Wanted Sans',
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: -0.55.w,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          right: 24,
+          top: 7,
+          child: Icon(Icons.circle, size: 40, color: Color(0xffFF9F1C)),
+        ),
+        Positioned(
+          right: 20,
+          child: Container(
+            width: 120.w,
+            height: 120.h,
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 31.20.w,
+                  top: 34.80.h,
+                  child: Text(
+                    '27',
+                    style: TextStyle(
+                      color: Colors.white /* white */,
+                      fontSize: 48.w,
+                      fontFamily: 'Wanted Sans',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.48.w,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

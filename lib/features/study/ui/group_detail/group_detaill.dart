@@ -2,6 +2,7 @@ import 'package:componentss/features/study/ui/group_detail/detail_home.dart';
 import 'package:componentss/features/study/ui/group_detail/detail_live.dart';
 import 'package:componentss/features/study/ui/group_detail/detail_ranking.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GroupDetaill extends StatefulWidget {
   const GroupDetaill({super.key});
@@ -19,30 +20,111 @@ class _GroupDetaillState extends State<GroupDetaill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        toolbarHeight: 50,
+        title: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 65),
+            child: Text(
+              "groupName",
+              style: TextStyle(
+                fontSize: 55.sp,
+                fontFamily: "Wanted Sans",
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
       body: Column(
         children: [
           PreferredSize(
-            preferredSize: Size.fromHeight(60.0), // 높이 설정
+            preferredSize: Size.fromHeight(80.0), // 높이 설정
             child: Container(
+              height: 50.0, // 원하는 높이 설정
               color: Colors.white,
-              child: BottomNavigationBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                currentIndex: _currentIndex, // 현재 선택된 탭 인덱스
-                onTap: (index) {
-                  setState(() {
-                    _currentIndex = index; // 선택된 탭 인덱스 업데이트
-                  });
-                },
-                items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-                  BottomNavigationBarItem(icon: Icon(Icons.chat), label: '채팅'),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
-                    label: '설정',
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // 홈 버튼
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _currentIndex = 0;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end, // 텍스트를 아래로 정렬
+                        children: [
+                          Text(
+                            '홈',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  _currentIndex == 0
+                                      ? Colors.black
+                                      : Color(0xFF6B6B6B),
+                              fontSize: 50.0.sp, // 텍스트 크기
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // 실시간 버튼
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _currentIndex = 1;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end, // 텍스트를 아래로 정렬
+                        children: [
+                          // 아이콘과 텍스트 간격
+                          Text(
+                            '실시간',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+
+                              color:
+                                  _currentIndex == 1
+                                      ? Colors.black
+                                      : Color(0xFF6B6B6B),
+                              fontSize: 50.sp, // 텍스트 크기
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // 랭킹 버튼
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _currentIndex = 2;
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end, // 텍스트를 아래로 정렬
+                        children: [
+                          Text(
+                            '랭킹',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+
+                              color:
+                                  _currentIndex == 2
+                                      ? Colors.black
+                                      : Color(0xFF6B6B6B),
+                              fontSize: 50.sp, // 텍스트 크기
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
