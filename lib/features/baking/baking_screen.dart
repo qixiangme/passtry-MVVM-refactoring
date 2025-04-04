@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:componentss/trend_ox.dart';
 import 'package:componentss/trend_quiz.dart';
 import 'package:componentss/trend_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,6 @@ class _BakingScreenState extends State<BakingScreen> {
       subtitle: '트랜드 질문',
       stage: '최근 트랜드 학습하기',
       isCompleted: false,
-
     ),
     // Quest(title: '새로운 퀘스트', subtitle: '간단 설명', stage: 'Stage 2-1'),
   ];
@@ -180,7 +180,7 @@ class _BakingScreenState extends State<BakingScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const TrendQuiz();
+                              return const TrendOx();
                             },
                           ),
                         );
@@ -244,12 +244,9 @@ class _BakingScreenState extends State<BakingScreen> {
                     ),
                   ),
                   SizedBox(height: 100),
-
                 ],
               ),
             ),
-
-
           ],
         ),
       ),
@@ -394,8 +391,6 @@ Widget _buildAttendanceSection() {
             }),
           ),
         ),
-
-
       ],
     ),
   );
@@ -420,10 +415,11 @@ Widget _buildQuestItem(Quest quest) {
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
     width: 950.w,
     decoration: BoxDecoration(
-      color: quest.isCompleted ? Colors.orange.shade100 :Colors.white,
+      color: quest.isCompleted ? Colors.orange.shade100 : Colors.white,
       borderRadius: BorderRadius.circular(8.0),
-      border: Border.all(color: quest.isCompleted ? Colors.orange : Colors.grey.shade300),
-
+      border: Border.all(
+        color: quest.isCompleted ? Colors.orange : Colors.grey.shade300,
+      ),
     ),
 
     child: Column(
@@ -436,7 +432,6 @@ Widget _buildQuestItem(Quest quest) {
           decoration: BoxDecoration(
             color: quest.isCompleted ? Colors.orange : Colors.grey.shade400,
             borderRadius: BorderRadius.circular(20),
-
           ),
           child: Text(
             quest.stage,
@@ -470,12 +465,13 @@ Widget _buildQuestItem(Quest quest) {
 
             ElevatedButton(
               onPressed: () {
-                quest.isCompleted ?
-                print('완료 버튼 클릭: ${quest.title}') :
-                print('바로가기 버튼 클릭: ${quest.title}');
+                quest.isCompleted
+                    ? print('완료 버튼 클릭: ${quest.title}')
+                    : print('바로가기 버튼 클릭: ${quest.title}');
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: quest.isCompleted ? Colors.orange : Colors.grey.shade800,
+                backgroundColor:
+                    quest.isCompleted ? Colors.orange : Colors.grey.shade800,
 
                 elevation: 0,
                 padding: EdgeInsets.zero,
@@ -487,7 +483,7 @@ Widget _buildQuestItem(Quest quest) {
                 visualDensity: VisualDensity.compact,
               ),
 
-              child:  Text(
+              child: Text(
                 quest.isCompleted ? '완료' : '바로가기',
                 style: TextStyle(fontSize: 10, color: Colors.white),
               ),
