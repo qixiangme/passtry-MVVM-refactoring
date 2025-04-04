@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:componentss/features/study/ui/answer_screen.dart';
 import 'package:componentss/trend_ox.dart';
 import 'package:componentss/trend_quiz.dart';
 import 'package:componentss/trend_screen.dart';
@@ -180,9 +181,7 @@ class _BakingScreenState extends State<BakingScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return const TrendOx();
-                            },
+                            builder: (context) => AnswerScreen(),
                           ),
                         );
                       },
@@ -244,48 +243,7 @@ class _BakingScreenState extends State<BakingScreen> {
                               .toList(),
                     ),
                   ),
-<<<<<<< HEAD
                   SizedBox(height: 100),
-=======
-                  SizedBox(height: 50),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '나만의 모범 답안',
-                          style: TextStyle(
-                            color: Colors.black /* white */,
-                            fontSize: 50.w,
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            //Navigator.push(
-                            //  context,
-                            //  MaterialPageRoute(
-                            //    builder: (context) {}
-                          },
-                          child: Row(
-                            children: [
-                              const Text('전체보기'),
-                              Icon(Icons.arrow_forward_ios, size: 15),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  //Padding(
-                  //  padding: EdgeInsets.only(left: 20, right: 20),
-                  //  child: Column(
-                  //    children: [
-
->>>>>>> 1bd4c220c4279ad6966e8b9fa3db3849c39b28b0
                 ],
               ),
             ),
@@ -386,10 +344,8 @@ Widget _buildAttendanceSection() {
   List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
 
   return Center(
-
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-
 
       children: [
         Container(
