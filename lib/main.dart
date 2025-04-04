@@ -1,4 +1,4 @@
-import 'package:componentss/features/auth/data/user_provider.dart';
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/onboarding_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';

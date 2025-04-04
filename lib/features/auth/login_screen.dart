@@ -1,8 +1,10 @@
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/data/auth_api.dart';
 import 'package:componentss/features/auth/repository/auth_repository.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,12 +15,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   void _login(BuildContext context) async {
-    final username = _idController.text;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final email = _idController.text;
     final password = _passwordController.text;
 
-    final success = await AuthApi.loginUser(context, username, password);
-
-    if (success) {
+    String result = await userProvider.login(email, password);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result)));
+    if (result == "로그인 성공!") {
       print("로그인 성공");
       Navigator.pushReplacement(
         context,
@@ -51,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Text(
-              "아아디",
+              "닉네임",
               style: TextStyle(fontSize: 50.sp, fontWeight: FontWeight.w600),
             ),
           ),
@@ -70,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextField(
                   controller: _idController,
                   decoration: InputDecoration(
-                    hintText: "영문, 숫자 조합",
+                    hintText: "한글로 입력",
                     hintStyle: TextStyle(color: Color(0xFFC4CAD4)),
                     border: InputBorder.none,
                   ),
@@ -111,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SizedBox(height: 40),
           GestureDetector(
-            onTap: () => _login(context),
+            onTap: () => _login(context), //
             child: Center(
               child: Container(
                 width: 991.w,

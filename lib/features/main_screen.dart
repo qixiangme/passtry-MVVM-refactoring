@@ -1,4 +1,4 @@
-import 'package:componentss/features/auth/data/user_model.dart';
+import 'package:componentss/core/user_model.dart';
 import 'package:componentss/features/pages_list.dart';
 import 'package:flutter/material.dart';
 import 'package:componentss/core/widgets/customBottomNavigationBar.dart';

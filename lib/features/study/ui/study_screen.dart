@@ -1,4 +1,4 @@
-import 'package:componentss/features/auth/data/user_provider.dart';
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/study/data/group_api.dart';
 import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/data/tempGroup.dart';

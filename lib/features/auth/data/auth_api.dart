@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:componentss/features/auth/data/user_model.dart';
-import 'package:componentss/features/auth/data/user_provider.dart';
+import 'package:componentss/core/user_model.dart';
+import 'package:componentss/core/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -48,7 +48,12 @@ class AuthApi {
       );
 
       // User 객체 생성
-      final user = User(username: username, email: username, joinedGroups: []);
+      final user = User(
+        username: username,
+        score: 0,
+        email: username,
+        joinedGroups: [],
+      );
 
       // UserProvider를 통해 사용자 정보 설정
       Provider.of<UserProvider>(context, listen: false).setUser(user);

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:componentss/features/auth/data/user_provider.dart';
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
