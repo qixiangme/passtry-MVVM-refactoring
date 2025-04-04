@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:componentss/trend_quiz.dart';
+import 'package:componentss/trend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -172,13 +174,25 @@ class _BakingScreenState extends State<BakingScreen> {
                   ),
                   SizedBox(height: 6),
                   Center(
-                    child: Text(
-                      '따끈따끈한 반죽',
-                      style: TextStyle(
-                        color: Colors.black /* white */,
-                        fontSize: 66.w,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w700,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const TrendScreen();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        '따끈따끈한 반죽',
+                        style: TextStyle(
+                          color: Colors.black /* white */,
+                          fontSize: 66.w,
+                          fontFamily: 'Wanted Sans',
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
