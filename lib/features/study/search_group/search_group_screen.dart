@@ -1,5 +1,5 @@
 import 'package:componentss/features/main_screen.dart';
-import 'package:componentss/features/study/study_screen.dart';
+import 'package:componentss/features/study/ui/study_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

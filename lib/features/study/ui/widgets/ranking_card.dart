@@ -1,9 +1,10 @@
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/data/tempGroup.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class RankingCard extends StatelessWidget {
-  final Group group;
+  final GroupModel group;
   const RankingCard({super.key, required this.group});
 
   @override

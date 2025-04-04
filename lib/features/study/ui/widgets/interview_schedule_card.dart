@@ -1,9 +1,10 @@
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/data/tempGroup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InterviewSchedule extends StatelessWidget {
-  final Group group;
+  final GroupModel group;
 
   const InterviewSchedule({super.key, required this.group});
 

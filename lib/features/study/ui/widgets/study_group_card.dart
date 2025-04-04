@@ -1,9 +1,9 @@
-import 'package:componentss/features/study/data/tempGroup.dart';
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class StudyGroupCard extends StatelessWidget {
-  final Group group;
+  final GroupModel group;
 
   const StudyGroupCard({super.key, required this.group});
 
@@ -27,9 +27,9 @@ class StudyGroupCard extends StatelessWidget {
               borderRadius: BorderRadius.vertical(top: Radius.circular(35.r)),
 
               image:
-                  group.imageUrl.isNotEmpty
+                  group.imageUrl != null
                       ? DecorationImage(
-                        image: NetworkImage(group.imageUrl),
+                        image: NetworkImage(group.imageUrl!),
                         fit: BoxFit.cover,
                       )
                       : null,
@@ -57,11 +57,11 @@ class StudyGroupCard extends StatelessWidget {
                   children: [
                     Icon(Icons.calendar_today, color: Colors.black54, size: 18),
                     SizedBox(width: 5),
-                    Text(group.memberCount),
+                    Text("멤버수"),
                     SizedBox(width: 15),
                     Icon(Icons.calendar_today, color: Colors.black54, size: 18),
                     SizedBox(width: 5),
-                    Text(group.meetingInfo),
+                    Text("스터디 주제"),
                   ],
                 ),
               ],
