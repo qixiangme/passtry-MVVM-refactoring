@@ -1,3 +1,5 @@
+import 'package:componentss/features/baking/baking_screen.dart';
+import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,42 +16,20 @@ class TrendQuiz extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              left: 0.w,
-              top: 135.h,
-              child: Container(
-                width: 1080.w,
-                height: 120.h,
-                padding: const EdgeInsets.only(
-                  top: 13.75,
-                  left: 55,
-                  right: 77,
-                  bottom: 13.75,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 49.50.w,
-                  children: [
-                    Container(
-                      width: 50.w,
-                      height: 50.h,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(),
-                      child: Stack(),
+              top: 140.h,
+              left: 35.w,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              BakingScreen(), // Replace with your actual screen
                     ),
-                    Opacity(
-                      opacity: 0.w,
-                      child: Container(
-                        width: 55.w,
-                        height: 55.h,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(),
-                        child: Stack(),
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
+                child: Icon(CustomIcon.back, size: 55.w),
               ),
             ),
             Positioned(
@@ -77,7 +57,7 @@ class TrendQuiz extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 13,
+                        horizontal: 11,
                         vertical: 3,
                       ),
                       clipBehavior: Clip.antiAlias,
@@ -164,7 +144,7 @@ class TrendQuiz extends StatelessWidget {
               child: Container(
                 width: 486.w,
                 height: 409.h,
-                padding: const EdgeInsets.all(44),
+                padding: const EdgeInsets.all(10),
                 decoration: ShapeDecoration(
                   color: const Color(0xFFFF9F1C) /* main-orange */,
                   shape: RoundedRectangleBorder(
@@ -236,7 +216,7 @@ class TrendQuiz extends StatelessWidget {
               child: Container(
                 width: 486.w,
                 height: 409.h,
-                padding: const EdgeInsets.all(44),
+                padding: const EdgeInsets.all(10),
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: RoundedRectangleBorder(
