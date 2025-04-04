@@ -1,6 +1,7 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/features/study/data/group_api.dart';
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:componentss/features/study/ui/study_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
@@ -124,13 +125,15 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
               padding: EdgeInsets.only(right: 18),
               child: Center(
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     if (_isButtonEnabled) {
                       // 검색하기 버튼 클릭 시
                       String groupCode = digits.join();
                       groupApi.joinGroup(groupCode, userId);
 
-                      
+                      GroupModel? group = await groupApi.getGroupByJoinCode(
+                        groupCode,
+                      );
 
                       showModalBottomSheet(
                         context: context,
@@ -148,13 +151,38 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                             width: MediaQuery.of(context).size.width,
                             child: Column(
                               children: [
-                                SizedBox(height: 280),
+                                SizedBox(height: 60),
+
+                                if (group?.imageUrl !=
+                                    null) // 이미지 URL이 존재하는 경우만 표시
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      20,
+                                    ), // 이미지 둥근 모서리
+                                    child: Image.network(
+                                      group!.imageUrl!,
+                                      height: 200, // 이미지 높이
+                                      width: 200, // 이미지 너비
+                                      fit: BoxFit.cover, // 이미지 크기 조정
+                                      errorBuilder: (
+                                        context,
+                                        error,
+                                        stackTrace,
+                                      ) {
+                                        return Icon(
+                                          Icons.broken_image,
+                                          size: 100,
+                                          color: Colors.grey,
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 Center(
                                   child: Text.rich(
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: "면접 만점 암기빵 맛집",
+                                          text: group?.name,
                                           style: TextStyle(
                                             fontSize: 23,
                                             fontWeight: FontWeight.w700,

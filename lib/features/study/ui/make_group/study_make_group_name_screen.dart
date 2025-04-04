@@ -75,14 +75,15 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
         ),
       );
 
-      user.joinedGroups.add(
+      user.joinedGroups = [
+        ...user.joinedGroups,
         GroupModel(
           authorId: user.email,
           name: groupName,
           tags: tags,
           imageUrl: imagePath,
         ),
-      );
+      ];
 
       try {
         var response = await request.send(); // 🚀 요청 전송
