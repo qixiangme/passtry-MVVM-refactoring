@@ -1,8 +1,12 @@
 import 'dart:io';
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_complete_screen.dart';
 
 class StudyMakeGroupName extends StatefulWidget {
@@ -39,7 +43,43 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     });
   }
 
-  void _handleNextButtonTap() {
+  /// 그룹 업로드 메서드
+  Future<void> _uploadGroup(Map<String, dynamic> args) async {
+
+
+    final String groupName = args['name'] ?? '그룹 이름 없음';
+    final String? imagePath = args['imagePath'] as String?;
+    final File? imageFile = imagePath != null ? File(imagePath) : null;
+
+    var uri = Uri.parse("http://34.64.233.128:5200/groups"); // 🔥 엔드포인트 설정
+
+    var request =
+        http.MultipartRequest("POST", uri)
+          ..fields['authorId'] = "1234"
+          ..fields['name'] = groupName
+          ..fields['tags'] = '["tag1", "tag2"]'; // JSON 문자열 형태
+
+    if (imageFile != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          "image",
+          imageFile.path,
+          filename: path.basename(imageFile.path),
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+
+      try {
+        var response = await request.send(); // 🚀 요청 전송
+        print("요청전송");
+        var responseBody = await response.stream.bytesToString(); // 응답 읽기
+      } catch (e) {
+        print("Error: $e");
+      }
+    }
+  }
+
+  void _handleNextButtonTap() async {
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
@@ -56,6 +96,14 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     print('Selected Study Level: $studyLevel');
     print('Selected Inclusion Option: $inclusionOption');
 
+    await _uploadGroup({
+      'name': _GroupName,
+      'imagePath': _selectedImage?.path,
+      'authorId' : "1234",
+      "tags" : ["tag1", "tag2"],
+
+    });
+
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
     if (_isNextButtonEnabled) {
       print("--- 다음 버튼 클릭 ---");
@@ -65,6 +113,8 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
       setState(() {
         _isNextButtonClicked = true;
       });
+
+      await _uploadGroup(args); // 그룹 업로드 메서드 호출
 
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
       Navigator.push(
