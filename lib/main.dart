@@ -1,9 +1,5 @@
 import 'package:componentss/features/auth/onboarding_screen.dart';
 import 'package:componentss/features/main_screen.dart';
-import 'package:componentss/features/study/make_group/study_make_group_level_screen.dart';
-import 'package:componentss/features/study/make_group/study_make_group_name_screen.dart';
-import 'package:componentss/features/study/make_group/study_make_group_screen.dart';
-import 'package:componentss/features/study/make_group/study_make_group_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

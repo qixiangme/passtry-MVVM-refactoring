@@ -1,9 +1,10 @@
 import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart' as http;
 
 class StudyMakeGroupComplete extends StatefulWidget {
   const StudyMakeGroupComplete({super.key});
@@ -61,13 +62,23 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
           ..fields['tags'] = '["tag1", "tag2"]'; // JSON 문자열 형태
 
     if (imageFile != null) {
+      print(request);
+
       request.files.add(
         await http.MultipartFile.fromPath(
           "image",
           imageFile.path,
           filename: basename(imageFile.path),
+          contentType: MediaType('image', 'jpeg'), 
         ),
       );
+
+      try {
+        var response = await request.send(); // 🚀 요청 전송
+        var responseBody = await response.stream.bytesToString(); // 응답 읽기
+      } catch (e) {
+        print("Error: $e");
+      }
     }
   }
 
