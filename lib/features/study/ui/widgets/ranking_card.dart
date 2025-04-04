@@ -1,9 +1,10 @@
 import 'package:componentss/features/study/data/group_model.dart';
+import 'package:componentss/features/study/data/tempGroup.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 class RankingCard extends StatelessWidget {
-  final Group group;
+  final GroupModel group;
   const RankingCard({super.key, required this.group});
 
   @override
@@ -29,7 +30,15 @@ class RankingCard extends StatelessWidget {
               color: Colors.amber,
             ), // 트로피 아이콘
             SizedBox(width: 19.w), // 간격 조정
-            CircleAvatar(),
+            SizedBox(width: 19.w), // 간격 조정
+            CircleAvatar(
+              radius: 50.w, // CircleAvatar 크기 설정
+              backgroundImage:
+                  group.imageUrl != null && group.imageUrl!.isNotEmpty
+                      ? NetworkImage(group.imageUrl!) // 네트워크 이미지 설정
+                      : null, // 이미지가 없을 경우 null
+              backgroundColor: Colors.grey.shade200, // 기본 배경색 설정
+            ),
             SizedBox(width: 30.w), // 간격 조정
             Text(
               group.name, // 그룹 이름

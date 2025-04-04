@@ -1,9 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:componentss/features/auth/data/user_provider.dart';
+import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:componentss/features/study/make_group/study_make_group_complete_screen.dart';
+import 'package:path/path.dart' as path;
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:componentss/features/study/ui/make_group/study_make_group_complete_screen.dart';
+import 'package:provider/provider.dart';
 
 class StudyMakeGroupName extends StatefulWidget {
   const StudyMakeGroupName({super.key});
@@ -39,52 +46,99 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     });
   }
 
-  void _handleNextButtonTap() {
+  /// 그룹 업로드 메서드
+  Future<void> _uploadGroup(Map<String, dynamic> args) async {
+    final String groupName = args['name'] ?? '그룹 이름 없음';
+    final String? imagePath = args['imagePath'] as String?;
+    final File? imageFile = imagePath != null ? File(imagePath) : null;
 
+    var uri = Uri.parse("http://34.64.233.128:5200/groups"); // 🔥 엔드포인트 설정
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final user = userProvider.user;
+    final String category = args['category'] ?? "";
+    final String category2 = args['category2'] ?? "";
+
+    final List<String> tags = [category, category2];
+    var request =
+        http.MultipartRequest("POST", uri)
+          ..fields['authorId'] = user!.email
+          ..fields['name'] = groupName
+          ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
+
+    if (imageFile != null) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          "image",
+          imageFile.path,
+          filename: path.basename(imageFile.path),
+          contentType: MediaType('image', 'jpeg'),
+        ),
+      );
+
+      user.joinedGroups.add(
+        GroupModel(
+          authorId: user.email,
+          name: groupName,
+          tags: tags,
+          imageUrl: imagePath,
+        ),
+      );
+
+      try {
+        var response = await request.send(); // 🚀 요청 전송
+        print("요청전송");
+        var responseBody = await response.stream.bytesToString(); // 응답 읽기
+      } catch (e) {
+        print("Error: $e");
+      }
+    }
+  }
+
+  void _handleNextButtonTap() async {
     final Map<String, dynamic> args =
-    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
     final String category2 = args['category2'];
     final String date = args['date'];
     final String time = args['time'];
     final String studyLevel = args['studyLevel'];
     final String inclusionOption = args['inclusionOption'];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final user = userProvider.user;
 
-    print('category: $category');
-    print('category2: $category2');
-    print('Selected Date: $date');
-    print('Selected Time: $time');
-    print('Selected Study Level: $studyLevel');
-    print('Selected Inclusion Option: $inclusionOption');
+    await _uploadGroup({
+      'name': _GroupName,
+      'imagePath': _selectedImage?.path,
+      'authorId': user!.email,
+      "tags": ["tag1", "tag2"],
+    });
 
     // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
     if (_isNextButtonEnabled) {
-      print("--- 다음 버튼 클릭 ---");
-      print("이미지 : ${_selectedImage ?? '선택되지 않음'}");
-      print("그룹 이름 : ${_GroupName ?? '선택되지 않음'}");
-      print("--------------------");
       setState(() {
         _isNextButtonClicked = true;
       });
 
+      await _uploadGroup(args); // 그룹 업로드 메서드 호출
+
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudyMakeGroupComplete(),
+        MaterialPageRoute(
+          builder: (context) => StudyMakeGroupComplete(),
           settings: RouteSettings(
-          arguments: {
-          'category': category,
-          'category2': category2,
-          'date': date,
-          'time': time,
-          'studyLevel': studyLevel,
-          'inclusionOption': inclusionOption,
-            'groupName': _GroupName,
-          'imagePath': _selectedImage?.path,
-          },
+            arguments: {
+              'category': category,
+              'category2': category2,
+              'date': date,
+              'time': time,
+              'studyLevel': studyLevel,
+              'inclusionOption': inclusionOption,
+              'groupName': _GroupName,
+              'imagePath': _selectedImage?.path,
+            },
+          ),
         ),
-        ),
-
       ).then((_) {
         // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
         // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
@@ -212,7 +266,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 680.h,),
+                  SizedBox(height: 680.h),
                   Padding(
                     padding: EdgeInsets.only(bottom: 200.h),
                     child: Center(
@@ -253,6 +307,8 @@ class _AddImageContainerState extends State<AddImageContainer> {
         _image = image;
       });
       widget.onImageSelected(image);
+      print("이미지 선택됨: ${image.path}"); // 이미지 경로 출력
+      print(image.path);
     } else {
       // Handle the case where no image was selected
       print("No image selected.");
@@ -287,16 +343,13 @@ class NextButton extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
 
-  const NextButton({required this.isEnabled, required this.onTap, Key? key})
-    : super(key: key);
+  const NextButton({required this.isEnabled, required this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
     Color bgColor = isEnabled ? Color(0xFFFF9F1C) : Colors.white;
     Color borderColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
     Color textColor = isEnabled ? Colors.white : Color(0xFFFF9F1C);
-
-
 
     return InkWell(
       onTap: onTap,

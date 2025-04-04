@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:componentss/features/study/make_group/study_make_group_level_screen.dart';
+import 'package:componentss/features/study/ui/make_group/study_make_group_level_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 
 class StudyMakeGroup2 extends StatefulWidget {

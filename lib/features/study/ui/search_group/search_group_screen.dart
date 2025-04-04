@@ -1,9 +1,12 @@
+import 'package:componentss/features/auth/data/user_provider.dart';
 import 'package:componentss/features/main_screen.dart';
-import 'package:componentss/features/study/study_screen.dart';
+import 'package:componentss/features/study/data/group_api.dart';
+import 'package:componentss/features/study/ui/study_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class SearchGroupScreen extends StatefulWidget {
   const SearchGroupScreen({super.key});
@@ -13,6 +16,7 @@ class SearchGroupScreen extends StatefulWidget {
 }
 
 class _SearchGroupScreenState extends State<SearchGroupScreen> {
+  GroupApi groupApi = GroupApi();
   bool _isButtonEnabled = false;
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -32,6 +36,9 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    final userId = user?.email ?? "unknown";
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -120,6 +127,11 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                   onTap: () {
                     if (_isButtonEnabled) {
                       // 검색하기 버튼 클릭 시
+                      String groupCode = digits.join();
+                      groupApi.joinGroup(groupCode, userId);
+
+                      
+
                       showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
@@ -172,24 +184,29 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      width: 479.w,
-                                      height: 160.h,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color(0xFFFF9F1C),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(33.r),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "다시 입력하기",
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        width: 479.w,
+                                        height: 160.h,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
                                             color: Color(0xFFFF9F1C),
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(33.r),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "다시 입력하기",
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xFFFF9F1C),
+                                            ),
                                           ),
                                         ),
                                       ),

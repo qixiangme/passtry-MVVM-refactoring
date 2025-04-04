@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
-import 'package:componentss/features/study/study_screen.dart';
+import 'package:componentss/features/study/ui/study_screen.dart';
 import 'package:componentss/features/search/search_screen.dart';
-
 
 class StudyMakeGroupComplete extends StatefulWidget {
   const StudyMakeGroupComplete({super.key});
@@ -14,7 +14,6 @@ class StudyMakeGroupComplete extends StatefulWidget {
 }
 
 class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
-
   Widget _buildGroupImage(Map<String, dynamic> args) {
     try {
       if (args.containsKey('imagePath') && args['imagePath'] is String) {
@@ -40,7 +39,9 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
             height: 538.h,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/add_image_circle.png'), // AssetImage 사용
+                image: AssetImage(
+                  'assets/images/add_image_circle.png',
+                ), // AssetImage 사용
                 fit: BoxFit.contain,
               ),
             ),
@@ -53,7 +54,9 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
           height: 538.h,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/add_image_circle.png'), // AssetImage 사용
+              image: AssetImage(
+                'assets/images/add_image_circle.png',
+              ), // AssetImage 사용
               fit: BoxFit.contain,
             ),
           ),
@@ -61,7 +64,7 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
       }
     } catch (e) {
       print('Error loading image: $e');
-      return Container(
+      return SizedBox(
         width: 538.w,
         height: 538.h,
         child: Center(
@@ -72,12 +75,10 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
-    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String groupName = args['groupName'];
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -186,82 +187,88 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => StudyScreen()), // 이동할 페이지
+                      MaterialPageRoute(
+                        builder: (context) => MainScreen(goToPage: 1),
+                      ), // 이동할 페이지
                     );
-                  }, child: Container(
-                  width: 486.w,
-                  height: 160.h,
-                  padding: const EdgeInsets.all(10),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFFF9F1C) /* main-orange */,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(33.r),
+                  },
+                  child: Container(
+                    width: 486.w,
+                    height: 160.h,
+                    padding: const EdgeInsets.all(10),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFFFF9F1C) /* main-orange */,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(33.r),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 27.50.w,
+                      children: [
+                        Text(
+                          '확인',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white /* white */,
+                            fontSize: 50.sp,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.50,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 27.50.w,
-                    children: [
-                      Text(
-                        '확인',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white /* white */,
-                          fontSize: 50.sp,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.50,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),),
+                ),
 
-                SizedBox(width: 20.w,),
+                SizedBox(width: 20.w),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SearchScreen()), // 이동할 페이지
+                      MaterialPageRoute(
+                        builder: (context) => MainScreen(goToPage: 2),
+                      ), // 이동할 페이지
                     );
-                  }, child: Container(
-                  width: 486.w,
-                  height: 160.h,
-                  padding: const EdgeInsets.all(10),
-                  decoration: ShapeDecoration(
-                    color: Colors.white /* white */,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1,
-                        color: const Color(0xFFFF9F1C) /* main-orange */,
+                  },
+                  child: Container(
+                    width: 486.w,
+                    height: 160.h,
+                    padding: const EdgeInsets.all(10),
+                    decoration: ShapeDecoration(
+                      color: Colors.white /* white */,
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1,
+                          color: const Color(0xFFFF9F1C) /* main-orange */,
+                        ),
+                        borderRadius: BorderRadius.circular(33.r),
                       ),
-                      borderRadius: BorderRadius.circular(33.r),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 27.50,
+                      children: [
+                        Text(
+                          '게시글로 공유하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: const Color(0xFFFF9F1C) /* main-orange */,
+                            fontSize: 50.sp,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.50,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 27.50,
-                    children: [
-                      Text(
-                        '게시글로 공유하기',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: const Color(0xFFFF9F1C) /* main-orange */,
-                          fontSize: 50.sp,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.50,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                ),
-
               ],
             ),
           ],

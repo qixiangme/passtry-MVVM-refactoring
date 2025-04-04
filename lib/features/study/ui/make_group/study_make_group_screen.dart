@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:componentss/features/study/make_group/study_make_group_screen2.dart';
+import 'package:componentss/features/study/ui/make_group/study_make_group_screen2.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 
 class StudyMakeGroup extends StatefulWidget {
