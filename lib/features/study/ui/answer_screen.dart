@@ -22,12 +22,29 @@ class _AnswerScreenState extends State<AnswerScreen> {
         child: Stack(
           children: [
             Positioned(
+              top: 140.h,
+              left: 35.w,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              BakingScreen(), // Replace with your actual screen
+                    ),
+                  );
+                },
+                child: Icon(CustomIcon.back, size: 55.w),
+              ),
+            ),
+            Positioned(
               left: 44.w,
               top: 2032.h,
               child: Container(
                 width: 993.w,
                 height: 160.h,
-                padding: const EdgeInsets.all(44),
+                padding: const EdgeInsets.all(10),
                 decoration: ShapeDecoration(
                   color: const Color(0xFFFF9F1C) /* main-orange */,
                   shape: RoundedRectangleBorder(
@@ -60,14 +77,14 @@ class _AnswerScreenState extends State<AnswerScreen> {
               top: 341.h,
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 5,
+                  horizontal: 13,
+                  vertical: 4,
                 ),
                 clipBehavior: Clip.antiAlias,
                 decoration: ShapeDecoration(
                   color: const Color(0xFFEBEBEB) /* light-gray */,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(29.57),
+                    borderRadius: BorderRadius.circular(29.57.r),
                   ),
                 ),
                 child: Row(
@@ -105,7 +122,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
             ),
             Positioned(
               left: 44.50.w,
-              top: 588.h,
+              top: 600.h,
               child: Text(
                 '면접관의 질문에 나만의 답변을 작성해보아요!',
                 style: TextStyle(
@@ -117,63 +134,10 @@ class _AnswerScreenState extends State<AnswerScreen> {
                 ),
               ),
             ),
-            Positioned(
-              left: 0.w,
-              top: 135.h,
-              child: Container(
-                width: 1080.w,
-                height: 120.h,
-                padding: const EdgeInsets.only(
-                  top: 13.75,
-                  left: 55,
-                  right: 77,
-                  bottom: 13.75,
-                ),
-                decoration: BoxDecoration(color: Colors.white /* white */),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 49.50.w,
-                  children: [
-                    Container(
-                      width: 50.w,
-                      height: 50.h,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(),
-                      child: Stack(),
-                    ),
-                    SizedBox(
-                      width: 744.w,
-                      child: Text(
-                        ' ',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: const Color(0xFF1C1C1C) /* main-black */,
-                          fontSize: 55.w,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: -0.55.w,
-                        ),
-                      ),
-                    ),
-                    Opacity(
-                      opacity: 0,
-                      child: Container(
-                        width: 55.w,
-                        height: 55.h,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(),
-                        child: Stack(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+
             Positioned(
               left: 44.50.w,
-              top: 727.h,
+              top: 750.h,
               child: Container(
                 width: 992.w,
                 child: Column(
@@ -185,8 +149,8 @@ class _AnswerScreenState extends State<AnswerScreen> {
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 38.58,
-                        vertical: 33.07,
+                        horizontal: 10,
+                        vertical: 10,
                       ),
                       decoration: ShapeDecoration(
                         color: Colors.white /* white */,
@@ -215,7 +179,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
                                       color: const Color(
                                         0xFFFF9F1C,
                                       ) /* main-orange */,
-                                      fontSize: 44.w,
+                                      fontSize: 41.5.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -226,7 +190,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
                                       color: const Color(
                                         0xFF1C1C1C,
                                       ) /* main-black */,
-                                      fontSize: 44.w,
+                                      fontSize: 41.5.w,
                                       fontFamily: 'Wanted Sans',
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -242,8 +206,8 @@ class _AnswerScreenState extends State<AnswerScreen> {
                       width: double.infinity,
                       height: 262.h,
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 38.58,
-                        vertical: 33.07,
+                        horizontal: 10,
+                        vertical: 10,
                       ),
                       decoration: ShapeDecoration(
                         color: Colors.white /* white */,
@@ -268,10 +232,10 @@ class _AnswerScreenState extends State<AnswerScreen> {
                               '➀ 작성한 것은 나중에 수정할 수 있어요\n➁ \‘시작하기\'를 누르고 24시간 안에 작성해주세요\n➂ 나만이 가지고 있는 차별점을 살려 작성해보아요\n',
                               style: TextStyle(
                                 color: const Color(0xFF6B6B6B) /* dark-gray */,
-                                fontSize: 40.w,
+                                fontSize: 39.w,
                                 fontFamily: 'Wanted Sans',
                                 fontWeight: FontWeight.w500,
-                                height: 1.65.h,
+                                height: 1.65,
                               ),
                             ),
                           ),
