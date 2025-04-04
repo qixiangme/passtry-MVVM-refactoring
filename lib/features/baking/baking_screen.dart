@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:componentss/features/baking/questions/trend/trend_ox.dart';
-import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
-import 'package:componentss/features/baking/questions/trend/trend_screen.dart';
+
+import 'package:componentss/features/baking/questions/even/answer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -180,9 +179,7 @@ class _BakingScreenState extends State<BakingScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) {
-                              return const TrendOx();
-                            },
+                            builder: (context) => AnswerScreen(),
                           ),
                         );
                       },
@@ -282,6 +279,7 @@ class _BakingScreenState extends State<BakingScreen> {
                   //  child: Column(
                   //    children: [
 
+                  SizedBox(height: 100),
                 ],
               ),
             ),
@@ -382,10 +380,8 @@ Widget _buildAttendanceSection() {
   List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
 
   return Center(
-
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-
 
       children: [
         Container(
