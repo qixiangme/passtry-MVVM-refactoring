@@ -137,6 +137,7 @@ class _StudyScreenState extends State<StudyScreen>
                           ),
                         ),
                       ),
+
                       SizedBox(height: 10),
                       Padding(
                         padding: EdgeInsets.only(top: 8),
@@ -175,17 +176,35 @@ class _StudyScreenState extends State<StudyScreen>
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20, top: 30),
-                        child: SizedBox(
-                          width: 1000,
-                          child: Text(
-                            "모시기모시기\n응원의 모시기멘트",
-                            style: TextStyle(color: Colors.white, fontSize: 25),
+
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 20, top: 30),
+                            child: SizedBox(
+                              width: 1000.w,
+                              child: Text(
+                                "오늘도 함께\n면접 합격을 향해!",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          Positioned(
+                            top: 150.h, // 텍스트보다 살짝 아래
+                            left: 560.w, // 오른쪽으로 이동
+                            child: Image.asset(
+                              'assets/icons/cupcake.png',
+                              width: 500.w,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 180),
+                      SizedBox(height: 490.h),
                     ],
                   ),
                 ),
@@ -202,10 +221,10 @@ class _StudyScreenState extends State<StudyScreen>
                         Padding(
                           padding: const EdgeInsets.only(left: 26),
                           child: Text(
-                            "참여중인 스터디",
+                            "참여 중인 스터디",
                             style: TextStyle(
-                              fontSize: 45.sp,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 50.sp,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -257,7 +276,7 @@ class _StudyScreenState extends State<StudyScreen>
                           child: Text(
                             "스터디 랭킹",
                             style: TextStyle(
-                              fontSize: 45.sp,
+                              fontSize: 50.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
