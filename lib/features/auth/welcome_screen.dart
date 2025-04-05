@@ -1,3 +1,4 @@
+import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,9 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => MainScreen(goToPage: 0),
-                        ),
+                        MaterialPageRoute(builder: (context) => StudyMake()),
                       );
                     },
                     child: Center(
