@@ -1,8 +1,10 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/onboarding_screen.dart';
+import 'package:componentss/features/baking/UI/baking_screen.dart';
 import 'package:componentss/features/baking/UI/baking_stage.dart';
 import 'package:componentss/features/baking/UI/questions/odd/odd_quiz.dart';
 import 'package:componentss/features/baking/UI/questions/odd/odd_screen.dart';
+import 'package:componentss/features/baking/UI/trend/trend_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
           // ScreenUtil 초기화
           ScreenUtil.init(context, designSize: Size(1080, 2400));
           return MaterialApp(
-            home: BakingStage(),
+            home: TrendScreen(),
             theme: ThemeData(
               fontFamily: "Wanted Sans",
               scaffoldBackgroundColor: Colors.white,
