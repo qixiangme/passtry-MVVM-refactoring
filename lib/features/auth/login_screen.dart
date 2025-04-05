@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Text(
-                '|',
+                'ㅣ',
                 style: TextStyle(
                   color: const Color(0xFF6B6B6B) /* dark-gray */,
                   fontSize: 40.sp,
