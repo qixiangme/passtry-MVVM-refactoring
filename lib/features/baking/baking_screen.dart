@@ -6,8 +6,10 @@ import 'package:componentss/features/baking/data/attendance_model.dart';
 import 'package:componentss/features/baking/data/mission_api.dart';
 import 'package:componentss/features/baking/data/mission_model.dart';
 import 'package:componentss/features/baking/data/mission_response_model.dart';
+import 'package:componentss/features/baking/data/qna_list_model.dart';
 import 'package:componentss/features/baking/questions/even/answer_screen.dart';
 import 'package:componentss/features/baking/questions/odd/odd_screen.dart';
+import 'package:componentss/features/baking/baking_QnaList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -303,7 +305,7 @@ class _BakingScreenState extends State<BakingScreen> {
             Stack(
               children: [
                 Container(
-                  width: double.infinity,
+                  //width: double.infinity,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,13 +316,17 @@ class _BakingScreenState extends State<BakingScreen> {
 
                       Center(
                         //API로 받아오기
-                        child : EventCard(
-                        title: '동아리 면접 🍞', // 이모지도 텍스트로 넣을 수 있습니다.
-                        targetDate: DateTime(2024, 5, 31, 15, 00), // 목표 날짜 및 시간
-                      ),),
-
-
-
+                        child: EventCard(
+                          title: '동아리 면접 🍞', // 이모지도 텍스트로 넣을 수 있습니다.
+                          targetDate: DateTime(
+                            2024,
+                            5,
+                            31,
+                            15,
+                            00,
+                          ), // 목표 날짜 및 시간
+                        ),
+                      ),
 
                       Row(
                         children: [
@@ -492,10 +498,14 @@ class _BakingScreenState extends State<BakingScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                //Navigator.push(
-                                //  context,
-                                //  MaterialPageRoute(
-                                //    builder: (context) {}
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return QnaListPage();
+                                    },
+                                  ),
+                                );
                               },
                               child: Row(
                                 children: [
@@ -508,12 +518,12 @@ class _BakingScreenState extends State<BakingScreen> {
                         ),
                       ),
                       SizedBox(height: 20),
-
+                      QnaListView(qnaItems: qnaList),
                       //Padding(
                       //  padding: EdgeInsets.only(left: 20, right: 20),
                       //  child: Column(
                       //    children: [
-                      SizedBox(height: 100),
+
                     ],
                   ),
                 ),
@@ -617,17 +627,12 @@ class Quest {
   });
 }
 
-
 class EventCard extends StatelessWidget {
   final String title;
   final DateTime targetDate;
 
-  const EventCard({
-    Key? key,
-    required this.title,
-    required this.targetDate,
-  }) : super(key: key);
-
+  const EventCard({Key? key, required this.title, required this.targetDate})
+    : super(key: key);
 
   String calculateDday(DateTime target) {
     final now = DateTime.now();
@@ -647,7 +652,6 @@ class EventCard extends StatelessWidget {
   // D-day 문자열을 각 부분(문자)으로 분리하는 함수
   List<String> getDdayParts(String dDayString) {
     if (dDayString == 'D-Day') {
-
       return ['D', '-', '0'];
     } else {
       // "D - 123" 또는 "D + 45" 같은 형태 처리
@@ -677,10 +681,8 @@ class EventCard extends StatelessWidget {
         border: Border.all(color: Colors.orange, width: 1.5),
       ),
       child: Row(
-
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -696,35 +698,32 @@ class EventCard extends StatelessWidget {
               SizedBox(height: 4.0),
               Text(
                 formattedDate,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.black54,
-                ),
+                style: TextStyle(fontSize: 14.0, color: Colors.black54),
               ),
             ],
           ),
 
           Row(
-            children: dDayParts.map((part) {
-              // 각 문자(부분)를 위한 컨테이너 생성
-              return Container(
-                margin: const EdgeInsets.only(left: 3.0),
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-
-
-                ),
-                child: Text(
-                  part, // D-day 문자 (예: 'D', '-', '3', '0')
-                  style: TextStyle(
-                    fontSize: 75.51.sp,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.orange,
-                  ),
-                ),
-              );
-            }).toList(),
+            children:
+                dDayParts.map((part) {
+                  // 각 문자(부분)를 위한 컨테이너 생성
+                  return Container(
+                    margin: const EdgeInsets.only(left: 3.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 5.0,
+                    ),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Text(
+                      part, // D-day 문자 (예: 'D', '-', '3', '0')
+                      style: TextStyle(
+                        fontSize: 75.51.sp,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  );
+                }).toList(),
           ),
         ],
       ),
