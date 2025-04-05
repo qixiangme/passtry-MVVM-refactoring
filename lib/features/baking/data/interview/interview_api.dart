@@ -16,7 +16,7 @@ class InterviewApi {
 
       // POST 요청
       final response = await http.post(
-        Uri.parse(baseUrl),
+        Uri.parse('$baseUrl/interviews'),
         headers: {
           'Content-Type': 'application/json; charset=utf-8', // UTF-8 설정
         },

@@ -1,4 +1,5 @@
 import 'package:componentss/features/baking/UI/baking_screen.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
 import 'package:componentss/features/baking/UI/questions/even/answer_block.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -7,8 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnswerScreen extends StatefulWidget {
   final Mission mission;
+  final InterviewModel inteview;
 
-  const AnswerScreen({super.key, required this.mission});
+  const AnswerScreen({
+    super.key,
+    required this.mission,
+    required this.inteview,
+  });
 
   @override
   State<AnswerScreen> createState() => _AnswerScreenState();
@@ -45,6 +51,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
                     MaterialPageRoute(
                       builder:
                           (context) => AnswerBlock(
+                            inteview: widget.inteview,
                             mission: widget.mission,
                           ), // Replace with your actual screen
                     ),

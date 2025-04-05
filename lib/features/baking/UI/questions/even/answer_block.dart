@@ -1,5 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/UI/baking_screen.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_api.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
 import 'package:componentss/features/baking/UI/questions/even/answer_screen.dart';
@@ -12,8 +13,8 @@ import 'package:provider/provider.dart';
 
 class AnswerBlock extends StatefulWidget {
   final Mission mission;
-
-  const AnswerBlock({super.key, required this.mission});
+  final InterviewModel inteview;
+  const AnswerBlock({super.key, required this.mission, required this.inteview});
 
   @override
   State<AnswerBlock> createState() => _AnswerBlockState();
@@ -163,7 +164,7 @@ class _AnswerBlockState extends State<AnswerBlock> {
               top: 2032.h,
               child: GestureDetector(
                 onTap: () {
-                  final userId = user!.username; // 실제 유저 ID를 가져오는 로직 확인
+                  final userId = user!.id!; // 실제 유저 ID를 가져오는 로직 확인
                   final missionId =
                       "${widget.mission.stage}-${widget.mission.index}";
                   final content = _controller.text;
@@ -176,6 +177,8 @@ class _AnswerBlockState extends State<AnswerBlock> {
 
                   completeMission(
                     userId: userId,
+                    interviewId: widget.inteview.id!,
+
                     stage: widget.mission.stage,
                     index: widget.mission.index,
                   );

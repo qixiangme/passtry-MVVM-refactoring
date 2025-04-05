@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/UI/baking_screen.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_api.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
 import 'package:componentss/features/main_screen.dart';
@@ -12,7 +13,8 @@ import 'package:provider/provider.dart';
 
 class OddQuiz extends StatefulWidget {
   final Mission mission;
-  const OddQuiz({super.key, required this.mission});
+  final InterviewModel inteview;
+  const OddQuiz({super.key, required this.mission, required this.inteview});
 
   @override
   State<OddQuiz> createState() => _OddQuizState();
@@ -231,15 +233,14 @@ class _OddQuizState extends State<OddQuiz> {
                   },
                   child: GestureDetector(
                     onTap: () {
-                      final userId = user!.username; // 실제 유저 ID를 가져오는 로직 확인
+                      final userId = user!.id!; // 실제 유저 ID를 가져오는 로직 확인
 
                       completeMission(
+                        interviewId: widget.inteview.id!,
                         userId: userId,
                         stage: widget.mission.stage,
                         index: widget.mission.index,
                       );
-
-                      
 
                       Navigator.pushReplacement(
                         context,
