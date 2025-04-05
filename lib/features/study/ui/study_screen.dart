@@ -394,7 +394,7 @@ class _StudyScreenState extends State<StudyScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SearchGroupScreen(),
+                              builder: (context) => NewGroupCategoryScreen(),
                             ),
                           );
                         }

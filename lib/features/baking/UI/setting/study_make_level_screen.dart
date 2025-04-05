@@ -2,7 +2,7 @@ import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/UI/setting/study_comeplete_screen.dart';
 import 'package:componentss/features/baking/data/interview/interview_api.dart';
 import 'package:componentss/features/baking/data/interview/interview_model.dart';
-import 'package:componentss/features/study/ui/make_group/study_make_group_name_screen.dart';
+import 'package:componentss/features/baking/ui/setting/study_make_group_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -85,7 +85,7 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
       print("인터뷰 생성 성공");
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StudyComplete()),
+        MaterialPageRoute(builder: (context) => StudyMakeGroupName()),
       );
     }
   }
