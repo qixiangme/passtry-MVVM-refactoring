@@ -72,13 +72,13 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
       userId: user!.id!, // UserProvider에서 가져온 사용자 ID
       name: '인터뷰 이름', // 필요에 따라 설정
       category: _mapCategoryToEnum(category),
-      tags:  [mappedCategory2],
+      tags: [mappedCategory2],
       date: DateFormat('yyyy-MM-dd').format(selectedDate), // YYYY-MM-DD 형식으로 변환
       time: time,
       questDifficulty: questDifficulty,
       includeTrendQuiz: includeTrendQuiz,
     );
-
+    print("DEVUG");
     // POST 요청
     final success = await InterviewApi.postInterview(interview);
     if (success) {
@@ -87,8 +87,6 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
         context,
         MaterialPageRoute(builder: (context) => StudyComplete()),
       );
-    } else {
-      print("인터뷰 생성 실패");
     }
   }
 

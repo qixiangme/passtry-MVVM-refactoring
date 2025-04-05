@@ -4,6 +4,7 @@ import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/UI/baking_qnaList_screen.dart';
 import 'package:componentss/features/baking/UI/baking_stage.dart';
 import 'package:componentss/features/baking/UI/qna_list_model.dart';
+import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
 import 'package:componentss/features/baking/data/interview/interview_api.dart';
@@ -25,6 +26,7 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  bool isExpanded = true;
   int? _dday; // D-day 데이터를 저장할 변수
   bool isLoadingDday = true; // D-day 데이터 로딩 상태
   late MissionResponse? _missionResponse;
@@ -411,7 +413,6 @@ class _BakingScreenState extends State<BakingScreen> {
                           itemCount: _interviews.length,
                           itemBuilder: (context, index) {
                             final interview = _interviews[index];
-                            print(interview.id!);
                             return ListTile(
                               title: Text(
                                 interview.id!,
@@ -667,6 +668,82 @@ class _BakingScreenState extends State<BakingScreen> {
           ],
         ),
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // 인터뷰 버튼들 (애니메이션 적용)
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: isExpanded ? 1.0 : 0.0,
+            child: Column(
+              children: List.generate(_interviews.length, (index) {
+                final interview = _interviews[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: FloatingActionButton.extended(
+                    heroTag: 'interview_$index',
+                    backgroundColor: Colors.white,
+                    icon: const Icon(Icons.person, color: Colors.orange),
+                    label: Text(
+                      interview.name, // 인터뷰 이름 표시
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {
+                      // 인터뷰 버튼 클릭 시 동작
+                      print('인터뷰 ${interview.name} 선택됨');
+                    },
+                  ),
+                );
+              }),
+            ),
+          ),
+
+          // 항상 표시되는 버튼
+          if (isExpanded)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: FloatingActionButton.extended(
+                heroTag: 'always_visible',
+                backgroundColor: Colors.orange,
+                icon: const Icon(Icons.add, color: Colors.white),
+                label: const Text(
+                  '새 인터뷰 만들기',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  // StudyMake 화면으로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StudyMake()),
+                  );
+                },
+              ),
+            ),
+
+          // 메인 플로팅 버튼 (토글 기능)
+          FloatingActionButton(
+            heroTag: 'main_fab',
+            backgroundColor: Colors.orange,
+            child: Icon(
+              isExpanded ? Icons.close : Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                isExpanded = !isExpanded; // 버튼 확장/축소 상태 변경
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -693,7 +770,6 @@ class _AnimatedHalfCircleProgressState extends State<AnimatedHalfCircleProgress>
     )..repeat(reverse: false);
 
     _animation = Tween<double>(begin: 0, end: 0.5).animate(_controller);
-
     _controller.forward();
   }
 
