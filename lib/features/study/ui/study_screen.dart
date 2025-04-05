@@ -54,6 +54,20 @@ class _StudyScreenState extends State<StudyScreen>
     try {
       final groups = await groupApi.getGroupsById(userId); // GroupApi 활용
       if (groups != null) {
+        groups.sort();
+        /*if (groups != null) {
+          // --- ▼ 데이터 정렬 로직 추가 ▼ ---
+          groups.sort((a, b) {
+            // GroupModel의 랭킹 관련 필드를 기준으로 내림차순 정렬
+            // 만약 rankingScore 필드가 없다면 실제 사용하는 필드 이름으로 바꿔주세요.
+            // 예를 들어 필드 이름이 'score' 라면 a.score.compareTo(b.score) -> b.score.compareTo(a.score)
+            // 타입이 다르거나 null 처리가 필요하면 적절히 수정해야 합니다.
+            int scoreA = a.rankingScore ?? 0; // null일 경우 0으로 처리 (예시)
+            int scoreB = b.rankingScore ?? 0; // null일 경우 0으로 처리 (예시)
+            return scoreB.compareTo(scoreA); // 내림차순 정렬 (b와 a의 위치를 바꾸면 오름차순)
+          });
+          
+         */
         setState(() {
           _studyGroups = groups;
           isLoading = false;
