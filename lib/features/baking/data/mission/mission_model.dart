@@ -3,7 +3,7 @@ class Mission {
   final int stage;
   final int index;
   final String question;
-  final String type;
+  final String type; // "ODD" 또는 "EVEN"
 
   Mission({
     required this.id,
@@ -13,14 +13,13 @@ class Mission {
     required this.type,
   });
 
-  // JSON 데이터를 Dart 객체로 변환
   factory Mission.fromJson(Map<String, dynamic> json) {
     return Mission(
-      id: json['id'],
-      stage: json['stage'],
-      index: json['index'],
-      question: json['question'],
-      type: json['type'],
+      id: json['id'] ?? "",
+      stage: json['stage'] ?? 0,
+      index: json['index'] ?? 0,
+      question: json['question'] ?? "",
+      type: json['type'] ?? "",
     );
   }
 }

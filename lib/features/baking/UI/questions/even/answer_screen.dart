@@ -1,11 +1,14 @@
-import 'package:componentss/features/baking/baking_screen.dart';
-import 'package:componentss/features/study/ui/answer_block.dart';
+import 'package:componentss/features/baking/UI/questions/baking_screen.dart';
+import 'package:componentss/features/baking/data/mission/mission_model.dart';
+import 'package:componentss/features/baking/UI/questions/even/answer_block.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnswerScreen extends StatefulWidget {
-  const AnswerScreen({super.key});
+  final Mission mission;
+
+  const AnswerScreen({super.key, required this.mission});
 
   @override
   State<AnswerScreen> createState() => _AnswerScreenState();
@@ -27,14 +30,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
               left: 35.w,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) =>
-                              BakingScreen(), // Replace with your actual screen
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
                 child: Icon(CustomIcon.back, size: 55.w),
               ),
@@ -48,8 +44,9 @@ class _AnswerScreenState extends State<AnswerScreen> {
                     context,
                     MaterialPageRoute(
                       builder:
-                          (context) =>
-                              AnswerBlock(), // Replace with your actual screen
+                          (context) => AnswerBlock(
+                            mission: widget.mission,
+                          ), // Replace with your actual screen
                     ),
                   );
                 },
@@ -107,7 +104,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
                   spacing: 29.57.w,
                   children: [
                     Text(
-                      'stage 1-3',
+                      "Stage ${widget.mission.stage}-${widget.mission.index}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: const Color(0xFF6B6B6B) /* dark-gray */,
@@ -151,7 +148,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
             Positioned(
               left: 44.50.w,
               top: 750.h,
-              child: Container(
+              child: SizedBox(
                 width: 992.w,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -242,7 +239,7 @@ class _AnswerScreenState extends State<AnswerScreen> {
                             width: 914.84.w,
                             height: 195.87.h,
                             child: Text(
-                              '➀ 작성한 것은 나중에 수정할 수 있어요\n➁ \‘시작하기\'를 누르고 24시간 안에 작성해주세요\n➂ 나만이 가지고 있는 차별점을 살려 작성해보아요\n',
+                              '➀ 작성한 것은 나중에 수정할 수 있어요\n➁ ‘시작하기\'를 누르고 24시간 안에 작성해주세요\n➂ 나만이 가지고 있는 차별점을 살려 작성해보아요\n',
                               style: TextStyle(
                                 color: const Color(0xFF6B6B6B) /* dark-gray */,
                                 fontSize: 39.w,
