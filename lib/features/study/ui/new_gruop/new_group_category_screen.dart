@@ -74,6 +74,7 @@ class _NewGroupCategoryScreenState extends State<NewGroupCategoryScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -93,10 +94,10 @@ class _NewGroupCategoryScreenState extends State<NewGroupCategoryScreen> {
               children: [
                 SizedBox(height: 100.h),
                 Text(
-                  '어떤 면접을 앞두고 계신가요?',
+                  '어떤 면접을 준비하고 있는\n사람들과 함께하고 싶으신가요?',
                   style: TextStyle(
                     color: const Color(0xFF1F1F1F),
-                    fontSize: 65.sp,
+                    fontSize: 60.sp,
                     fontFamily: 'Wanted Sans',
                     fontWeight: FontWeight.w600,
                   ),
@@ -114,7 +115,7 @@ class _NewGroupCategoryScreenState extends State<NewGroupCategoryScreen> {
                 SizedBox(height: 120.h),
                 Container(
                   width: 992.w,
-                  padding: (EdgeInsets.symmetric(horizontal: 50.w)),
+                  padding: (EdgeInsets.symmetric(horizontal: 10.w)),
                   child: CategoryItems(
                     onItemSelected: _handleCategoryItemSelect,
                   ),
@@ -172,8 +173,8 @@ class _CategoryItemState extends State<CategoryItem> {
         widget.onSelected(widget.text);
       },
       child: Container(
-        width: 250.w,
-        height: 250.h,
+        width: 280.w,
+        height: 280.h,
         padding: EdgeInsets.all(20.w),
         decoration: ShapeDecoration(
           color: containerColor,
@@ -194,7 +195,7 @@ class _CategoryItemState extends State<CategoryItem> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(widget.assetPath),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -237,15 +238,15 @@ class _CategoryItemsState extends State<CategoryItems> {
   String? selectedText;
 
   final List<CategoryInfo> items = [
-    CategoryInfo(text: '학술', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '전공', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '예술', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '취미', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '봉사', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '어학', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '창업', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '여행', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '기타', assetPath: 'assets/images/box.png'),
+    CategoryInfo(text: '학술', assetPath: 'assets/icons/book.png'),
+    CategoryInfo(text: '전공', assetPath: 'assets/icons/keyboard.png'),
+    CategoryInfo(text: '예술', assetPath: 'assets/icons/art.png'),
+    CategoryInfo(text: '취미', assetPath: 'assets/icons/guitar.png'),
+    CategoryInfo(text: '봉사', assetPath: 'assets/icons/volunteer.png'),
+    CategoryInfo(text: '어학', assetPath: 'assets/icons/chat.png'),
+    CategoryInfo(text: '창업', assetPath: 'assets/icons/startup.png'),
+    CategoryInfo(text: '여행', assetPath: 'assets/icons/travel.png'),
+    CategoryInfo(text: '기타', assetPath: 'assets/icons/etc.png'),
   ];
 
   void handleItemSelected(String text) {
@@ -274,133 +275,6 @@ class _CategoryItemsState extends State<CategoryItems> {
   }
 }
 
-class CategoryChip extends StatelessWidget {
-  final String emoji;
-  final String text;
-  final bool isSelected;
-  final Function(String) onSelected;
-
-  CategoryChip({
-    required this.emoji,
-    required this.text,
-    required this.isSelected,
-    required this.onSelected,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Color bgColor = isSelected ? const Color(0x21FF9F1C) : Colors.white;
-    Color borderColor =
-    isSelected ? const Color(0xFFFF9F1C) : const Color(0xFFEBEBEB);
-
-    return GestureDetector(
-      onTap: () {
-        print("${text} 클릭됨");
-        onSelected(text);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 26.h),
-        decoration: ShapeDecoration(
-          color: bgColor,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 2.75.w, color: borderColor),
-            borderRadius: BorderRadius.circular(36.r),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              emoji,
-              style: TextStyle(
-                color: const Color(0xFF1C1C1C),
-                fontSize: 36.sp,
-                fontFamily: 'Wanted Sans',
-                fontWeight: FontWeight.w600,
-                letterSpacing: -0.36,
-              ),
-            ),
-            SizedBox(width: 10.w),
-            Text(
-              text,
-              style: TextStyle(
-                color: const Color(0xFF1C1C1C),
-                fontSize: 40.sp,
-                fontFamily: 'Wanted Sans',
-                fontWeight: FontWeight.w600,
-                letterSpacing: -0.40,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CategoryChipInfo {
-  final String emoji;
-  final String text;
-
-  CategoryChipInfo({required this.emoji, required this.text});
-}
-
-class CategoryChipGroup extends StatefulWidget {
-  final Function(String) onChipSelected;
-
-  const CategoryChipGroup({required this.onChipSelected, Key? key})
-      : super(key: key);
-
-  @override
-  _CategoryChipGroupState createState() => _CategoryChipGroupState();
-}
-
-class _CategoryChipGroupState extends State<CategoryChipGroup> {
-  String? selectedChipText;
-
-  // 표시할 칩 데이터 목록
-  final List<CategoryChipInfo> chipItems = [
-    CategoryChipInfo(emoji: '📚', text: '학술'),
-    CategoryChipInfo(emoji: '💻', text: '전공'),
-    CategoryChipInfo(emoji: '🎨', text: '예술'),
-    CategoryChipInfo(emoji: '👥', text: '문화•취미'),
-    CategoryChipInfo(emoji: '☀️', text: '봉사'),
-    CategoryChipInfo(emoji: '🔠', text: '어학'),
-    CategoryChipInfo(emoji: '🤝', text: '창업'),
-    CategoryChipInfo(emoji: '✈️', text: '여행'),
-  ];
-
-  void handleChipSelected(String text) {
-    setState(() {
-      selectedChipText = text;
-    });
-    widget.onChipSelected(text);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.start,
-      runAlignment: WrapAlignment.center,
-      spacing: 20.w,
-      runSpacing: 20.h,
-      children:
-      chipItems.map((chipInfo) {
-        return CategoryChip(
-          emoji: chipInfo.emoji,
-          text: chipInfo.text,
-          // 현재 선택된 텍스트와 이 칩의 텍스트가 같은지 비교하여 isSelected 결정
-          isSelected: selectedChipText == chipInfo.text,
-
-          onSelected: handleChipSelected,
-        );
-      }).toList(),
-    );
-  }
-}
 
 class NextButton extends StatelessWidget {
   final bool isEnabled;

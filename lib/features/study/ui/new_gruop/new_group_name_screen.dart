@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/study/data/group_model.dart';
+import 'package:componentss/features/study/ui/new_gruop/new_group_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -9,8 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:componentss/features/study/ui/make_group/study_make_group_complete_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:componentss/features/study/ui/new_gruop/new_group_complete_screen.dart';
 
 class NewGroupNameScreen extends StatefulWidget {
   const NewGroupNameScreen({super.key});
@@ -98,8 +99,6 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
     final Map<String, dynamic> args =
     ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
-    final String studyLevel = args['studyLevel'];
-    final String inclusionOption = args['inclusionOption'];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final user = userProvider.user;
 
@@ -122,12 +121,10 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => StudyMakeGroupComplete(),
+          builder: (context) => NewGroupCompleteScreen(),
           settings: RouteSettings(
             arguments: {
               'category': category,
-              'studyLevel': studyLevel,
-              'inclusionOption': inclusionOption,
               'groupName': _GroupName,
               'imagePath': _selectedImage?.path,
             },
@@ -153,6 +150,7 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
