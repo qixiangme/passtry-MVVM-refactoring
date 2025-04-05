@@ -1,4 +1,4 @@
-import 'package:componentss/features/baking/UI/questions/baking_screen.dart';
+import 'package:componentss/features/baking/UI/baking_screen.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
 import 'package:componentss/features/baking/UI/questions/odd/odd_quiz.dart';
 import 'package:componentss/features/main_screen.dart';
@@ -32,6 +32,19 @@ class _BakingStageState extends State<BakingStage> {
                 height: 3575.h,
                 decoration: BoxDecoration(color: const Color(0xFF95E08A)),
               ),
+            ),
+            Positioned(
+              top: 281.h,
+              child: Image.asset('assets/images/stage_road.png'),
+              width: 1080.w,
+              height: 2000.h,
+            ),
+            Positioned(
+              right: 200,
+              top: 1860.h,
+              child: Image.asset('assets/images/road_bottom.png'),
+              width: 380.w,
+              height: 900.h,
             ),
             Positioned(
               left: 1002.w,
