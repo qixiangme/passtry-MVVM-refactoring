@@ -1,5 +1,5 @@
 
-import 'package:componentss/features/baking/data/mission_model.dart';
+import 'package:componentss/features/baking/data/mission/mission_model.dart';
 
 class MissionResponse {
   final Mission nextOddMission;

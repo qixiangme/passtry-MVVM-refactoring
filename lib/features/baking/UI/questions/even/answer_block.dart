@@ -1,8 +1,8 @@
 import 'package:componentss/core/user_provider.dart';
-import 'package:componentss/features/baking/baking_screen.dart';
-import 'package:componentss/features/baking/data/mission_api.dart';
-import 'package:componentss/features/baking/data/mission_model.dart';
-import 'package:componentss/features/baking/questions/even/answer_screen.dart';
+import 'package:componentss/features/baking/UI/questions/baking_screen.dart';
+import 'package:componentss/features/baking/data/mission/mission_api.dart';
+import 'package:componentss/features/baking/data/mission/mission_model.dart';
+import 'package:componentss/features/baking/UI/questions/even/answer_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
