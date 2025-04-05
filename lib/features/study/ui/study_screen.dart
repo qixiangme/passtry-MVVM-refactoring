@@ -402,7 +402,11 @@ class _StudyScreenState extends State<StudyScreen>
                       heroTag: 'search_group',
                       backgroundColor: Colors.white,
                       shape: CircleBorder(),
-                      child: Icon(Icons.search, color: Color(0xffFF9F1C)),
+                      child: Icon(
+                        Icons.search,
+                        color: Color(0xffFF9F1C),
+                        size: 35,
+                      ),
                       onPressed: () {
                         if (isExpanded) {
                           setState(() {
@@ -433,10 +437,11 @@ class _StudyScreenState extends State<StudyScreen>
                 heroTag: 'main_fab',
                 backgroundColor: Color(0xffFF9F1C),
                 shape: CircleBorder(),
-                child: Icon(
-                  isExpanded ? Icons.close : Icons.add,
-                  color: Colors.white,
-                ),
+                child:
+                    isExpanded
+                        ? Image.asset('assets/icons/close.png', width: 65.w)
+                        : Image.asset('assets/icons/spatula.png', width: 66.w),
+
                 onPressed: () {
                   setState(() {
                     isExpanded = !isExpanded;
