@@ -44,7 +44,7 @@ class _StudyScreenState extends State<StudyScreen>
     final user = userProvider.user;
     if (user != null) {
       // 사용자 ID로 그룹 목록 가져오기
-      fetchGroupsByUserId(user.email);
+      fetchGroupsByUserId(user.id!);
     }
   }
 
@@ -100,7 +100,7 @@ class _StudyScreenState extends State<StudyScreen>
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
     if (user != null) {
-      print("사용자 이름: ${user.username}");
+      print("사용자 이름: ${user.id}");
     }
     return Scaffold(
       appBar: AppBar(backgroundColor: Color(0xFF6B6B6B), toolbarHeight: 1),
@@ -122,7 +122,7 @@ class _StudyScreenState extends State<StudyScreen>
                       Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Text(
-                          user != null ? "${user.username}님, 안녕하세요!" : "안녕하세요!",
+                          user != null ? "${user.id}님, 안녕하세ㅁㄴㅇ요!" : "안녕하세요!",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,

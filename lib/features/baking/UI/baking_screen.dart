@@ -6,6 +6,8 @@ import 'package:componentss/features/baking/UI/baking_stage.dart';
 import 'package:componentss/features/baking/UI/qna_list_model.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
+import 'package:componentss/features/baking/data/interview/interview_api.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_api.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_response_model.dart';
@@ -23,10 +25,20 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  int? _dday; // D-day 데이터를 저장할 변수
+  bool isLoadingDday = true; // D-day 데이터 로딩 상태
   late MissionResponse? _missionResponse;
   bool _isLoading = true; // 로딩 상태를 관리
   final List<Quest> dailyQuests = [];
   late List<Attendance> _attendanceHistory;
+  late List<Interview> _interviews;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // _loadMissionData();
+  }
 
   @override
   void initState() {
@@ -35,6 +47,24 @@ class _BakingScreenState extends State<BakingScreen> {
     _attendanceHistory = []; // 초기화
     _loadMissionAndAttendanceData(); // 미션과
     // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
+  }
+
+  Future<void> _loadInterviewData() async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final user = userProvider.user;
+      final interviewResponse = await fetchUserInterviews(user!.username);
+
+      setState(() {
+        _interviews = interviewResponse;
+        _isLoading = false;
+      });
+    } catch (error) {
+      print("Error loading interview data: $error");
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> _loadMissionAndAttendanceData() async {

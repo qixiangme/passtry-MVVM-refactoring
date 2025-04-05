@@ -15,7 +15,7 @@ class DetailRanking extends StatefulWidget {
 
 class _DetailRankingState extends State<DetailRanking> {
   List<RankingModel> _rankings = [];
-  
+
   bool _isLoading = true;
   @override
   void initState() {
@@ -105,10 +105,8 @@ class _DetailRankingState extends State<DetailRanking> {
     return Container(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: _buildRankingList(),
-          ),
+          SizedBox(width: 100, height: 100, child: _buildRankingList()),
+
           Stack(
             children: [
               Positioned(

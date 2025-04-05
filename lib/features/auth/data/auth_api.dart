@@ -47,22 +47,31 @@ class AuthApi {
         body: jsonEncode({'username': username, 'password': password}),
       );
 
-      // User 객체 생성
-      final user = User(
-        username: username,
-        score: 0,
-        email: username,
-        joinedGroups: [],
-      );
+      if (response.statusCode == 200) {
+        // 로그인 성공 시, 사용자 정보 받아오기
+        final userResponse = await http.get(
+          Uri.parse('$baseUrl/users/$username'),
+          headers: {'Content-Type': 'application/json'},
+        );
 
-      // UserProvider를 통해 사용자 정보 설정
-      Provider.of<UserProvider>(context, listen: false).setUser(user);
+        if (userResponse.statusCode == 200) {
+          final userData = jsonDecode(userResponse.body);
+          final user = User.fromJson(userData);
 
-      // 사용자 정보 내부 저장
-      await saveUser(user);
+          // Provider와 SharedPreferences에 저장
+          Provider.of<UserProvider>(context, listen: false).setUser(user);
+          await saveUser(user);
 
-      print("로그인 성공");
-      return true;
+          print("로그인 성공 및 사용자 정보 설정 완료");
+          return true;
+        } else {
+          print("사용자 정보를 가져오는 데 실패: ${userResponse.statusCode}");
+          return false;
+        }
+      } else {
+        print("로그인 실패: ${response.statusCode}");
+        return false;
+      }
     } catch (e) {
       print("로그인 중 오류 발생: $e");
       return false;
@@ -76,13 +85,24 @@ class AuthApi {
   }
 
   // 저장된 사용자 가져오기
-  static Future<User?> getUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userData = prefs.getString('user');
-    if (userData != null) {
-      return User.fromJson(jsonDecode(userData));
+  static Future<User?> getUserById(String id) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/users/$id'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return User.fromJson(data);
+      } else {
+        print("사용자 정보를 가져오지 못했습니다. 상태 코드: ${response.statusCode}");
+        return null;
+      }
+    } catch (e) {
+      print("getUser API 호출 중 오류 발생: $e");
+      return null;
     }
-    return null;
   }
 
   // 로그아웃 (저장된 정보 삭제)
