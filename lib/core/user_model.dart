@@ -1,5 +1,4 @@
 import 'package:componentss/features/study/data/group_model.dart';
-import 'package:componentss/features/study/data/tempGroup.dart';
 
 class User {
   final String username;

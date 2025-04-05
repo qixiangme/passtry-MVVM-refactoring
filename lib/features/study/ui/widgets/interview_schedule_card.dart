@@ -1,5 +1,4 @@
 import 'package:componentss/features/study/data/group_model.dart';
-import 'package:componentss/features/study/data/tempGroup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

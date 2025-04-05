@@ -1,7 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/study/data/group_api.dart';
 import 'package:componentss/features/study/data/group_model.dart';
-import 'package:componentss/features/study/data/tempGroup.dart';
 import 'package:componentss/features/study/ui/group_detail/group_detaill.dart';
 import 'package:componentss/features/study/ui/search_group/search_group_screen.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
