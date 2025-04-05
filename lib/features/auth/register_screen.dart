@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (result == "회원가입 성공!") {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => WelcomeScreen()),
         );
       }
     }
