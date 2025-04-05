@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:componentss/core/user_provider.dart';
 
 class MyProfieScreen extends StatelessWidget {
   const MyProfieScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    if (user != null) {
+      print("사용자 이름: ${user.username}");
+    }
+
     return Container(
       width: 1080.w,
       height: 2400.h,
@@ -772,7 +780,7 @@ class MyProfieScreen extends StatelessWidget {
             left: 361.w,
             top: 352.h,
             child: Text(
-              'Username',
+              user != null ? "${user.username}" : "username",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 50.w,
