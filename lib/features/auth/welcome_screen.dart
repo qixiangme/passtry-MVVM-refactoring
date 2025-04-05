@@ -64,7 +64,6 @@ class WelcomeScreen extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => StudyMakeGroup(),
                         ),
-                        //MaterialPageRoute(builder: (context) => StudyMake()),
                       );
                     },
                     child: Center(

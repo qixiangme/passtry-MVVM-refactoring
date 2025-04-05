@@ -115,6 +115,17 @@ class _resultScreenState extends State<resultScreen> {
     ),
     Positioned(
       top: 791.h,
+      left: 45.w,
+      child: Image.asset
+(
+        'C:/Users/USER/Desktop/2025_TEAM_9_FE/assets/icons/success_image.png',
+        width: 992.w,
+        height: 1092.h,
+        fit: BoxFit.cover,
+      )
+    ),
+    Positioned(
+      top: 791.h,
       left: 44.w,
       child: Container(
         width: 992,

@@ -11,17 +11,16 @@ class OnboardingScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(height: 250.h),
-          Positioned(
-            left: 44.w,
-            top: 342.h,
+          SizedBox(height: 342.h),
+          Center(
             child: Image.asset(
               'assets/icons/login.png',
               width: 992.w,
               height: 1360.h,
-            ),
+              fit: BoxFit.cover,
+            )
           ),
-          SizedBox(height: 250.h),
+          SizedBox(height: 125.h),
           GestureDetector(
             onTap: () {
               Navigator.push(
