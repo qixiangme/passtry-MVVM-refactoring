@@ -52,6 +52,12 @@ class _StudyScreenState extends State<StudyScreen>
     try {
       final groups = await groupApi.getGroupsById(userId); // GroupApi 활용
       if (groups != null) {
+        groups.sort((a, b) {
+          int scoreA = a.score ?? 0; // null일 경우 0으로 처리 (예시)
+          int scoreB = b.score ?? 0; // null일 경우 0으로 처리 (예시)
+          return scoreB.compareTo(scoreA); // 내림차순 정렬 (b와 a의 위치를 바꾸면 오름차순)
+        });
+
         setState(() {
           _studyGroups = groups;
           isLoading = false;

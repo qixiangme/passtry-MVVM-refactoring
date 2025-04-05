@@ -123,12 +123,12 @@ class _StudyMakeState2 extends State<StudyMake2> {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
-    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
     final String category2 = args['category2'];
 
-    final DateFormat dateFormatter = DateFormat('yyyy.MM.dd');
-    final DateFormat timeFormatter = DateFormat('HH:mm');
+    final DateFormat dateFormatter = DateFormat('yyyy-MM-dd');
+    final DateFormat timeFormatter = DateFormat('HH:mm:00');
 
     String displayDate =
         _selectedDate != null ? dateFormatter.format(_selectedDate!) : '날짜 선택';
@@ -161,7 +161,6 @@ class _StudyMakeState2 extends State<StudyMake2> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             SizedBox(height: 100.h),
 
             Text(
@@ -255,17 +254,17 @@ class _StudyMakeState2 extends State<StudyMake2> {
                             print('Remaining Days: $remainingDays');
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => StudyMakeLevel(),
+                              MaterialPageRoute(
+                                builder: (context) => StudyMakeLevel(),
                                 settings: RouteSettings(
-                                arguments: {
-                                'category': category,
-                                'category2': category2,
-                                  'date': displayDate,
-                                  'time': displayTime,
-                                }, // 전달할 데이터
+                                  arguments: {
+                                    'category': category,
+                                    'category2': category2,
+                                    'date': displayDate,
+                                    'time': displayTime,
+                                  }, // 전달할 데이터
+                                ),
                               ),
-                            ),
-
                             );
                           }
                           : null,

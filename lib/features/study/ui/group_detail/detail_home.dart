@@ -93,11 +93,11 @@ class _DetailHomeState extends State<DetailHome> {
         final score = _memberScores[memberId] ?? 0;
 
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 16.0),
           child: Container(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(20.0),
             decoration: BoxDecoration(
-              color: Colors.grey[800],
+              color: Color(0xffD9D9D9).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Row(
@@ -195,6 +195,7 @@ class _DetailHomeState extends State<DetailHome> {
             Expanded(
               child: Container(
                 width: double.infinity,
+                height: 2074.h,
                 color: Color(0xFF434343),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,7 +287,7 @@ class _DetailHomeState extends State<DetailHome> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 6),
+                    SizedBox(height: 10),
                     Center(
                       child: Text(
                         '따끈따끈한 반죽',
@@ -298,7 +299,7 @@ class _DetailHomeState extends State<DetailHome> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 50),
                     Padding(
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
@@ -594,10 +595,12 @@ class _DetailHomeState extends State<DetailHome> {
                     //     ),
                     //   ],
                     // ),
-                    SizedBox(
-                      height: 300,
-                      width: 300,
-                      child: _buildMemberList(),
+                    Center(
+                      child: SizedBox(
+                        height: 552.h,
+                        width: 1080.w,
+                        child: _buildMemberList(),
+                      ),
                     ),
                   ],
                 ),
