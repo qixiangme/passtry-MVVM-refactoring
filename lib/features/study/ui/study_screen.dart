@@ -142,6 +142,24 @@ class _StudyScreenState extends State<StudyScreen>
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
+
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: 14,
+                                      left: 2,
+                                    ),
+                                    child: Container(
+                                      width: 8.w,
+                                      height: 8.h,
+                                      decoration: ShapeDecoration(
+                                        color: const Color(
+                                          0xFFFF9F1C,
+                                        ) /* main-orange */,
+                                        shape: OvalBorder(),
+                                      ),
+                                    ),
+                                  ),
+
                                   SizedBox(width: 23),
                                   Text(
                                     "실시간 멤버들의 현황을 확인할 수 있는 텍스트입니다.",
