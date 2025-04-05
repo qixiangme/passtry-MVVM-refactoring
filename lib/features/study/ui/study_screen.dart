@@ -27,9 +27,9 @@ class _StudyScreenState extends State<StudyScreen>
 
   List<GroupModel> _studyGroups = []; // 스터디 그룹 목록
   bool isLoading = true; // 데이터 로딩 상태
-  bool _showButton = true;
+  final bool _showButton = true;
   final bool _showAdditionalButtons = false; // 추가 버튼 표시 여부
-  double _lastOffset = 0;
+  final double _lastOffset = 0;
 
   @override
   void initState() {
@@ -80,26 +80,6 @@ class _StudyScreenState extends State<StudyScreen>
     super.dispose();
   }
 
-  void _scrollListener() {
-    double currentOffset = _scrollController.offset;
-    if (currentOffset > _lastOffset && currentOffset > 50) {
-      // 아래로 스크롤 시 버튼 숨김 (50px 이상 스크롤해야 적용)
-      if (_showButton) {
-        setState(() {
-          _showButton = false;
-        });
-      }
-    } else if (currentOffset < _lastOffset) {
-      // 위로 스크롤 시 버튼 다시 표시
-      if (!_showButton) {
-        setState(() {
-          _showButton = true;
-        });
-      }
-    }
-    _lastOffset = currentOffset; // 현재 스크롤 위치 저장
-  }
-
   bool isExpanded = false;
 
   @override
@@ -129,7 +109,7 @@ class _StudyScreenState extends State<StudyScreen>
                       Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Text(
-                          user != null ? "${user.username}님, 안녕하세요!" : "안녕하세요!",
+                          user != null ? "${user.id}님, 안녕하세요!" : "안녕하세요!",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,

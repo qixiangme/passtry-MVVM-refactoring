@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
-
+import 'package:componentss/features/study/data/ranking_model.dart';
+import 'package:http/http.dart' as http;
 import 'package:componentss/features/study/data/group_api.dart';
 import 'package:componentss/features/study/data/group_model.dart';
 import 'package:flutter/material.dart';
@@ -41,34 +43,28 @@ class _DetailHomeState extends State<DetailHome> {
     loadGroupAndScores(widget.groupModel.joinCode);
   }
 
-  // Widget _buildMemberList() {
-  //   if (_group == null || _memberScores.isEmpty) {
-  //     return Center(child: CircularProgressIndicator());
-  //   }
+  Future<String> fetchUsernameById(String memberId) async {
+    final url = Uri.parse(
+      'http://34.64.233.128:5200/users/$memberId',
+    ); // API 엔드포인트
 
-  //   return ListView.builder(
-  //     itemCount: _group!.memberIds.length,
-  //     itemBuilder: (context, index) {
-  //       final memberId = _group!.memberIds[index];
-  //       final score = _memberScores[memberId] ?? 0;
+    try {
+      final response = await http.get(url);
 
-  //       return ListTile(
-  //         leading: CircleAvatar(
-  //           backgroundColor: Colors.grey,
-  //           child: Text(
-  //             memberId.substring(0, 2), // 멤버 ID의 일부를 표시
-  //             style: TextStyle(color: Colors.white),
-  //           ),
-  //         ),
-  //         title: Text(
-  //           'Member ID: $memberId',
-  //           style: TextStyle(color: Colors.white),
-  //         ),
-  //         trailing: Text('$score 점', style: TextStyle(color: Colors.orange)),
-  //       );
-  //     },
-  //   );
-  // }
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        return data['username']; // 서버에서 반환된 유저 이름
+      } else {
+        print('❌ 유저 이름 가져오기 실패');
+        print('응답 코드: ${response.statusCode}');
+        print('응답 내용: ${response.body}');
+        throw Exception('유저 이름을 가져오는 중 오류 발생');
+      }
+    } catch (e) {
+      print('🚨 네트워크 요청 중 오류 발생: $e');
+      throw Exception('유저 이름을 가져오는 중 네트워크 오류 발생');
+    }
+  }
 
   Widget _buildMemberList() {
     if (_group == null || _memberScores.isEmpty) {

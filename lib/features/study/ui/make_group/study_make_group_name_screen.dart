@@ -49,8 +49,6 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
   /// 그룹 업로드 메서드
   Future<void> _uploadGroup(Map<String, dynamic> args) async {
     final String groupName = args['name'] ?? '그룹 이름 없음';
-    // final String? imagePath = args['imagePath'] as String?; // 이미지 경로 제거
-    // final File? imageFile = imagePath != null ? File(imagePath) : null; // 이미지 파일 제거
 
     var uri = Uri.parse("http://34.64.233.128:5200/groups"); // 🔥 엔드포인트 설정
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -61,10 +59,11 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
 
     final List<String> tags = [category, category2];
     var request =
-    http.MultipartRequest("POST", uri)
-      ..fields['authorId'] = user!.id! // userProvider에서 가져온 ID 사용
-      ..fields['name'] = groupName
-      ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
+        http.MultipartRequest("POST", uri)
+          ..fields['authorId'] =
+              user!.id! // userProvider에서 가져온 ID 사용
+          ..fields['name'] = groupName
+          ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
 
     // if (imageFile != null) { // 이미지 파일 업로드 로직 제거
     //   request.files.add(
@@ -91,7 +90,6 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     }
   }
 
-
   void _handleNextButtonTap() async {
     // 버튼 클릭 가능 상태이고, 아직 처리 중이 아닐 때만 실행
     if (_isNextButtonEnabled && !_isNextButtonClicked) {
@@ -100,7 +98,8 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
       });
 
       final Map<String, dynamic> args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>? ?? {}; // null 체크 및 기본값 추가
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>? ??
+          {}; // null 체크 및 기본값 추가
       final String category = args['category'] ?? ""; // 기본값 설정
       final String category2 = args['category2'] ?? ""; // 기본값 설정
       final String date = args['date'] ?? ""; // 기본값 설정
@@ -114,7 +113,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
       Map<String, dynamic> uploadArgs = {
         'name': _GroupName,
         // 'imagePath': _selectedImage?.path, // 이미지 경로 제거
-        'authorId': user?.id, // UserProvider에서 가져온 ID 사용 (null 가능성 처리)
+        'authorId': user!.id!, // UserProvider에서 가져온 ID 사용 (null 가능성 처리)
         'category': category,
         'category2': category2,
         // "tags": ["tag1", "tag2"], // 실제 태그 사용하도록 수정
@@ -129,7 +128,6 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
         // 사용자에게 오류 메시지 표시 등 추가 처리 가능
         return;
       }
-
 
       await _uploadGroup(uploadArgs); // 그룹 업로드 메서드 호출
 
@@ -166,7 +164,6 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,7 +182,8 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 77.w), // ScreenUtil 적용
-          child: Column( // Stack 제거 (단순 구조)
+          child: Column(
+            // Stack 제거 (단순 구조)
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 100.h), // ScreenUtil 적용
@@ -209,7 +207,8 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                 child: SizedBox(
                   width: 900.w, // ScreenUtil 적용
                   // height 제거 (TextField 높이에 맞게 자동 조절)
-                  child: TextField( // Column 구조 단순화
+                  child: TextField(
+                    // Column 구조 단순화
                     onChanged: (text) {
                       _handleNameSelected(text);
                       print("입력된 텍스트: $text");
@@ -224,14 +223,10 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                         letterSpacing: 0.44,
                       ),
                       border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade200,
-                        ),
+                        borderSide: BorderSide(color: Colors.grey.shade200),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey.shade900,
-                        ),
+                        borderSide: BorderSide(color: Colors.grey.shade900),
                       ),
                     ),
                     textAlign: TextAlign.center,
@@ -248,7 +243,10 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                 child: Center(
                   child: NextButton(
                     isEnabled: _isNextButtonEnabled,
-                    onTap: _isNextButtonClicked ? () {} : _handleNextButtonTap, // 처리 중일 때 탭 비활성화
+                    onTap:
+                        _isNextButtonClicked
+                            ? () {}
+                            : _handleNextButtonTap, // 처리 중일 때 탭 비활성화
                   ),
                 ),
               ),
@@ -314,7 +312,6 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
 //   }
 // }
 
-
 class NextButton extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
@@ -328,9 +325,12 @@ class NextButton extends StatelessWidget {
     // isEnabled가 false (즉, 이름 입력 전)일 때는 '다음' 텍스트 표시
     // isEnabled가 true (즉, 이름 입력 후)일 때는 '만들기' 텍스트 표시
 
-    Color bgColor = isEnabled ? Color(0xFFFF9F1C) : Colors.grey.shade300; // 비활성 상태 색상 변경
-    Color textColor = isEnabled ? Colors.white : Colors.grey.shade600; // 비활성 상태 텍스트 색상 변경
-    Color borderColor = isEnabled ? Colors.white : Colors.grey.shade300; // 비활성 상태 테두리 색상 변경
+    Color bgColor =
+        isEnabled ? Color(0xFFFF9F1C) : Colors.grey.shade300; // 비활성 상태 색상 변경
+    Color textColor =
+        isEnabled ? Colors.white : Colors.grey.shade600; // 비활성 상태 텍스트 색상 변경
+    Color borderColor =
+        isEnabled ? Colors.white : Colors.grey.shade300; // 비활성 상태 테두리 색상 변경
 
     return InkWell(
       // isEnabled가 false일 때 onTap 비활성화 (선택 사항, 버튼 모양만으로도 충분할 수 있음)
@@ -342,7 +342,10 @@ class NextButton extends StatelessWidget {
         decoration: ShapeDecoration(
           color: bgColor,
           shape: RoundedRectangleBorder(
-            side: BorderSide(width: 2.75.w, color: borderColor), // ScreenUtil 적용
+            side: BorderSide(
+              width: 2.75.w,
+              color: borderColor,
+            ), // ScreenUtil 적용
             borderRadius: BorderRadius.circular(33.r), // ScreenUtil 적용
           ),
         ),
