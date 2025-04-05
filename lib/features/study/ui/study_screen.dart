@@ -7,6 +7,7 @@ import 'package:componentss/features/study/ui/make_group/study_make_group_screen
 import 'package:componentss/features/study/ui/widgets/interview_schedule_card.dart';
 import 'package:componentss/features/study/ui/widgets/ranking_card.dart';
 import 'package:componentss/features/study/ui/widgets/study_group_card.dart';
+import 'package:componentss/features/study/ui/new_gruop/new_group_category_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -106,7 +107,7 @@ class _StudyScreenState extends State<StudyScreen>
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
     if (user != null) {
-      print("사용자 이름: ${user.id}");
+      print("사용자 이름: ${user.username}");
     }
     return Scaffold(
       appBar: AppBar(backgroundColor: Color(0xFF6B6B6B), toolbarHeight: 1),
@@ -128,7 +129,7 @@ class _StudyScreenState extends State<StudyScreen>
                       Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Text(
-                          user != null ? "${user.id}님, 안녕하세ㅁㄴㅇ요!" : "안녕하세요!",
+                          user != null ? "${user.username}님, 안녕하세요!" : "안녕하세요!",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
@@ -375,7 +376,7 @@ class _StudyScreenState extends State<StudyScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StudyMakeGroup(),
+                              builder: (context) => NewGroupCategoryScreen(),
                             ),
                           );
                         }

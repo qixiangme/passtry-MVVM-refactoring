@@ -6,14 +6,14 @@ import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:componentss/features/study/ui/study_screen.dart';
 import 'package:componentss/features/search/search_screen.dart';
 
-class StudyMakeGroupComplete extends StatefulWidget {
-  const StudyMakeGroupComplete({super.key});
+class NewGroupCompleteScreen extends StatefulWidget {
+  const NewGroupCompleteScreen({super.key});
 
   @override
-  State<StudyMakeGroupComplete> createState() => _StudyMakeGroupComplete();
+  State<NewGroupCompleteScreen> createState() => _NewGroupCompleteScreen();
 }
 
-class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
+class _NewGroupCompleteScreen extends State<NewGroupCompleteScreen> {
   Widget _buildGroupImage(Map<String, dynamic> args) {
     try {
       if (args.containsKey('imagePath') && args['imagePath'] is String) {
@@ -77,7 +77,7 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String groupName = args['groupName'];
 
     return Scaffold(

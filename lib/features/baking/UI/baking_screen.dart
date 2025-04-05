@@ -17,6 +17,7 @@ import 'package:componentss/features/baking/UI/questions/odd/odd_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class BakingScreen extends StatefulWidget {
   const BakingScreen({super.key});
@@ -399,7 +400,7 @@ class _BakingScreenState extends State<BakingScreen> {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  //width: double.infinity,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -426,45 +427,19 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                       SizedBox(height: 100),
                       Text('logo'),
+                      SizedBox(height: 50),
+
                       Center(
-                        child: Container(
-                          width: 1000.w,
-                          height: 200.h,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 2,
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          decoration: ShapeDecoration(
-                            color: Color(0x21FF9F1C), // 주황색
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 2.96.w,
-                                color: const Color(
-                                  0xFFFF9F1C,
-                                ) /* main-orange */,
-                              ),
-                              borderRadius: BorderRadius.circular(29.57.w),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 29.57.w,
-                            children: [
-                              Text(
-                                '동아리 면접',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 36.w,
-                                  fontFamily: 'Wanted Sans',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
+                        //API로 받아오기
+                        child: EventCard(
+                          title: '동아리 면접 🍞', // 이모지도 텍스트로 넣을 수 있습니다.
+                          targetDate: DateTime(
+                            2024,
+                            5,
+                            31,
+                            15,
+                            00,
+                          ), // 목표 날짜 및 시간
                         ),
                       ),
 
@@ -638,10 +613,14 @@ class _BakingScreenState extends State<BakingScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                //Navigator.push(
-                                //  context,
-                                //  MaterialPageRoute(
-                                //    builder: (context) {}
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return QnaListPage();
+                                    },
+                                  ),
+                                );
                               },
                               child: Row(
                                 children: [
@@ -656,11 +635,12 @@ class _BakingScreenState extends State<BakingScreen> {
                       SizedBox(height: 20),
                       QnaListView(qnaItems: qnaList),
 
+
                       //Padding(
                       //  padding: EdgeInsets.only(left: 20, right: 20),
                       //  child: Column(
                       //    children: [
-                      SizedBox(height: 100),
+
                     ],
                   ),
                 ),
@@ -837,4 +817,108 @@ class Quest {
     required this.stage,
     required this.isCompleted,
   });
+}
+
+class EventCard extends StatelessWidget {
+  final String title;
+  final DateTime targetDate;
+
+  const EventCard({Key? key, required this.title, required this.targetDate})
+    : super(key: key);
+
+  String calculateDday(DateTime target) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final targetDay = DateTime(target.year, target.month, target.day);
+    final difference = targetDay.difference(today).inDays;
+
+    if (difference == 0) {
+      return 'D-Day'; // D-Day는 특별 처리
+    } else if (difference > 0) {
+      return 'D - $difference';
+    } else {
+      return 'D + ${difference.abs()}';
+    }
+  }
+
+  // D-day 문자열을 각 부분(문자)으로 분리하는 함수
+  List<String> getDdayParts(String dDayString) {
+    if (dDayString == 'D-Day') {
+      return ['D', '-', '0'];
+    } else {
+      // "D - 123" 또는 "D + 45" 같은 형태 처리
+      List<String> parts = [];
+      parts.add('D'); // 첫 글자 'D'
+      parts.add(dDayString.substring(2, 3)); // 부호 ('-' 또는 '+')
+      String numberPart = dDayString.substring(4);
+      parts.addAll(numberPart.split(''));
+      return parts;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final formattedDate = DateFormat('yyyy.MM.dd HH:mm').format(targetDate);
+    final dDayString = calculateDday(targetDate);
+    final dDayParts = getDdayParts(dDayString); // D-day 부분을 각 문자로 분리
+
+    return Container(
+      width: 1000.w,
+      height: 250.h,
+
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        color: Color(0x21FF9F1C),
+        borderRadius: BorderRadius.circular(15.0),
+        border: Border.all(color: Colors.orange, width: 1.5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              SizedBox(height: 4.0),
+              Text(
+                formattedDate,
+                style: TextStyle(fontSize: 14.0, color: Colors.black54),
+              ),
+            ],
+          ),
+
+          Row(
+            children:
+                dDayParts.map((part) {
+                  // 각 문자(부분)를 위한 컨테이너 생성
+                  return Container(
+                    margin: const EdgeInsets.only(left: 3.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 5.0,
+                    ),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Text(
+                      part, // D-day 문자 (예: 'D', '-', '3', '0')
+                      style: TextStyle(
+                        fontSize: 75.51.sp,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  );
+                }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
 }

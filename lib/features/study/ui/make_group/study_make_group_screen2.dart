@@ -167,7 +167,7 @@ class _StudyMakeGroupState2 extends State<StudyMakeGroup2> {
               '면접 날짜와 시간을 알려주세요',
               style: TextStyle(
                 color: const Color(0xFF1F1F1F),
-                fontSize: 70.sp,
+                fontSize: 65.sp,
                 fontFamily: 'Wanted Sans',
                 fontWeight: FontWeight.w600,
               ),
