@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 class AttendanceApi {
   final String baseUrl = "http://34.64.233.128:5200"; // 서버 URL
 
-  Future<bool> checkAttendance(String userId) async {
-    final url = Uri.parse("$baseUrl/attendances/today?userId=$userId");
+  Future<bool> checkAttendance(String userId,String interviewId) async {
+    final url = Uri.parse("$baseUrl/attendances/today?userId=$userId&interviewId=$interviewId");
 
     try {
       final response = await http.get(url);
@@ -24,9 +24,12 @@ class AttendanceApi {
     }
   }
 
-  Future<List<Attendance>> fetchAttendanceHistory(String userId) async {
+  Future<List<Attendance>> fetchAttendanceHistory(
+    String userId,
+    String interviewId,
+  ) async {
     final url = Uri.parse(
-      'http://34.64.233.128:5200/attendances/history?userId=$userId',
+      'http://34.64.233.128:5200/attendances/history?userId=$userId&interviewId=$interviewId',
     );
     final response = await http.get(url);
 
