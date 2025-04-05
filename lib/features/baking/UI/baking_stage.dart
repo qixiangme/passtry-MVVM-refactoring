@@ -73,11 +73,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 270.w,
-              top: 418.h,
+              // 첫 번째 동그라미
+              left: 300.w,
+              top: 420.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
@@ -93,11 +94,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 101.w,
-              top: 1396.h,
+              // 네 번째 동그라미
+              left: 150.w,
+              top: 1280.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
@@ -113,11 +115,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 339.w,
-              top: 2364.h,
+              // 일곱 번째 동그라미미
+              left: 400.w,
+              top: 2100.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
@@ -133,11 +136,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 551.w,
-              top: 1056.h,
+              //세 번째 동그라미
+              left: 530.w,
+              top: 980.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
@@ -153,11 +157,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 459.w,
-              top: 1721.h,
+              // 다섯 번째 동그라미미
+              left: 500.w,
+              top: 1550.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
@@ -173,11 +178,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 722.w,
+              // 두 번째 동그라미
+              left: 710.w,
               top: 621.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
@@ -193,11 +199,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 754.w,
-              top: 2108.h,
+              // 여섯 번째 동그라미
+              left: 730.w,
+              top: 1850.h,
               child: Container(
-                width: 240.w,
-                height: 240.h,
+                width: 200.w,
+                height: 200.h,
                 decoration: ShapeDecoration(
                   color: Colors.white /* white */,
                   shape: OvalBorder(),
