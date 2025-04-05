@@ -10,7 +10,6 @@ class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
-
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
@@ -27,7 +26,9 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(height: 125),
             Center(
               child: Text(
-                user != null ? '${user.username} 님, 환영합니다!': 'Username 님, 환영합니다!',
+                user != null
+                    ? '${user.username} 님, 환영합니다!'
+                    : 'Username 님, 환영합니다!',
                 style: TextStyle(
                   color: const Color(0xFF1C1C1C) /* main-black */,
                   fontSize: 76.sp,
@@ -61,9 +62,7 @@ class WelcomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => StudyMakeGroup(),
-                        ),
+                        MaterialPageRoute(builder: (context) => StudyMake()),
                       );
                     },
                     child: Center(

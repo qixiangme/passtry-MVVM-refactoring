@@ -20,7 +20,8 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
   void _updateNextButtonState() {
     setState(() {
       _isNextButtonEnabled =
-          _selectedStudyLevelText != null && _selectedInclusionOptionText != null;
+          _selectedStudyLevelText != null &&
+          _selectedInclusionOptionText != null;
     });
   }
 
@@ -40,11 +41,9 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
     // 디버깅용 출력
   }
 
-
   void _handleNextButtonTap() {
-
     final Map<String, dynamic> args =
-    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
     final String category2 = args['category2'];
     final String date = args['date'];
@@ -65,41 +64,38 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
       });
 
       // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
-       Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => StudyMakeGroupName(),
-        settings: RouteSettings(
-        arguments: {
-        'category': category,
-        'category2': category2,
-        'date': date,
-        'time': time,
-        'studyLevel': _selectedStudyLevelText,
-        'inclusionOption': _selectedInclusionOptionText,
-        },
-      ),
-      ),
-    ).then((_) {
-      // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
-      // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
-      if (mounted) {
-        // 3. 버튼 상태를 다시 false로 초기화
-        setState(() {
-          _isNextButtonClicked = false;
-        });
-      }
-    });
-
-    }
-    else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StudyMakeGroupName(),
+          settings: RouteSettings(
+            arguments: {
+              'category': category,
+              'category2': category2,
+              'date': date,
+              'time': time,
+              'studyLevel': _selectedStudyLevelText,
+              'inclusionOption': _selectedInclusionOptionText,
+            },
+          ),
+        ),
+      ).then((_) {
+        // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
+        // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
+        if (mounted) {
+          // 3. 버튼 상태를 다시 false로 초기화
+          setState(() {
+            _isNextButtonClicked = false;
+          });
+        }
+      });
+    } else {
       print("다음 버튼 클릭 불가");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -191,27 +187,29 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
 
                 SizedBox(width: 40.w),
 
-                Text('최근 이슈, 트랜드 퀴즈도 포함할까요?',
+                Text(
+                  '최근 이슈, 트랜드 퀴즈도 포함할까요?',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 35.sp,
                     fontFamily: 'Wanted Sans',
                     fontWeight: FontWeight.w600,
-                  ),)
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 50.h),
             InclusionOptions(onItemSelected: _handleInclusionOptionSelect),
             Spacer(),
             Padding(
-                padding: EdgeInsets.only(bottom: 200.h),
-                child : Center(
-                  child: NextButton(
-                    isEnabled: _isNextButtonEnabled,
-                    onTap: _handleNextButtonTap,
-                  ),)
+              padding: EdgeInsets.only(bottom: 200.h),
+              child: Center(
+                child: NextButton(
+                  isEnabled: _isNextButtonEnabled,
+                  onTap: _handleNextButtonTap,
+                ),
+              ),
             ),
-
           ],
         ),
       ),
@@ -368,15 +366,13 @@ class InclusionOption extends StatefulWidget {
   _InclusionOptionState createState() => _InclusionOptionState();
 }
 
-
-
 class _InclusionOptionState extends State<InclusionOption> {
   @override
   Widget build(BuildContext context) {
     Color containerColor =
-    widget.isSelected ? Colors.orange.withOpacity(0.3) : Colors.white;
+        widget.isSelected ? Colors.orange.withOpacity(0.3) : Colors.white;
     Color borderColor =
-    widget.isSelected ? Colors.orange : const Color(0xFFEBEBEB);
+        widget.isSelected ? Colors.orange : const Color(0xFFEBEBEB);
 
     return GestureDetector(
       onTap: () {
@@ -436,7 +432,8 @@ class _InclusionOptionState extends State<InclusionOption> {
 class InclusionOptions extends StatefulWidget {
   final Function(String) onItemSelected;
 
-  const InclusionOptions({required this.onItemSelected, Key? key}) : super(key: key);
+  const InclusionOptions({required this.onItemSelected, Key? key})
+    : super(key: key);
 
   @override
   _InclusionOptionsState createState() => _InclusionOptionsState();
@@ -450,13 +447,11 @@ class InclusionOptionInfo {
 }
 
 class _InclusionOptionsState extends State<InclusionOptions> {
-
   String? selectedText;
 
   final List<InclusionOptionInfo> items = [
     InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/icons/circle.png'),
     InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/icons/X.png'),
-
   ];
 
   void handleInclusionOptionSelected(String text) {
@@ -473,14 +468,14 @@ class _InclusionOptionsState extends State<InclusionOptions> {
       spacing: 15.w,
       runSpacing: 15.h,
       children:
-      items.map((InclusionOptionInfo) {
-        return InclusionOption(
-          text: InclusionOptionInfo.text,
-          assetPath: InclusionOptionInfo.assetPath,
-          isSelected: selectedText == InclusionOptionInfo.text,
-          onSelected: handleInclusionOptionSelected,
-        );
-      }).toList(),
+          items.map((InclusionOptionInfo) {
+            return InclusionOption(
+              text: InclusionOptionInfo.text,
+              assetPath: InclusionOptionInfo.assetPath,
+              isSelected: selectedText == InclusionOptionInfo.text,
+              onSelected: handleInclusionOptionSelected,
+            );
+          }).toList(),
     );
   }
 }
@@ -490,7 +485,7 @@ class NextButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const NextButton({required this.isEnabled, required this.onTap, Key? key})
-      : super(key: key);
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {

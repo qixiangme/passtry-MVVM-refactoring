@@ -23,11 +23,11 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
   String? _selectedInclusionOptionText;
 
   bool _isNextButtonEnabled = false;
+  String _nextButtonText = '다음';
   void _updateNextButtonState() {
     setState(() {
-      _isNextButtonEnabled =
-          _selectedStudyLevelText != null &&
-          _selectedInclusionOptionText != null;
+      _isNextButtonEnabled = _selectedStudyLevelText != null;
+      _nextButtonText = _selectedStudyLevelText != null ? '퀘스트 생성하기' : '다음';
     });
   }
 
@@ -168,67 +168,10 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
               ),
             ),
             SizedBox(height: 150.h),
-            Container(
-              width: 70.w,
-              height: 70.h,
-              decoration: ShapeDecoration(
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.r),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  '1',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 50.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
             SizedBox(height: 50.h),
             StudyLevels(onItemSelected: _handleStudyLevelSelect),
             SizedBox(height: 150.h),
-            Row(
-              children: [
-                Container(
-                  width: 70.w,
-                  height: 70.h,
-                  decoration: ShapeDecoration(
-                    color: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.r),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '2',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 50.sp,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
 
-                SizedBox(width: 40.w),
-
-                Text(
-                  '최근 이슈, 트랜드 퀴즈도 포함할까요?',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 35.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
             SizedBox(height: 50.h),
             InclusionOptions(onItemSelected: _handleInclusionOptionSelect),
             Spacer(),
@@ -238,6 +181,7 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
                 child: NextButton(
                   isEnabled: _isNextButtonEnabled,
                   onTap: _handleNextButtonTap,
+                  text: _nextButtonText,
                 ),
               ),
             ),
@@ -349,10 +293,10 @@ class _StudyLevelsState extends State<StudyLevels> {
   String? selectedText;
 
   final List<LevelInfo> items = [
-    LevelInfo(text: '난이도 상', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 중', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 하', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 기초', assetPath: 'assets/images/box.png'),
+    LevelInfo(text: '난이도 상', assetPath: 'assets/icons/croissant.png'),
+    LevelInfo(text: '난이도 중', assetPath: 'assets/icons/baguette.png'),
+    LevelInfo(text: '난이도 하', assetPath: 'assets/icons/white_bread.png'),
+    LevelInfo(text: '난이도 기초', assetPath: 'assets/icons/kneading.png'),
   ];
 
   void handleLevelSelected(String text) {
@@ -481,10 +425,10 @@ class InclusionOptionInfo {
 class _InclusionOptionsState extends State<InclusionOptions> {
   String? selectedText;
 
-  final List<InclusionOptionInfo> items = [
-    InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/images/box.png'),
-    InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/images/box.png'),
-  ];
+  // final List<InclusionOptionInfo> items = [
+  //   InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/images/box.png'),
+  //   InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/images/box.png'),
+  // ];
 
   void handleInclusionOptionSelected(String text) {
     setState(() {
@@ -499,15 +443,15 @@ class _InclusionOptionsState extends State<InclusionOptions> {
       alignment: WrapAlignment.center,
       spacing: 15.w,
       runSpacing: 15.h,
-      children:
-          items.map((InclusionOptionInfo) {
-            return InclusionOption(
-              text: InclusionOptionInfo.text,
-              assetPath: InclusionOptionInfo.assetPath,
-              isSelected: selectedText == InclusionOptionInfo.text,
-              onSelected: handleInclusionOptionSelected,
-            );
-          }).toList(),
+      // children:
+      //     items.map((InclusionOptionInfo) {
+      //       return InclusionOption(
+      //         text: InclusionOptionInfo.text,
+      //         assetPath: InclusionOptionInfo.assetPath,
+      //         isSelected: selectedText == InclusionOptionInfo.text,
+      //         onSelected: handleInclusionOptionSelected,
+      //       );
+      //     }).toList(),
     );
   }
 }
@@ -515,8 +459,14 @@ class _InclusionOptionsState extends State<InclusionOptions> {
 class NextButton extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
+  final String text;
 
-  const NextButton({required this.isEnabled, required this.onTap, super.key});
+  const NextButton({
+    required this.isEnabled,
+    required this.onTap,
+    required this.text,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -539,7 +489,7 @@ class NextButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          '다음',
+          text,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textColor,
