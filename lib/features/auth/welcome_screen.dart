@@ -44,7 +44,17 @@ class WelcomeScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 60.sp, fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(height: 550),
+            SizedBox(height: 50.62.h),
+            Center(
+              child: Image.asset(
+                'assets/icons/welcome.png',
+                width: 992.w,
+                height: 1092.h,
+                fit: BoxFit.cover,
+              ),
+
+            ),
+            SizedBox(height: 209.h),
 
             GestureDetector(
               onTap: () {},
@@ -68,7 +78,7 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     child: Center(
                       child: Text(
-                        "시작하기",
+                        "면접 목표 만들기",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
