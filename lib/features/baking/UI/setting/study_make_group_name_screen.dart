@@ -238,7 +238,7 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
                   ),
                 ),
               ),
-              SizedBox(height: 1000.h), // 이름 입력 필드와 버튼 사이 간격 조정 (이미지 제거 고려)
+              SizedBox(height: 1250.h), // 이름 입력 필드와 버튼 사이 간격 조정 (이미지 제거 고려)
               Padding(
                 padding: EdgeInsets.only(bottom: 200.h), // ScreenUtil 적용
                 child: Center(
