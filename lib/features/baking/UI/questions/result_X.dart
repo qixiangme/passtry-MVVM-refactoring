@@ -34,7 +34,7 @@ class _resultScreenState extends State<resultScreen> {
         child: Transform.rotate(
         angle: 45 * (math.pi / 180),
         child: Image.asset(
-        'C:/Users/USER/Desktop/2025_TEAM_9_FE/assets/icons/plus.png',
+        'assets/icons/plus.png',
         color: const Color(0xFF6B6B6B)
       ),
       )
@@ -78,7 +78,7 @@ class _resultScreenState extends State<resultScreen> {
       left: 45.w,
       child: Image.asset
 (
-        'C:/Users/USER/Desktop/2025_TEAM_9_FE/assets/icons/fail_image.png',
+        'assets/icons/fail_image.png',
         width: 992.w,
         height: 1092.h,
         fit: BoxFit.cover,

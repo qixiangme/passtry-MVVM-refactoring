@@ -170,13 +170,10 @@ class _OddQuizState extends State<OddQuiz> {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          isOSelected ? "정말 모르겠을 때, 눌러주세요!" : "힌트으",
+                          isOSelected ? "정말 모르겠을 때, 눌러주세요!\n키워드를 알려드릴게요" : "모나미, 디지털, 기록",
                           style: TextStyle(color: Color(0xFF8E95A2)),
                         ),
-                        Text(
-                          "키워드를 알려드릴게요!",
-                          style: TextStyle(color: Color(0xFF8E95A2)),
-                        ),
+                        
                       ],
                     ),
                   ),
