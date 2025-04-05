@@ -109,6 +109,7 @@ class _BakingScreenState extends State<BakingScreen> {
       final user = userProvider.user;
       final missionResponseFuture = fetchNextMissions(
         user!.id!,
+        _interviews[0].id!,
       ); // 유저 ID를 실제 값으로 대체
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
         user.id!,

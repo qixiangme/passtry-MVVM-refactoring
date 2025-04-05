@@ -7,8 +7,13 @@ import 'package:http/http.dart' as http;
 const String baseUrl = 'http://34.64.233.128:5200';
 
 // MissionResponse를 받아오는 함수
-Future<MissionResponse> fetchNextMissions(String userId) async {
-  final url = Uri.parse('$baseUrl/missions/next?userId=$userId');
+Future<MissionResponse> fetchNextMissions(
+  String userId,
+  String interviewid,
+) async {
+  final url = Uri.parse(
+    '$baseUrl/missions/next?userId=$userId&intwerviewId=$interviewid',
+  );
 
   final response = await http.get(url);
 
@@ -94,5 +99,3 @@ Future<void> completeMission({
     throw Exception('미션 완료 처리 중 오류 발생');
   }
 }
-
-
