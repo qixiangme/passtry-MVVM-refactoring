@@ -1,3 +1,4 @@
+import 'package:componentss/features/auth/login_screen.dart';
 import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class WelcomeScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => StudyMake()),
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
                       );
                     },
                     child: Center(

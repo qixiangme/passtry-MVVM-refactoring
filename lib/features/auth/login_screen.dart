@@ -1,5 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/data/auth_api.dart';
+import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ).showSnackBar(SnackBar(content: Text("로그인 성공!")));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainScreen(goToPage: 1)),
+        MaterialPageRoute(builder: (context) => StudyMake()),
       );
     } else {
       ScaffoldMessenger.of(
