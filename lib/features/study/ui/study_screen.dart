@@ -30,6 +30,7 @@ class _StudyScreenState extends State<StudyScreen>
   final bool _showButton = true;
   final bool _showAdditionalButtons = false; // 추가 버튼 표시 여부
   final double _lastOffset = 0;
+  int score = 0; // 점수 초기화
 
   @override
   void initState() {
@@ -375,7 +376,7 @@ class _StudyScreenState extends State<StudyScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NewGroupCategoryScreen(),
+                              builder: (context) => SearchGroupScreen(),
                             ),
                           );
                         }
