@@ -255,12 +255,12 @@ class _CategoryItemsState extends State<CategoryItems> {
   String? selectedText;
 
   final List<CategoryInfo> items = [
-    CategoryInfo(text: '교내동아리', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '연합동아리', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '서포터즈', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '봉사단', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '인턴 • 현장실습', assetPath: 'assets/images/box.png'),
-    CategoryInfo(text: '기타', assetPath: 'assets/images/box.png'),
+    CategoryInfo(text: '교내동아리', assetPath: 'assets/icons/university.png'),
+    CategoryInfo(text: '연합동아리', assetPath: 'assets/icons/union_club.png'),
+    CategoryInfo(text: '서포터즈', assetPath: 'assets/icons/loud_speaker.png'),
+    CategoryInfo(text: '봉사단', assetPath: 'assets/icons/volunteer_group.png'),
+    CategoryInfo(text: '인턴 • 현장실습', assetPath: 'assets/icons/field_training.png'),
+    CategoryInfo(text: '기타', assetPath: 'assets/icons/baked_bread.png'),
   ];
 
   void handleItemSelected(String text) {

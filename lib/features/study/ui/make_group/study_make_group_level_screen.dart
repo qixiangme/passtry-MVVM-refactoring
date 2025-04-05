@@ -454,8 +454,8 @@ class _InclusionOptionsState extends State<InclusionOptions> {
   String? selectedText;
 
   final List<InclusionOptionInfo> items = [
-    InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/images/box.png'),
-    InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/images/box.png'),
+    InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/icons/circle.png'),
+    InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/icons/X.png'),
 
   ];
 
