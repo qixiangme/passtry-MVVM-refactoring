@@ -50,6 +50,7 @@ class MyProfieScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   SizedBox(
                     width: 193.w,
                     child: Text(
@@ -88,6 +89,33 @@ class MyProfieScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          Positioned(
+            left: 968.w,
+            top: 1260.h,
+            child: Image.asset(
+              'assets/icons/next.png',
+              width: 32.w,
+              height: 32.h,
+            ),
+          ),
+          Positioned(
+            left: 968.w,
+            top: 1380.h,
+            child: Image.asset(
+              'assets/icons/next.png',
+              width: 32.w,
+              height: 32.h,
+            ),
+          ),
+          Positioned(
+            left: 968.w,
+            top: 1500.h,
+            child: Image.asset(
+              'assets/icons/next.png',
+              width: 32.w,
+              height: 32.h,
             ),
           ),
           Positioned(
@@ -146,13 +174,23 @@ class MyProfieScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  Positioned(
+                    left: 903.w,
+                    top: 62.h,
+                    child: Image.asset(
+                      'assets/icons/next.png',
+                      width: 32.w,
+                      height: 32.h,
+                    ),
+                  ),
                   Positioned(
                     left: 36.w,
                     top: 36.h,
-                    child: Container(
+                    child: Image.asset(
+                      'assets/icons/baguette.png',
                       width: 80.w,
                       height: 80.h,
-                      decoration: BoxDecoration(color: const Color(0xFFD9D9D9)),
                     ),
                   ),
                   Positioned(
@@ -214,13 +252,23 @@ class MyProfieScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  Positioned(
+                    left: 903.w,
+                    top: 60.h,
+                    child: Image.asset(
+                      'assets/icons/next.png',
+                      width: 32.w,
+                      height: 32.h,
+                    ),
+                  ),
                   Positioned(
                     left: 36.w,
                     top: 36.h,
-                    child: Container(
+                    child: Image.asset(
+                      'assets/icons/bagel.png',
                       width: 80.w,
                       height: 80.h,
-                      decoration: BoxDecoration(color: const Color(0xFFD9D9D9)),
                     ),
                   ),
                   Positioned(
@@ -271,10 +319,10 @@ class MyProfieScreen extends StatelessWidget {
                   Positioned(
                     left: 36.w,
                     top: 36.h,
-                    child: Container(
+                    child: Image.asset(
+                      'assets/icons/bread.png',
                       width: 80.w,
                       height: 80.h,
-                      decoration: BoxDecoration(color: const Color(0xFFD9D9D9)),
                     ),
                   ),
                   Positioned(
@@ -316,6 +364,15 @@ class MyProfieScreen extends StatelessWidget {
                         height: 1.05.h,
                         letterSpacing: -0.40.w,
                       ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 903.w,
+                    top: 60.h,
+                    child: Image.asset(
+                      'assets/icons/next.png',
+                      width: 32.w,
+                      height: 32.h,
                     ),
                   ),
                 ],
@@ -608,12 +665,15 @@ class MyProfieScreen extends StatelessWidget {
                       child: Stack(),
                     ),
                   ),
-                  Container(
-                    width: 66.w,
-                    height: 66.h,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(),
-                    child: Stack(),
+
+                  Positioned(
+                    left: 937.w,
+                    height: 27.h,
+                    child: Image.asset(
+                      'assets/icons/setting.png',
+                      width: 66.w,
+                      height: 66.h,
+                    ),
                   ),
                 ],
               ),
