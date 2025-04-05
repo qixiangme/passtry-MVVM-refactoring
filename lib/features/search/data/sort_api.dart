@@ -30,14 +30,15 @@ class SortApi {
 
       // 응답 상태 코드 확인
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final responseBodyBytes = response.bodyBytes; // 바이트 형태로 받기
+        final responseBodyString = utf8.decode(responseBodyBytes); // UTF-8로 디코딩
+        final data = json.decode(responseBodyString);
         List<PostModel> sortedPosts = [];
         for (var item in data) {
           sortedPosts.add(PostModel.fromJson(item));
         }
         return sortedPosts;
       } else {
-        // 에러 발생 시 응답 본문 출력
         print("Response body: ${response.body}");
         throw Exception('정렬된 게시글 요청 실패: ${response.statusCode}');
       }
