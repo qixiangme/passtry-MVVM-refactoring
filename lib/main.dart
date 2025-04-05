@@ -1,5 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/onboarding_screen.dart';
+import 'package:componentss/features/baking/UI/baking_stage.dart';
 import 'package:componentss/features/baking/UI/questions/odd/odd_quiz.dart';
 import 'package:componentss/features/baking/UI/questions/odd/odd_screen.dart';
 import 'package:componentss/features/main_screen.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           // ScreenUtil 초기화
           ScreenUtil.init(context, designSize: Size(1080, 2400));
           return MaterialApp(
-            home: OnboardingScreen(),
+            home: BakingStage(),
             theme: ThemeData(
               fontFamily: "Wanted Sans",
               scaffoldBackgroundColor: Colors.white,

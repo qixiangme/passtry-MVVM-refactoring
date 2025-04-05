@@ -73,10 +73,10 @@ class _BakingScreenState extends State<BakingScreen> {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final user = userProvider.user;
       final missionResponseFuture = fetchNextMissions(
-        user!.username,
+        user!.id!,
       ); // 유저 ID를 실제 값으로 대체
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
-        user.username,
+        user!.id!,
       );
 
       final results = await Future.wait([
