@@ -53,7 +53,8 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
           ),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        child: Padding(
         padding: const EdgeInsets.only(left: 20, top: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +114,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                   setState(() {
                     digits = List.generate(
                       4,
-                      (index) => index < text.length ? text[index] : "",
+                          (index) => index < text.length ? text[index] : "",
                     );
                     print("digits: $digits");
                   });
@@ -165,10 +166,10 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                       width: 200, // 이미지 너비
                                       fit: BoxFit.cover, // 이미지 크기 조정
                                       errorBuilder: (
-                                        context,
-                                        error,
-                                        stackTrace,
-                                      ) {
+                                          context,
+                                          error,
+                                          stackTrace,
+                                          ) {
                                         return Icon(
                                           Icons.broken_image,
                                           size: 100,
@@ -247,7 +248,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                           MaterialPageRoute(
                                             builder:
                                                 (context) =>
-                                                    MainScreen(goToPage: 1),
+                                                MainScreen(goToPage: 1),
                                           ),
                                         );
                                       },
@@ -291,7 +292,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                     height: 160.h,
                     decoration: BoxDecoration(
                       color:
-                          _isButtonEnabled ? Color(0XFFFF9F1C) : Colors.white,
+                      _isButtonEnabled ? Color(0XFFFF9F1C) : Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(38.5.r)),
                       border: Border.all(color: Color(0XFFFF9F1C)),
                     ),
@@ -302,9 +303,9 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                           fontSize: 50.sp,
                           fontWeight: FontWeight.w600,
                           color:
-                              _isButtonEnabled
-                                  ? Colors.white
-                                  : Color(0XFFFF9F1C),
+                          _isButtonEnabled
+                              ? Colors.white
+                              : Color(0XFFFF9F1C),
                         ),
                       ),
                     ),
@@ -315,6 +316,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
           ],
         ),
       ),
+      )
     );
   }
 
