@@ -50,7 +50,7 @@ class AuthApi {
       if (response.statusCode == 200) {
         // 로그인 성공 시, 사용자 정보 받아오기
         final userResponse = await http.get(
-          Uri.parse('$baseUrl/users/$username'),
+          Uri.parse('$baseUrl/users/$username/name'),
           headers: {'Content-Type': 'application/json'},
         );
 
