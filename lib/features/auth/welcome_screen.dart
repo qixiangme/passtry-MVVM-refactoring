@@ -13,9 +13,8 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 90),
-            Padding(
-              padding: const EdgeInsets.only(left: 13),
+            SizedBox(height: 125),
+            Center(
               child: Text(
                 'Username 님, 환영합니다!',
                 style: TextStyle(
@@ -26,16 +25,16 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 13.0, top: 8),
+            SizedBox(height: 5),
+            Center(
               child: Text(
                 "함께 면접 준비 시작해 볼까요?",
                 style: TextStyle(fontSize: 60.sp, fontWeight: FontWeight.w500),
               ),
             ),
-            SizedBox(height: 550),
 
+            Center(child: Image.asset('assets/icons/oven.png')),
+            SizedBox(height: 85),
             GestureDetector(
               onTap: () {},
               child: Center(
@@ -58,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     child: Center(
                       child: Text(
-                        "시작하기",
+                        "면접 목표 만들기",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
