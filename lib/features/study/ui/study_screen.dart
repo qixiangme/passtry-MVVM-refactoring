@@ -109,7 +109,7 @@ class _StudyScreenState extends State<StudyScreen>
                       Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Text(
-                          user != null ? "${user.id}님, 안녕하세요!" : "안녕하세요!",
+                          user != null ? "${user.username}님, 안녕하세요!" : "안녕하세요!",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
