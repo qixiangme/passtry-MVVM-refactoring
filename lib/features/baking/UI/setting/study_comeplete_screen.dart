@@ -13,7 +13,7 @@ class StudyComplete extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 90),
+            SizedBox(height: 100),
             Padding(
               padding: const EdgeInsets.only(left: 13),
               child: Text(
@@ -38,7 +38,17 @@ class StudyComplete extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 550),
+            SizedBox(height: 40),
+            Positioned(
+              left: 44.w,
+              top: 791.h,
+              child: Image.asset(
+                'assets/images/interview_screen.png',
+                width: 992.w,
+                height: 1092.h,
+              ),
+            ),
+            SizedBox(height: 149.h),
 
             GestureDetector(
               onTap: () {},

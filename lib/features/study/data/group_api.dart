@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:componentss/features/study/data/ranking_model.dart';
 import 'package:http/http.dart' as http;
 import 'group_model.dart'; // GroupModel 파일 import
+import 'dart:async';
 
 class GroupApi {
   final String baseUrl = "http://34.64.233.128:5200";
@@ -14,7 +15,9 @@ class GroupApi {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final responseBodyBytes = response.bodyBytes;
+        final responseBodyString = utf8.decode(responseBodyBytes);
+        final data = jsonDecode(responseBodyString);
         return GroupModel.fromJson(data);
       } else {
         print("Error: ${response.statusCode}, ${response.body}");
@@ -33,8 +36,9 @@ class GroupApi {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-
+        final responseBodyBytes = response.bodyBytes;
+        final responseBodyString = utf8.decode(responseBodyBytes);
+        final List<dynamic> data = jsonDecode(responseBodyString);
         return data.map((group) => GroupModel.fromJson(group)).toList();
       } else {
         print("Error: ${response.statusCode}, ${response.body}");
@@ -53,7 +57,9 @@ class GroupApi {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        final responseBodyBytes = response.bodyBytes;
+        final responseBodyString = utf8.decode(responseBodyBytes);
+        final List<dynamic> data = jsonDecode(responseBodyString);
         return data.map((group) => GroupModel.fromJson(group)).toList();
       } else {
         print("Error: ${response.statusCode}, ${response.body}");
@@ -92,7 +98,9 @@ Future<Map<String, int>> fetchMemberScores(List<String> memberIds) async {
       );
 
       if (response.statusCode == 200) {
-        final int score = int.parse(response.body.trim());
+        final responseBodyBytes = response.bodyBytes;
+        final responseBodyString = utf8.decode(responseBodyBytes);
+        final int score = int.parse(responseBodyString.trim());
         memberScores[memberId] = score;
         print("점수 가져오기 성공");
       } else {
@@ -118,7 +126,9 @@ Future<List<RankingModel>> fetchDailyRanking(String groupId) async {
         .timeout(Duration(seconds: 10));
 
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
+      final responseBodyBytes = response.bodyBytes;
+      final responseBodyString = utf8.decode(responseBodyBytes);
+      final List<dynamic> data = jsonDecode(responseBodyString);
       print("✅ 랭킹 데이터 가져오기 성공: $data");
       return data.map((item) => RankingModel.fromJson(item)).toList();
     } else {
