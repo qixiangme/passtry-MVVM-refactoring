@@ -12,6 +12,7 @@ class InterviewApi {
     try {
       // 요청 데이터 변환
       final Map<String, dynamic> requestData = interview.toJson();
+      print("📤 요청 데이터: $requestData");
 
       // POST 요청
       final response = await http.post(
@@ -22,6 +23,7 @@ class InterviewApi {
         body: jsonEncode(requestData),
       );
       final decodedBody = utf8.decode(response.bodyBytes);
+      print(decodedBody);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         return true;
