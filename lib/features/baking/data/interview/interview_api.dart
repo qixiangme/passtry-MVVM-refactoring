@@ -12,7 +12,6 @@ class InterviewApi {
     try {
       // 요청 데이터 변환
       final Map<String, dynamic> requestData = interview.toJson();
-      print("📤 요청 데이터: ${jsonEncode(requestData)}");
 
       // POST 요청
       final response = await http.post(
@@ -23,18 +22,13 @@ class InterviewApi {
         body: jsonEncode(requestData),
       );
       final decodedBody = utf8.decode(response.bodyBytes);
-      print("📥 응답 상태 코드: ${response.statusCode}");
-      print("📥 응답 본문: $decodedBody");
 
       if (response.statusCode == 201 || response.statusCode == 200) {
-        print("인터뷰 생성 성공: $decodedBody");
         return true;
       } else {
-        print("인터뷰 생성 실패: ${response.statusCode}, $decodedBody");
         return false;
       }
     } catch (e) {
-      print("인터뷰 생성 중 오류 발생: $e");
       return false;
     }
   }
@@ -44,7 +38,6 @@ class InterviewApi {
     try {
       // 요청 URL 출력
       final url = Uri.parse('$baseUrl/interviews/user/$userId');
-      print("📤 요청 URL: $url");
 
       // GET 요청
       final response = await http.get(
@@ -53,26 +46,20 @@ class InterviewApi {
       );
 
       // 응답 상태 코드 및 헤더 출력
-      print("📥 응답 상태 코드: ${response.statusCode}");
-      print("📥 응답 헤더: ${response.headers}");
 
       // 응답 본문 디코딩
       final decodedBody = utf8.decode(response.bodyBytes);
-      print("📥 응답 본문: $decodedBody");
 
       if (response.statusCode == 200) {
         // JSON 파싱
         final List<dynamic> jsonList = jsonDecode(decodedBody);
-        print("✅ 인터뷰 데이터 파싱 성공: ${jsonList.length}개");
 
         // 인터뷰 모델로 변환
         return jsonList.map((e) => InterviewModel.fromJson(e)).toList();
       } else {
-        print("❌ 인터뷰 목록 조회 실패: ${response.statusCode}");
         return [];
       }
     } catch (e) {
-      print("🚨 인터뷰 목록 가져오기 오류: $e");
       return [];
     }
   }
