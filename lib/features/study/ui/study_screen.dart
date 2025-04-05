@@ -457,11 +457,11 @@ class _StudyScreenState extends State<StudyScreen>
                 heroTag: 'main_fab',
                 backgroundColor: Color(0xffFF9F1C),
                 shape: CircleBorder(),
-                child: Icon(
-                  isExpanded ? Icons.close : Icons.add,
-                  color: Colors.white,
-                  size: 35,
-                ),
+                child:
+                    isExpanded
+                        ? Image.asset('assets/icons/close.png', width: 65.w)
+                        : Image.asset('assets/icons/spatula.png', width: 66.w),
+
                 onPressed: () {
                   setState(() {
                     isExpanded = !isExpanded;
