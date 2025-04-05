@@ -512,14 +512,8 @@ class _BakingScreenState extends State<BakingScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40, left: 20),
-                        child: Text(
-                          '패스츄리',
-                          style: TextStyle(
-                            fontSize: 66.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
+                        child: Image(width: 150, height : 70, image: AssetImage('assets/icons/passtry_header.png')),),
+
                       SizedBox(height: 10),
 
                       Center(
