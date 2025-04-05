@@ -45,6 +45,8 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  String levelText = '';
+  String titleText = '';
   int? userScore; // 유저의 점수
   bool isLoadingScore = true; // 점수 로딩 상태
   int index = 0;
@@ -118,17 +120,31 @@ class _BakingScreenState extends State<BakingScreen> {
 
   String getImageForScore(int score) {
     if (score < 2) {
+      titleText = "따끈따끈한 반죽";
+      levelText = 'LV.0';
       return 'assets/icons/dough.png'; // 스코어가 100 미만일 때
     } else if (score < 100) {
+      titleText = "살짝 익은 스콘";
+      levelText = 'LV.1';
+
       return 'assets/icons/bread.png'; // 스코어가 100 미만일 때
       // 스코어가 100 이상 500 미만일 때
     } else if (score < 300) {
+      titleText = "노릇노릇한 식빵";
+      levelText = 'LV.2';
+
       return 'assets/icons/baguette.png'; // 스코어가 100 미만일 때
       // 스코어가 100 이상 500 미만일 때
     } else if (score < 500) {
+      titleText = "달콤한 케이크";
+      levelText = 'LV.4';
+
       return 'assets/icons/croissant.png'; // 스코어가 100 미만일 때
       // 스코어가 100 이상 500 미만일 때
     } else {
+      titleText = "제빵의 달인";
+      levelText = 'LV.4';
+
       return 'assets/icons/bagel.png'; // 스코어가 100 미만일 때
       // 스코어가 500 이상일 때
     }
@@ -598,7 +614,7 @@ class _BakingScreenState extends State<BakingScreen> {
                             spacing: 29.57.w,
                             children: [
                               Text(
-                                'Lv.0',
+                                levelText,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: const Color(
@@ -616,7 +632,7 @@ class _BakingScreenState extends State<BakingScreen> {
                       SizedBox(height: 6),
                       Center(
                         child: Text(
-                          '따끈따끈한 반죽',
+                          titleText,
                           style: TextStyle(
                             color: Colors.black /* white */,
                             fontSize: 66.w,
@@ -737,76 +753,120 @@ class _BakingScreenState extends State<BakingScreen> {
                     ],
                   ),
                 ),
+                if (isExpanded)
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = false; // 배경을 클릭하면 닫힘
+                      });
+                    },
+                    child: Container(
+                      color: Colors.black.withOpacity(0.7), // 반투명 검정색 배경
+                      width: 10000,
+                      height: 10000,
+                    ),
+                  ),
               ],
             ),
           ],
         ),
       ),
       floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end, // 버튼들을 아래쪽에 정렬
+        crossAxisAlignment: CrossAxisAlignment.end, // 가운데 정렬df
         children: [
-          // 인터뷰 버튼들 (애니메이션 적용)
-          AnimatedOpacity(
-            duration: const Duration(milliseconds: 200),
-            opacity: isExpanded ? 1.0 : 0.0,
-            child: Column(
-              children: List.generate(_interviews.length, (index) {
-                final interview = _interviews[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: FloatingActionButton.extended(
-                    heroTag: 'interview_$index',
-                    backgroundColor: Colors.white,
-                    icon: const Icon(Icons.person, color: Colors.orange),
-                    label: Text(
-                      interview.name, // 인터뷰 이름 표시
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        this.index = index; // 선택된 인터뷰의 인덱스를 업데이트
-                      });
-                      _loadMissionAndAttendanceData(index);
-                      // 인터뷰 버튼 클릭 시 동작
-                    },
-                  ),
-                );
-              }),
-            ),
-          ),
-
-          // 항상 표시되는 버튼
+          // 확장된 상태에서 표시되는 버튼들
           if (isExpanded)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: FloatingActionButton.extended(
-                heroTag: 'always_visible',
-                backgroundColor: Colors.orange,
-                icon: const Icon(Icons.add, color: Colors.white),
-                label: const Text(
-                  '새 인터뷰 만들기',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end, // 버튼과 텍스트를 가운데 정렬
+                    children: [
+                      const SizedBox(width: 10), // 버튼과 텍스트 사이 간격
+                      const Text(
+                        '목표 추가하기',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+
+                      FloatingActionButton(
+                        heroTag: 'always_visible',
+                        backgroundColor: Colors.orange,
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ), // 동그라미 버튼
+                        onPressed: () {
+                          // StudyMake 화면으로 이동
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudyMake(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                onPressed: () {
-                  // StudyMake 화면으로 이동
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => StudyMake()),
+                // 추가 확장 버튼들 (예: 인터뷰 버튼)
+                ...List.generate(_interviews.length, (index) {
+                  final interview = _interviews[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: Text(
+                            interview.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 14),
+
+                        FloatingActionButton(
+                          shape: CircleBorder(),
+                          heroTag: 'interview_$index',
+                          backgroundColor: Colors.orange,
+                          // icon: const Icon(Icons.person, color: Colors.orange),
+                          // label: Text(
+                          //   interview.name, // 인터뷰 이름 표시
+                          //   style: const TextStyle(
+                          //     color: Colors.black,
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w600,
+                          //   ),
+                          // ),
+                          onPressed: () {
+                            setState(() {
+                              this.index = index; // 선택된 인터뷰의 인덱스를 업데이트
+                            });
+                            _loadMissionAndAttendanceData(index);
+                          },
+                        ),
+                      ],
+                    ),
                   );
-                },
-              ),
+                }),
+              ],
             ),
 
           // 메인 플로팅 버튼 (토글 기능)
           FloatingActionButton(
+            shape: CircleBorder(),
             heroTag: 'main_fab',
             backgroundColor: Colors.orange,
             child: Icon(
