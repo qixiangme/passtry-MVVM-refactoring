@@ -125,7 +125,7 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
               '퀘스트 난이도를 선택해주세요',
               style: TextStyle(
                 color: const Color(0xFF1F1F1F),
-                fontSize: 70.sp,
+                fontSize: 65.sp,
                 fontFamily: 'Wanted Sans',
                 fontWeight: FontWeight.w600,
               ),
@@ -319,10 +319,10 @@ class _StudyLevelsState extends State<StudyLevels> {
   String? selectedText;
 
   final List<LevelInfo> items = [
-    LevelInfo(text: '난이도 상', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 중', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 하', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 기초', assetPath: 'assets/images/box.png'),
+    LevelInfo(text: '난이도 상', assetPath: 'assets/icons/croissant.png'),
+    LevelInfo(text: '난이도 중', assetPath: 'assets/icons/baguette.png'),
+    LevelInfo(text: '난이도 하', assetPath: 'assets/icons/white_bread.png'),
+    LevelInfo(text: '난이도 기초', assetPath: 'assets/icons/kneading.png'),
   ];
 
   void handleLevelSelected(String text) {
