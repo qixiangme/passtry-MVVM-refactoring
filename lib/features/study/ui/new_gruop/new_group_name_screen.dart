@@ -78,10 +78,15 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
       user.joinedGroups = [
         ...user.joinedGroups,
         GroupModel(
-          authorId: user.email,
+          id: '00', // 수정 필요
+          authorId: user.id!, // user.id가 null이 아님을 가정하고 '!'로 null safety 처리
           name: groupName,
+          joinCode: '00', // 수정 필요
           tags: tags,
           imageUrl: imagePath,
+          memberIds: [user.id!], // 그룹 생성자는 초기 멤버로 포함
+          score: 0, // 초기 점수 설정 (적절한 값으로 변경 가능)
+          level: 1, // 초기 레벨 설정 (적절한 값으로 변경 가능)
         ),
       ];
 
