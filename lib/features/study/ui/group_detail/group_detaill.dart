@@ -21,10 +21,7 @@ class _GroupDetaillState extends State<GroupDetaill> {
   void initState() {
     super.initState();
     // `widget.groupModel`을 사용하여 `_pages` 초기화
-    _pages = [
-      DetailHome(groupModel: widget.groupModel),
-      DetailRanking(groupModel: widget.groupModel),
-    ];
+    _pages = [DetailHome(groupModel: widget.groupModel)];
   }
 
   @override
@@ -82,33 +79,10 @@ class _GroupDetaillState extends State<GroupDetaill> {
                         ],
                       ),
                     ),
+
                     // 실시간 버튼
 
                     // 랭킹 버튼
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _currentIndex = 1;
-                        });
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end, // 텍스트를 아래로 정렬
-                        children: [
-                          Text(
-                            '랭킹',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-
-                              color:
-                                  _currentIndex == 2
-                                      ? Colors.black
-                                      : Color(0xFF6B6B6B),
-                              fontSize: 50.sp, // 텍스트 크기
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),

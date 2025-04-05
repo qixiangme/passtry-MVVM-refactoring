@@ -257,7 +257,12 @@ class _DetailHomeState extends State<DetailHome> {
                               width: 611.w,
                               height: 500.h,
                               decoration: BoxDecoration(
-                                color: Color(0XFF6B6B6B),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/icons/dough.png',
+                                  ), // AssetImage를 DecorationImage로 감쌈
+                                  fit: BoxFit.cover, // 이미지 크기 조정
+                                ),
                               ),
                             ),
                           ),
@@ -681,7 +686,7 @@ class _AnimatedHalfCircleProgressState extends State<AnimatedHalfCircleProgress>
       duration: Duration(seconds: 1),
     )..repeat(reverse: false);
 
-    _animation = Tween<double>(begin: 0, end: 0.5).animate(_controller);
+    _animation = Tween<double>(begin: 0, end: 0).animate(_controller);
 
     _controller.forward();
   }
