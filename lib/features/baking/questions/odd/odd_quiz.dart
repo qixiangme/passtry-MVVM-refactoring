@@ -1,20 +1,27 @@
 import 'dart:async';
 
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/baking_screen.dart';
+import 'package:componentss/features/baking/data/mission_api.dart';
+import 'package:componentss/features/baking/data/mission_model.dart';
 import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class OddQuiz extends StatefulWidget {
-  const OddQuiz({super.key});
+  final Mission mission;
+  const OddQuiz({super.key, required this.mission});
 
   @override
   State<OddQuiz> createState() => _OddQuizState();
 }
 
 class _OddQuizState extends State<OddQuiz> {
+  final GlobalKey<_CountdownTimerState> _timerKey =
+      GlobalKey<_CountdownTimerState>();
   bool isOSelected = false; // O 버튼 선택 상태
   bool isXSelected = false; // X 버튼 선택 상태
   String? selectedAnswer; // 선택된 답안 ("O" 또는 "X")
@@ -32,6 +39,8 @@ class _OddQuizState extends State<OddQuiz> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
     return Scaffold(
       body: Container(
         width: 1080.w,
@@ -99,7 +108,7 @@ class _OddQuizState extends State<OddQuiz> {
                   SizedBox(
                     width: 904.w,
                     child: Text(
-                      '정보가 파악되지 않아 사회가 공식적으로 계측하는 경제활동 추계에 포함되지 않는 경제활동은?',
+                      widget.mission.question,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: const Color(0xFF1C1C1C),
@@ -115,7 +124,7 @@ class _OddQuizState extends State<OddQuiz> {
             ),
             SizedBox(height: 100.h), // 간격 추가
             // X 버튼
-            CountdownTimer(duration: 15),
+            CountdownTimer(key: _timerKey, duration: 15),
             SizedBox(height: 50.h), // 간격 추가
             // O 버튼
             GestureDetector(
@@ -179,58 +188,91 @@ class _OddQuizState extends State<OddQuiz> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 486.w,
-                  height: 342.h,
-                  decoration: ShapeDecoration(
-                    color: Colors.white, // 기본 흰색
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w,
-                        color: const Color(0xFFFF9F1C),
+                GestureDetector(
+                  onTap: () {
+                    _timerKey.currentState?.resetTimer();
+                  },
+                  child: Container(
+                    width: 486.w,
+                    height: 342.h,
+                    decoration: ShapeDecoration(
+                      color: Colors.white, // 기본 흰색
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 2.75.w,
+                          color: const Color(0xFFFF9F1C),
+                        ),
+                        borderRadius: BorderRadius.circular(33.r),
                       ),
-                      borderRadius: BorderRadius.circular(33.r),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '한번 더 말해보기',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: const Color(0xFFFF9F1C), // 기본 노란색
-                        fontSize: 50.sp,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -1.20.w,
+                    child: Center(
+                      child: Text(
+                        '한번 더 말해보기',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: const Color(0xFFFF9F1C), // 기본 노란색
+                          fontSize: 50.sp,
+                          fontFamily: 'Wanted Sans',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -1.20.w,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(width: 3),
-                Container(
-                  width: 486.w,
-                  height: 349.h,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFFF9F1C), // 선택된 경우 노란색
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 2.75.w,
-                        color: const Color(0xFFFF9F1C),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MainScreen(goToPage: 1),
                       ),
-                      borderRadius: BorderRadius.circular(33.r),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '다음 문제',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white, // 선택된 경우 글자 흰색
+                    );
+                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      final userId = user!.username; // 실제 유저 ID를 가져오는 로직 확인
 
-                        fontSize: 50.sp,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: -1.20.w,
+                      completeMission(
+                        userId: userId,
+                        stage: widget.mission.stage,
+                        index: widget.mission.index,
+                      );
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MainScreen(goToPage: 0),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 486.w,
+                      height: 349.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFFF9F1C), // 선택된 경우 노란색
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 2.75.w,
+                            color: const Color(0xFFFF9F1C),
+                          ),
+                          borderRadius: BorderRadius.circular(33.r),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '제출하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white, // 선택된 경우 글자 흰색
+
+                            fontSize: 50.sp,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -1.20.w,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -274,6 +316,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   }
 
   void _startTimer() {
+    _timer?.cancel(); // 기존 타이머 취소
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_currentTime > 0) {
         setState(() {
@@ -291,6 +334,13 @@ class _CountdownTimerState extends State<CountdownTimer> {
     int minutes = seconds ~/ 60;
     int remainingSeconds = seconds % 60;
     return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+  }
+
+  void resetTimer() {
+    setState(() {
+      _currentTime = widget.duration;
+    });
+    _startTimer();
   }
 
   @override

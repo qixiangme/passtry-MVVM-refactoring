@@ -4,8 +4,10 @@ import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/data/attendance_api.dart';
 import 'package:componentss/features/baking/data/attendance_model.dart';
 import 'package:componentss/features/baking/data/mission_api.dart';
+import 'package:componentss/features/baking/data/mission_model.dart';
 import 'package:componentss/features/baking/data/mission_response_model.dart';
 import 'package:componentss/features/baking/questions/even/answer_screen.dart';
+import 'package:componentss/features/baking/questions/odd/odd_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -35,11 +37,13 @@ class _BakingScreenState extends State<BakingScreen> {
   Future<void> _loadMissionAndAttendanceData() async {
     try {
       // 미션 데이터와 출석 데이터를 병렬로 가져옴
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final user = userProvider.user;
       final missionResponseFuture = fetchNextMissions(
-        "asd",
+        user!.username,
       ); // 유저 ID를 실제 값으로 대체
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
-        "0",
+        user.username,
       );
 
       final results = await Future.wait([
@@ -57,13 +61,12 @@ class _BakingScreenState extends State<BakingScreen> {
 
         // 출석 데이터와 미션 데이터를 매칭하여 Quest의 isCompleted 설정
         final attendance =
-            attendanceHistory.isNotEmpty ? attendanceHistory.first : null;
-        print(attendanceHistory.length);
+            attendanceHistory.isNotEmpty ? attendanceHistory.last : null;
 
         dailyQuests.add(
           Quest(
             title: "모범답안 작성하기",
-            subtitle: missionResponse.nextOddMission.question ?? "질문 없음",
+            subtitle: missionResponse.nextOddMission.question,
             stage:
                 "Stage ${missionResponse.nextOddMission.stage}-${missionResponse.nextOddMission.index}",
             isCompleted: attendance?.oddMissionCompleted ?? false,
@@ -73,10 +76,13 @@ class _BakingScreenState extends State<BakingScreen> {
         dailyQuests.add(
           Quest(
             title: "랜덤질문에 답변 연습하기",
-            subtitle: missionResponse.nextEvenMission.question ?? "질문 없음",
+            subtitle:
+                attendance!.evenMissionCompleted
+                    ? missionResponse.nextEvenMission.question
+                    : "",
             stage:
                 "Stage ${missionResponse.nextEvenMission.stage}-${missionResponse.nextEvenMission.index}",
-            isCompleted: attendance?.evenMissionCompleted ?? false,
+            isCompleted: attendance.evenMissionCompleted,
           ),
         );
       });
@@ -88,54 +94,7 @@ class _BakingScreenState extends State<BakingScreen> {
     }
   }
 
-  Future<void> _loadMissionData() async {
-    try {
-      // MissionResponse 데이터를 가져옴
-      final missionResponse = await fetchNextMissions(
-        "asd",
-      ); // 유저 ID를 실제 값으로 대체
-      setState(() {
-        _missionResponse = missionResponse;
-        _isLoading = false;
-
-        // ODD 미션과 EVEN 미션을 Quest로 변환하여 dailyQuests에 추가
-        dailyQuests.add(
-          Quest(
-            title: "모범답안 작성하기",
-            subtitle: missionResponse.nextOddMission.question ?? "질문 없음",
-            stage:
-                "Stage ${missionResponse.nextOddMission.stage}-${missionResponse.nextOddMission.index}",
-            isCompleted: false,
-          ),
-        );
-        dailyQuests.add(
-          Quest(
-            title: "랜덤질문에 답변 연습하기",
-            subtitle: missionResponse.nextEvenMission.question ?? "질문 없음",
-            stage:
-                "Stage ${missionResponse.nextEvenMission.stage}-${missionResponse.nextEvenMission.index}",
-            isCompleted: false,
-          ),
-        );
-      });
-    } catch (error) {
-      print("Error fetching missions: $error");
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
   Widget _buildAttendanceSection() {
-    if (_attendanceHistory.isEmpty) {
-      return Center(
-        child: Text(
-          "출석 기록이 없습니다.",
-          style: TextStyle(fontSize: 16, color: Colors.grey),
-        ),
-      );
-    }
-
     // 요일 이름과 날짜를 매핑
     List<String> days = ['월', '화', '수', '목', '금', '토', '일'];
     DateTime startOfWeek = DateTime.now().subtract(
@@ -163,8 +122,11 @@ class _BakingScreenState extends State<BakingScreen> {
 
                 // 출석 여부 확인
                 bool isAttended = _attendanceHistory.any(
-                  (attendance) => attendance.date == formattedDate,
+                  (attendance) =>
+                      attendance.attendanceSatisfied &&
+                      attendance.date == formattedDate,
                 );
+
                 bool isToday =
                     currentDate.day == DateTime.now().day &&
                     currentDate.month == DateTime.now().month &&
@@ -221,9 +183,29 @@ class _BakingScreenState extends State<BakingScreen> {
     );
   }
 
-  Widget _buildQuestItem(Quest quest) {
+  Widget _buildQuestItem(Quest quest, MissionResponse missionresponse) {
     return GestureDetector(
       onTap: () {
+        if (quest.title == "모범답안 작성하기") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      AnswerScreen(mission: missionresponse.nextOddMission),
+            ),
+          );
+        } else if (quest.title == "랜덤질문에 답변 연습하기") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      OddScreen(mission: missionresponse.nextEvenMission),
+            ),
+          );
+          // 다른 퀘스트에 대한 동작 추가
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -460,23 +442,13 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                       SizedBox(height: 6),
                       Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AnswerScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            '따끈따끈한 반죽',
-                            style: TextStyle(
-                              color: Colors.black /* white */,
-                              fontSize: 66.w,
-                              fontFamily: 'Wanted Sans',
-                              fontWeight: FontWeight.w700,
-                            ),
+                        child: Text(
+                          '따끈따끈한 반죽',
+                          style: TextStyle(
+                            color: Colors.black /* white */,
+                            fontSize: 66.w,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
@@ -523,7 +495,10 @@ class _BakingScreenState extends State<BakingScreen> {
                                       padding: const EdgeInsets.only(
                                         bottom: 10.0,
                                       ),
-                                      child: _buildQuestItem(quest),
+                                      child: _buildQuestItem(
+                                        quest,
+                                        _missionResponse!,
+                                      ),
                                     ),
                                   )
                                   .toList(),

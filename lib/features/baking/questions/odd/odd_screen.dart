@@ -1,11 +1,15 @@
 import 'package:componentss/features/baking/baking_screen.dart';
+import 'package:componentss/features/baking/data/mission_model.dart';
+import 'package:componentss/features/baking/questions/odd/odd_quiz.dart';
 import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OddScreen extends StatefulWidget {
-  const OddScreen({super.key});
+  final Mission mission;
+
+  const OddScreen({super.key, required this.mission});
 
   @override
   State<OddScreen> createState() => _OddScreenState();
@@ -27,14 +31,7 @@ class _OddScreenState extends State<OddScreen> {
               left: 35.w,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) =>
-                              BakingScreen(), // Replace with your actual screen
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
                 child: Icon(CustomIcon.back, size: 55.w),
               ),
@@ -159,34 +156,44 @@ class _OddScreenState extends State<OddScreen> {
                     ),
                   );
                 },
-                child: Container(
-                  width: 993.w,
-                  height: 160.h,
-                  padding: const EdgeInsets.all(10),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFFF9F1C) /* main-orange */,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(33.w),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    //spacing: 27.50.w,
-                    children: [
-                      Text(
-                        '답변 작성 시작하기',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white /* white */,
-                          fontSize: 50.w,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.50.w,
-                        ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OddQuiz(mission: widget.mission),
                       ),
-                    ],
+                    );
+                  },
+                  child: Container(
+                    width: 993.w,
+                    height: 160.h,
+                    padding: const EdgeInsets.all(10),
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFFFF9F1C) /* main-orange */,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(33.w),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      //spacing: 27.50.w,
+                      children: [
+                        Text(
+                          '답변 작성 시작하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white /* white */,
+                            fontSize: 50.w,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.50.w,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
