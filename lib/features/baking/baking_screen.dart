@@ -9,7 +9,7 @@ import 'package:componentss/features/baking/data/mission_response_model.dart';
 import 'package:componentss/features/baking/data/qna_list_model.dart';
 import 'package:componentss/features/baking/questions/even/answer_screen.dart';
 import 'package:componentss/features/baking/questions/odd/odd_screen.dart';
-import 'package:componentss/features/baking/baking_QnaList_screen.dart';
+import 'package:componentss/features/baking/baking_qnaList_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
