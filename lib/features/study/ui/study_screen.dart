@@ -212,7 +212,7 @@ class _StudyScreenState extends State<StudyScreen>
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 17),
                           child: SizedBox(
-                            height: 455.h, // 🟢 높이 제한 추가
+                            height: 500.h, // 🟢 높이 제한 추가
                             child:
                                 _studyGroups.isEmpty
                                     ? Center(
