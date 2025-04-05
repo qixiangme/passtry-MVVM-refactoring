@@ -23,11 +23,11 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
   String? _selectedInclusionOptionText;
 
   bool _isNextButtonEnabled = false;
+  String _nextButtonText = '다음';
   void _updateNextButtonState() {
     setState(() {
-      _isNextButtonEnabled =
-          _selectedStudyLevelText != null &&
-          _selectedInclusionOptionText != null;
+      _isNextButtonEnabled = _selectedStudyLevelText != null;
+      _nextButtonText = _selectedStudyLevelText != null ? '퀘스트 생성하기' : '다음';
     });
   }
 
@@ -181,6 +181,7 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
                 child: NextButton(
                   isEnabled: _isNextButtonEnabled,
                   onTap: _handleNextButtonTap,
+                  text: _nextButtonText,
                 ),
               ),
             ),
@@ -292,10 +293,10 @@ class _StudyLevelsState extends State<StudyLevels> {
   String? selectedText;
 
   final List<LevelInfo> items = [
-    LevelInfo(text: '난이도 상', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 중', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 하', assetPath: 'assets/images/box.png'),
-    LevelInfo(text: '난이도 기초', assetPath: 'assets/images/box.png'),
+    LevelInfo(text: '난이도 상', assetPath: 'assets/icons/croissant.png'),
+    LevelInfo(text: '난이도 중', assetPath: 'assets/icons/baguette.png'),
+    LevelInfo(text: '난이도 하', assetPath: 'assets/icons/white_bread.png'),
+    LevelInfo(text: '난이도 기초', assetPath: 'assets/icons/kneading.png'),
   ];
 
   void handleLevelSelected(String text) {
@@ -458,8 +459,14 @@ class _InclusionOptionsState extends State<InclusionOptions> {
 class NextButton extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
+  final String text;
 
-  const NextButton({required this.isEnabled, required this.onTap, super.key});
+  const NextButton({
+    required this.isEnabled,
+    required this.onTap,
+    required this.text,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -482,7 +489,7 @@ class NextButton extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          '다음',
+          text,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: textColor,
