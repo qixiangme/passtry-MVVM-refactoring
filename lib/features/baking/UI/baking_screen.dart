@@ -512,7 +512,12 @@ class _BakingScreenState extends State<BakingScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 40, left: 20),
-                        child: Image(width: 150, height : 70, image: AssetImage('assets/icons/passtry_header.png')),),
+                        child: Image(
+                          width: 150,
+                          height: 70,
+                          image: AssetImage('assets/icons/passtry_header.png'),
+                        ),
+                      ),
 
                       SizedBox(height: 10),
 
@@ -624,17 +629,22 @@ class _BakingScreenState extends State<BakingScreen> {
                         ),
                       ),
                       SizedBox(height: 6),
-                      Center(
-                        child: Text(
-                          titleText,
-                          style: TextStyle(
-                            color: Colors.black /* white */,
-                            fontSize: 66.w,
-                            fontFamily: 'Wanted Sans',
-                            fontWeight: FontWeight.w700,
+                      Row(
+                        children: [
+                          Center(
+                            child: Text(
+                              titleText,
+                              style: TextStyle(
+                                color: Colors.black /* white */,
+                                fontSize: 66.w,
+                                fontFamily: 'Wanted Sans',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
+
                       SizedBox(height: 200.h),
 
                       Padding(
@@ -809,6 +819,7 @@ class _BakingScreenState extends State<BakingScreen> {
                     ],
                   ),
                 ),
+
                 // 추가 확장 버튼들 (예: 인터뷰 버튼)
                 ...List.generate(_interviews.length, (index) {
                   final interview = _interviews[index];
@@ -1041,22 +1052,65 @@ class EventCard extends StatelessWidget {
         border: Border.all(color: Colors.orange, width: 1.5),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 170),
+            child: Row(
+              children: [
+                Text(
+                  'D',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color(0xFFFF9F1C) /* main-orange */,
+                    fontSize: 75.51.w,
+                    fontFamily: 'Wanted Sans',
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.76.w,
+                  ),
                 ),
-              ),
-              SizedBox(height: 4.0),
-            ],
+                Text(
+                  '-',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color(0xFFFF9F1C) /* main-orange */,
+                    fontSize: 75.51.w,
+                    fontFamily: 'Wanted Sans',
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.76.w,
+                  ),
+                ),
+                Text(
+                  '0',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color(0xFFFF9F1C) /* main-orange */,
+                    fontSize: 75.51.w,
+                    fontFamily: 'Wanted Sans',
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.76.w,
+                  ),
+                ),
+                Text(
+                  '7',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: const Color(0xFFFF9F1C) /* main-orange */,
+                    fontSize: 75.51.w,
+                    fontFamily: 'Wanted Sans',
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.76.w,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
