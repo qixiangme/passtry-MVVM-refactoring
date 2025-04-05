@@ -629,11 +629,6 @@ class _DetailHomeState extends State<DetailHome> {
               ),
             ),
             Positioned(
-              right: 24,
-              top: 7,
-              child: Icon(Icons.circle, size: 40, color: Color(0xffFF9F1C)),
-            ),
-            Positioned(
               right: 20,
               child: SizedBox(
                 width: 120.w,
@@ -641,17 +636,11 @@ class _DetailHomeState extends State<DetailHome> {
                 child: Stack(
                   children: [
                     Positioned(
-                      left: 31.20.w,
-                      top: 34.80.h,
-                      child: Text(
-                        '27',
-                        style: TextStyle(
-                          color: Colors.white /* white */,
-                          fontSize: 48.w,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: -0.48.w,
-                        ),
+                      left: 10.w,
+                      top: 20.h,
+                      child: Image.asset(
+                        'assets/icons/yellowBread.png',
+                        width: 100.w,
                       ),
                     ),
                   ],
