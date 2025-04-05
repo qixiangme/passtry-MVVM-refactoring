@@ -157,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   "비밀번호",
                   "영문, 숫자 조합 8자리 이상",
                   _passwordController,
-                  _passwordError,
+                  _passwordError ?? _confirmPasswordError,
                   obscureText: true,
                 ),
               ),
@@ -171,7 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: true,
                 ),
               ),
-              SizedBox(height: 240),
+              SizedBox(height: 250),
               Center(
                 child: GestureDetector(
                   onTap: _validateInputs,
