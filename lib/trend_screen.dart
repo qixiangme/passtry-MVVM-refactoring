@@ -1,4 +1,5 @@
 import 'package:componentss/features/baking/baking_screen.dart';
+import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,8 +31,9 @@ class _trendScreenState extends State<TrendScreen> {
                     context,
                     MaterialPageRoute(
                       builder:
-                          (context) =>
-                              BakingScreen(), // Replace with your actual screen
+                          (context) => MainScreen(
+                            goToPage: 2,
+                          ), // Replace with your actual screen
                     ),
                   );
                 },

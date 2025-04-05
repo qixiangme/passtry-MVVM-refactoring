@@ -10,7 +10,7 @@ class AnswerBlock extends StatefulWidget {
   @override
   State<AnswerBlock> createState() => _AnswerBlockState();
 }
-
+//로그인 로딩 처리
 class _AnswerBlockState extends State<AnswerBlock> {
   @override
   Widget build(BuildContext context) {
