@@ -1,4 +1,5 @@
 import 'package:componentss/features/baking/UI/baking_screen.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
 import 'package:componentss/features/baking/UI/questions/odd/odd_quiz.dart';
 import 'package:componentss/features/main_screen.dart';
@@ -8,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OddScreen extends StatefulWidget {
   final Mission mission;
-
-  const OddScreen({super.key, required this.mission});
+  final InterviewModel inteview;
+  const OddScreen({super.key, required this.mission, required this.inteview});
 
   @override
   State<OddScreen> createState() => _OddScreenState();
@@ -162,7 +163,11 @@ class _OddScreenState extends State<OddScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OddQuiz(mission: widget.mission),
+                        builder:
+                            (context) => OddQuiz(
+                              mission: widget.mission,
+                              inteview: widget.inteview,
+                            ),
                       ),
                     );
                   },

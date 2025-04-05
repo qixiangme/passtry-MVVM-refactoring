@@ -30,7 +30,6 @@ class BakingStage extends StatefulWidget {
 class _BakingStageState extends State<BakingStage> {
   // 동그라미 위치 리스트
   List<CirclePosition> circlePositions = [
-
     CirclePosition(left: 446.w, top: 3067.h, isUnlocked: true), // 일곱 번째 동그라미
 
     CirclePosition(left: 770.w, top: 2760.h, isUnlocked: true), // 여섯 번째 동그라미
@@ -42,10 +41,6 @@ class _BakingStageState extends State<BakingStage> {
     CirclePosition(left: 446.w, top: 1780.h, isUnlocked: false), // 세 번째 동그라미
     CirclePosition(left: 765.w, top: 1470.h, isUnlocked: false), // 두 번째 동그라미
     CirclePosition(left: 446.w, top: 1150.h, isUnlocked: false), // 첫 번째 동그라미
-
-
-
-
   ];
   final List<Mission> stage1Missions = [
     Mission(
@@ -101,7 +96,8 @@ class _BakingStageState extends State<BakingStage> {
 
   Future<void> _navigateToMission(int currentMissionIndex) async {
     // 유효한 인덱스인지 확인
-    if (currentMissionIndex < 0 || currentMissionIndex >= stage1Missions.length) {
+    if (currentMissionIndex < 0 ||
+        currentMissionIndex >= stage1Missions.length) {
       print("Error: Invalid mission index $currentMissionIndex");
       return;
     }
@@ -109,7 +105,9 @@ class _BakingStageState extends State<BakingStage> {
     Mission currentMission = stage1Missions[currentMissionIndex];
     bool? missionCompletedSuccessfully; // 결과는 bool? (null 가능)
 
-    print("Navigating to mission ${currentMission.index} (${currentMission.type})");
+    print(
+      "Navigating to mission ${currentMission.index} (${currentMission.type})",
+    );
 
     // 미션 타입에 따라 적절한 퀴즈 화면으로 이동하고 결과(bool?)를 기다림
     if (currentMission.type == "ODD") {
@@ -117,7 +115,7 @@ class _BakingStageState extends State<BakingStage> {
         context,
         MaterialPageRoute(
           // OddQuiz는 성공 시 true, 실패/뒤로가기 시 false 또는 null 반환 가정
-          builder: (context) => OddQuiz(mission: currentMission),
+          builder: (context) => MainScreen(goToPage: 0),
         ),
       );
     } else if (currentMission.type == "EVEN") {
@@ -125,7 +123,7 @@ class _BakingStageState extends State<BakingStage> {
         context,
         MaterialPageRoute(
           // AnswerScreen은 성공 시 true, 실패/뒤로가기 시 false 또는 null 반환 가정
-          builder: (context) => AnswerScreen(mission: currentMission),
+          builder: (context) => MainScreen(goToPage: 0),
         ),
       );
     } else {
@@ -146,7 +144,9 @@ class _BakingStageState extends State<BakingStage> {
 
         // 다음 미션이 아직 잠겨 있는지 확인
         if (!currentNextPosition.isUnlocked) {
-          print("Unlocking next mission: Index ${nextMissionIndex} (Mission ${nextMissionIndex + 1})");
+          print(
+            "Unlocking next mission: Index $nextMissionIndex (Mission ${nextMissionIndex + 1})",
+          );
 
           // --- 중요: 새로운 CirclePosition 객체 생성 (isUnlocked: true) ---
           CirclePosition unlockedNextPosition = CirclePosition(
@@ -161,31 +161,34 @@ class _BakingStageState extends State<BakingStage> {
             circlePositions[nextMissionIndex] = unlockedNextPosition;
           });
         } else {
-          print("Next mission (Index ${nextMissionIndex}) was already unlocked.");
+          print("Next mission (Index $nextMissionIndex) was already unlocked.");
         }
       } else {
         print("All missions completed!");
         // 모든 미션 완료 시 처리 (예: 스테이지 완료 화면 표시)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('축하합니다! 모든 미션을 완료했습니다!')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('축하합니다! 모든 미션을 완료했습니다!')));
       }
     } else {
       // 사용자가 뒤로 가거나 미션에 실패한 경우
-      print("Mission ${currentMission.index} was not completed or user backed out.");
+      print(
+        "Mission ${currentMission.index} was not completed or user backed out.",
+      );
     }
   }
 
   // 동그라미 위젯을 생성하는 함수
   Widget _buildCircleWidget(double left, double top, bool isUnlocked) {
+    String imagePath =
+        isUnlocked
+            ? 'assets/icons/acorn.png' // 실제 잠금 해제 아이콘 경로로 변경하세요.
+            : 'assets/icons/lock.png';
 
-    String imagePath = isUnlocked
-        ? 'assets/icons/acorn.png' // 실제 잠금 해제 아이콘 경로로 변경하세요.
-        : 'assets/icons/lock.png';
-
-    Color circleColor = isUnlocked
-        ? const Color(0xFFFDEEB2) // 잠금 해제 시 색상
-        : const Color(0xFFD2D2D2); // 잠겨 있을 때 색상
+    Color circleColor =
+        isUnlocked
+            ? const Color(0xFFFDEEB2) // 잠금 해제 시 색상
+            : const Color(0xFFD2D2D2); // 잠겨 있을 때 색상
 
     double iconWidth = isUnlocked ? 350.w : 74.w;
     double iconHeight = isUnlocked ? 350.h : 94.h;
@@ -195,10 +198,11 @@ class _BakingStageState extends State<BakingStage> {
     // 현재 위젯에 해당하는 CirclePosition 객체의 인덱스를 찾습니다.
     // *** 오류 수정: CirclePosition 클래스 이름 대신 circlePositions 리스트 인스턴스에서 indexWhere 호출 ***
     int currentIndex = circlePositions.indexWhere(
-          (info) => info.left == left && info.top == top,
+      (info) => info.left == left && info.top == top,
     );
     // 인덱스를 찾지 못한 경우 (-1) 처리 (선택 사항)
-    String stageNumberText = (currentIndex != -1) ? (currentIndex + 1).toString() : '?';
+    String stageNumberText =
+        (currentIndex != -1) ? (currentIndex + 1).toString() : '?';
 
     return Positioned(
       left: left,
@@ -206,14 +210,16 @@ class _BakingStageState extends State<BakingStage> {
       child: GestureDetector(
         onTap: () {
           if (isUnlocked) {
-            print('Unlocked stage tapped! Index: $currentIndex (Mission ${currentIndex + 1})');
+            print(
+              'Unlocked stage tapped! Index: $currentIndex (Mission ${currentIndex + 1})',
+            );
             // _navigateToMission 함수 호출 (현재 리스트 인덱스 전달)
             _navigateToMission(currentIndex);
           } else {
             print('Locked stage tapped! Index: $currentIndex');
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('이 스테이지는 아직 잠겨 있습니다.')),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('이 스테이지는 아직 잠겨 있습니다.')));
           }
         },
         child: Stack(
@@ -248,7 +254,9 @@ class _BakingStageState extends State<BakingStage> {
                   print(error);
                   // 잠금 해제 아이콘 로드 실패 시 대체 아이콘 표시
                   return Icon(
-                    isUnlocked ? Icons.check_circle_outline : Icons.lock, // 상태에 따른 대체 아이콘
+                    isUnlocked
+                        ? Icons.check_circle_outline
+                        : Icons.lock, // 상태에 따른 대체 아이콘
                     size: 60.sp,
                     color: Colors.grey,
                   );
@@ -280,7 +288,7 @@ class _BakingStageState extends State<BakingStage> {
           height: 3623.h, // 전체 높이는 내용에 맞게 조정될 수 있습니다.
           decoration: BoxDecoration(color: Colors.white),
           child: Stack(
-              clipBehavior: Clip.none,
+            clipBehavior: Clip.none,
             children: [
               // 배경색
               Positioned.fill(
@@ -310,12 +318,9 @@ class _BakingStageState extends State<BakingStage> {
               ),
 
               // --- 동그라미 위젯들을 리스트를 이용해 생성 ---
-              ...circlePositions
-                  .map(
-                    (pos) =>
-                        _buildCircleWidget(pos.left, pos.top, pos.isUnlocked),
-                  )
-                  .toList(),
+              ...circlePositions.map(
+                (pos) => _buildCircleWidget(pos.left, pos.top, pos.isUnlocked),
+              ),
               // -----------------------------------------
 
               // 도토리 이미지

@@ -5,6 +5,8 @@ import 'package:componentss/features/baking/UI/baking_qnaList_screen.dart';
 import 'package:componentss/features/baking/UI/baking_stage.dart';
 import 'package:componentss/features/baking/UI/qna_list_model.dart';
 import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
+import 'package:componentss/features/baking/data/answer/answer.dart';
+import 'package:componentss/features/baking/data/answer/answer_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
 import 'package:componentss/features/baking/data/interview/interview_api.dart';
@@ -27,7 +29,12 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  int? userScore; // 유저의 점수
+  bool isLoadingScore = true; // 점수 로딩 상태
+  int index = 0;
   bool isExpanded = true;
+  List<Answer> qnaItems = []; // Qna 데이터 리스트
+  bool isLoadingQna = true; // Qna 로딩 상태
   int? _dday; // D-day 데이터를 저장할 변수
   bool isLoadingDday = true; // D-day 데이터 로딩 상태
   late MissionResponse? _missionResponse;
@@ -46,20 +53,71 @@ class _BakingScreenState extends State<BakingScreen> {
     final user = userProvider.user;
     if (user != null && _interviews.isNotEmpty) {
       // 첫 번째 인터뷰의 ID로 D-day 데이터 가져오기
-      fetchDday(_interviews[0].id!);
+      fetchDday(_interviews[index].id!);
     }
   }
+
+  Future<void> _loadUserScore() async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final user = userProvider.user;
+
+      if (user != null) {
+        final score = await getTodayScore(user.id!); // 유저 ID로 점수 가져오기
+        setState(() {
+          userScore = score; // 점수 상태에 저장
+          isLoadingScore = false; // 로딩 완료
+        });
+      }
+    } catch (e) {
+      print('❌ 유저 점수 로드 중 오류 발생: $e');
+      setState(() {
+        isLoadingScore = false; // 로딩 실패
+      });
+    }
+  }
+
+  Future<void> _loadQnaItems() async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final user = userProvider.user;
+
+      String userId = user!.id!; // 실제 userId로 대체
+      final answers = await AnswerApi.fetchAnswersByUserId(userId);
+
+      setState(() {
+        qnaItems = answers; // 데이터를 상태에 저장
+        isLoadingQna = false; // 로딩 완료
+      });
+    } catch (e) {
+      print('❌ Qna 데이터를 가져오는 중 오류 발생: $e');
+      setState(() {
+        isLoadingQna = false; // 로딩 실패
+      });
+    }
+  }
+  String getImageForScore(int score) {
+  if (score < 2) {
+    return 'assets/images/'; // 스코어가 100 미만일 때
+  } else if (score < 197) {
+    return 'assets/images/medium_score.png'; // 스코어가 100 이상 500 미만일 때
+  } else {
+    return 'assets/images/high_score.png'; // 스코어가 500 이상일 때
+  }
+}
 
   @override
   void initState() {
     super.initState();
-    // _loadMissionData();
     _interviews = [];
-    _attendanceHistory = []; // 초기화
-    _loadMissionAndAttendanceData(); // 미션과
-    _loadInterviews();
-
-    // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
+    _attendanceHistory = [];
+    _loadInterviews().then((_) {
+      if (_interviews.isNotEmpty) {
+        _loadMissionAndAttendanceData(index); // 첫 번째 인터뷰 사용
+      }
+    });
+    _loadQnaItems();
+    _loadUserScore();
   }
 
   Future<void> _loadInterviews() async {
@@ -103,16 +161,29 @@ class _BakingScreenState extends State<BakingScreen> {
     }
   }
 
-  Future<void> _loadMissionAndAttendanceData() async {
+  Future<void> _loadMissionAndAttendanceData(int interviewIndex) async {
     try {
-      // 미션 데이터와 출석 데이터를 병렬로 가져옴
+      // 인터뷰 리스트가 비어있지 않은지 확인
+      if (_interviews.isEmpty || interviewIndex >= _interviews.length) {
+        print("🚨 유효하지 않은 인터뷰 인덱스: $interviewIndex");
+        return;
+      }
+
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final user = userProvider.user;
+
+      // 선택된 인터뷰의 ID 가져오기
+      final selectedInterviewId = _interviews[interviewIndex].id!;
+      print("📤 선택된 인터뷰 ID: $selectedInterviewId");
+
+      // 미션 데이터와 출석 데이터를 병렬로 가져옴
       final missionResponseFuture = fetchNextMissions(
         user!.id!,
-      ); // 유저 ID를 실제 값으로 대체
+        _interviews[interviewIndex].id!,
+      );
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
         user.id!,
+        _interviews[interviewIndex].id!,
       );
 
       final results = await Future.wait([
@@ -132,6 +203,7 @@ class _BakingScreenState extends State<BakingScreen> {
         final attendance =
             attendanceHistory.isNotEmpty ? attendanceHistory.last : null;
 
+        dailyQuests.clear(); // 기존 퀘스트 초기화
         dailyQuests.add(
           Quest(
             title: "모범답안 작성하기",
@@ -156,10 +228,11 @@ class _BakingScreenState extends State<BakingScreen> {
         );
       });
     } catch (error) {
-      print("Error loading mission or attendance data: $error");
-      setState(() {
-        _isLoading = false;
-      });
+      print("🚨 미션 또는 출석 데이터 로드 실패: $error");
+      if (mounted)
+        setState(() {
+          _isLoading = false;
+        });
     }
   }
 
@@ -174,6 +247,19 @@ class _BakingScreenState extends State<BakingScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Center(
+            child:
+                isLoadingScore
+                    ? const CircularProgressIndicator() // 로딩 중
+                    : Text(
+                      '오늘의 점수: ${userScore ?? 0}', // 점수 표시
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+          ),
           Container(
             width: 1000.w,
             height: 300.h,
@@ -260,8 +346,10 @@ class _BakingScreenState extends State<BakingScreen> {
             context,
             MaterialPageRoute(
               builder:
-                  (context) =>
-                      OddScreen(mission: missionresponse.nextOddMission),
+                  (context) => OddScreen(
+                    mission: missionresponse.nextOddMission,
+                    inteview: _interviews[index],
+                  ),
             ),
           );
         } else if (quest.title == "랜덤질문에 답변 연습하기") {
@@ -269,8 +357,10 @@ class _BakingScreenState extends State<BakingScreen> {
             context,
             MaterialPageRoute(
               builder:
-                  (context) =>
-                      AnswerScreen(mission: missionresponse.nextEvenMission),
+                  (context) => AnswerScreen(
+                    mission: missionresponse.nextEvenMission,
+                    inteview: _interviews[index],
+                  ),
             ),
           );
           // 다른 퀘스트에 대한 동작 추가
@@ -370,34 +460,6 @@ class _BakingScreenState extends State<BakingScreen> {
           children: [
             Stack(
               children: [
-                Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        'D-Day',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      _dday != null
-                          ? Text(
-                            '$_dday일 남음',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.orange,
-                            ),
-                          )
-                          : Text(
-                            isLoadingDday
-                                ? 'D-Day 데이터를 불러오는 중...'
-                                : 'D-Day 데이터를 가져올 수 없습니다.',
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                    ],
-                  ),
-                ),
                 Container(
                   //width: double.infinity,
                   color: Colors.white,
@@ -405,41 +467,15 @@ class _BakingScreenState extends State<BakingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(_dday.toString()),
-                      SizedBox(
-                        height: 100,
-                        width: 500,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: _interviews.length,
-                          itemBuilder: (context, index) {
-                            final interview = _interviews[index];
-                            return ListTile(
-                              title: Text(
-                                interview.id!,
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              subtitle: Text(interview.category),
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 100),
                       Text('logo'),
-                      SizedBox(height: 50),
 
                       Center(
-                        //API로 받아오기
-                        child: EventCard(
-                          title: '동아리 면접 🍞', // 이모지도 텍스트로 넣을 수 있습니다.
-                          targetDate: DateTime(
-                            2024,
-                            5,
-                            31,
-                            15,
-                            00,
-                          ), // 목표 날짜 및 시간
-                        ),
+                        child:
+                            isLoadingDday || _interviews.isEmpty
+                                ? const CircularProgressIndicator() // 로딩 중일 때 표시
+                                : EventCard(
+                                  title: _interviews[index].name, // 인터뷰 이름 표시
+                                ),
                       ),
 
                       Row(
@@ -632,14 +668,26 @@ class _BakingScreenState extends State<BakingScreen> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      QnaListView(qnaItems: qnaList),
-
+                      isLoadingQna
+                          ? const Center(
+                            child: CircularProgressIndicator(),
+                          ) // 로딩 중
+                          : qnaItems.isEmpty
+                          ? const Center(
+                            child: Text(
+                              '표시할 답변이 없습니다.',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          )
+                          : QnaListView(qnaItems: qnaItems),
 
                       //Padding(
                       //  padding: EdgeInsets.only(left: 20, right: 20),
                       //  child: Column(
                       //    children: [
-
                     ],
                   ),
                 ),
@@ -673,8 +721,11 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                     ),
                     onPressed: () {
+                      setState(() {
+                        this.index = index; // 선택된 인터뷰의 인덱스를 업데이트
+                      });
+                      _loadMissionAndAttendanceData(index);
                       // 인터뷰 버튼 클릭 시 동작
-                      print('인터뷰 ${interview.name} 선택됨');
                     },
                   ),
                 );
@@ -820,10 +871,8 @@ class Quest {
 
 class EventCard extends StatelessWidget {
   final String title;
-  final DateTime targetDate;
 
-  const EventCard({Key? key, required this.title, required this.targetDate})
-    : super(key: key);
+  const EventCard({super.key, required this.title});
 
   String calculateDday(DateTime target) {
     final now = DateTime.now();
@@ -857,10 +906,6 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('yyyy.MM.dd HH:mm').format(targetDate);
-    final dDayString = calculateDday(targetDate);
-    final dDayParts = getDdayParts(dDayString); // D-day 부분을 각 문자로 분리
-
     return Container(
       width: 1000.w,
       height: 250.h,
@@ -887,34 +932,7 @@ class EventCard extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 4.0),
-              Text(
-                formattedDate,
-                style: TextStyle(fontSize: 14.0, color: Colors.black54),
-              ),
             ],
-          ),
-
-          Row(
-            children:
-                dDayParts.map((part) {
-                  // 각 문자(부분)를 위한 컨테이너 생성
-                  return Container(
-                    margin: const EdgeInsets.only(left: 3.0),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 5.0,
-                    ),
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: Text(
-                      part, // D-day 문자 (예: 'D', '-', '3', '0')
-                      style: TextStyle(
-                        fontSize: 75.51.sp,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.orange,
-                      ),
-                    ),
-                  );
-                }).toList(),
           ),
         ],
       ),
