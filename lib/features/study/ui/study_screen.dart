@@ -188,7 +188,7 @@ class _StudyScreenState extends State<StudyScreen>
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
