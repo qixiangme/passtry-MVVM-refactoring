@@ -188,7 +188,7 @@ class _StudyMakeGroupComplete extends State<StudyMakeGroupComplete> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MainScreen(goToPage: 1),
+                        builder: (context) => MainScreen(goToPage: 0),
                       ), // 이동할 페이지
                     );
                   },

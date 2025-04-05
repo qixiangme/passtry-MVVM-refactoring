@@ -107,7 +107,7 @@ class _StudyMakeGroupState extends State<StudyMakeGroup> {
                   '어떤 면접을 앞두고 계신가요?',
                   style: TextStyle(
                     color: const Color(0xFF1F1F1F),
-                    fontSize: 70.sp,
+                    fontSize: 65.sp,
                     fontFamily: 'Wanted Sans',
                     fontWeight: FontWeight.w600,
                   ),
