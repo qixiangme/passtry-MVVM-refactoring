@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:componentss/features/baking/data/mission_model.dart';
-import 'package:componentss/features/baking/data/mission_response_model.dart';
+import 'package:componentss/features/baking/data/mission/mission_model.dart';
+import 'package:componentss/features/baking/data/mission/mission_response_model.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = 'http://34.64.233.128:5200';
@@ -71,8 +71,6 @@ Future<void> submitAnswer({
   }
 }
 
-
-
 Future<void> completeMission({
   required String userId,
   required int stage,
@@ -96,3 +94,5 @@ Future<void> completeMission({
     throw Exception('미션 완료 처리 중 오류 발생');
   }
 }
+
+

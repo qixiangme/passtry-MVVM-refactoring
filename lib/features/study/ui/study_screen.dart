@@ -1,7 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/study/data/group_api.dart';
 import 'package:componentss/features/study/data/group_model.dart';
-import 'package:componentss/features/study/data/tempGroup.dart';
 import 'package:componentss/features/study/ui/group_detail/group_detaill.dart';
 import 'package:componentss/features/study/ui/search_group/search_group_screen.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
@@ -46,7 +45,7 @@ class _StudyScreenState extends State<StudyScreen>
     final user = userProvider.user;
     if (user != null) {
       // 사용자 ID로 그룹 목록 가져오기
-      fetchGroupsByUserId(user.email);
+      fetchGroupsByUserId(user.id!);
     }
   }
 
@@ -54,20 +53,12 @@ class _StudyScreenState extends State<StudyScreen>
     try {
       final groups = await groupApi.getGroupsById(userId); // GroupApi 활용
       if (groups != null) {
-        groups.sort();
-        /*if (groups != null) {
-          // --- ▼ 데이터 정렬 로직 추가 ▼ ---
-          groups.sort((a, b) {
-            // GroupModel의 랭킹 관련 필드를 기준으로 내림차순 정렬
-            // 만약 rankingScore 필드가 없다면 실제 사용하는 필드 이름으로 바꿔주세요.
-            // 예를 들어 필드 이름이 'score' 라면 a.score.compareTo(b.score) -> b.score.compareTo(a.score)
-            // 타입이 다르거나 null 처리가 필요하면 적절히 수정해야 합니다.
-            int scoreA = a.rankingScore ?? 0; // null일 경우 0으로 처리 (예시)
-            int scoreB = b.rankingScore ?? 0; // null일 경우 0으로 처리 (예시)
-            return scoreB.compareTo(scoreA); // 내림차순 정렬 (b와 a의 위치를 바꾸면 오름차순)
-          });
-          
-         */
+        groups.sort((a, b) {
+          int scoreA = a.score ?? 0; // null일 경우 0으로 처리 (예시)
+          int scoreB = b.score ?? 0; // null일 경우 0으로 처리 (예시)
+          return scoreB.compareTo(scoreA); // 내림차순 정렬 (b와 a의 위치를 바꾸면 오름차순)
+        });
+
         setState(() {
           _studyGroups = groups;
           isLoading = false;
@@ -116,7 +107,7 @@ class _StudyScreenState extends State<StudyScreen>
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
     if (user != null) {
-      print("사용자 이름: ${user.username}");
+      print("사용자 이름: ${user.id}");
     }
     return Scaffold(
       appBar: AppBar(backgroundColor: Color(0xFF6B6B6B), toolbarHeight: 1),
@@ -138,7 +129,7 @@ class _StudyScreenState extends State<StudyScreen>
                       Padding(
                         padding: EdgeInsets.only(top: 30, left: 20),
                         child: Text(
-                          user != null ? "${user.username}님, 안녕하세요!" : "안녕하세요!",
+                          user != null ? "${user.id}님, 안녕하세ㅁㄴㅇ요!" : "안녕하세요!",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,

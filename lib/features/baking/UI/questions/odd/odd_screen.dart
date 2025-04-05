@@ -1,7 +1,7 @@
-import 'package:componentss/features/baking/baking_screen.dart';
-import 'package:componentss/features/baking/data/mission_model.dart';
-import 'package:componentss/features/baking/questions/odd/odd_quiz.dart';
-import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
+import 'package:componentss/features/baking/UI/baking_screen.dart';
+import 'package:componentss/features/baking/data/mission/mission_model.dart';
+import 'package:componentss/features/baking/UI/questions/odd/odd_quiz.dart';
+import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -151,8 +151,9 @@ class _OddScreenState extends State<OddScreen> {
                     context,
                     MaterialPageRoute(
                       builder:
-                          (context) =>
-                              TrendQuiz(), // Replace with your actual screen
+                          (context) => MainScreen(
+                            goToPage: 1,
+                          ), // Replace with your actual screen
                     ),
                   );
                 },

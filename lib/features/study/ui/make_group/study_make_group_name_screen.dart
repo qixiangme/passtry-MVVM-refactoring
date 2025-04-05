@@ -55,13 +55,14 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
     var uri = Uri.parse("http://34.64.233.128:5200/groups"); // 🔥 엔드포인트 설정
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final user = userProvider.user;
+    
     final String category = args['category'] ?? "";
     final String category2 = args['category2'] ?? "";
 
     final List<String> tags = [category, category2];
     var request =
         http.MultipartRequest("POST", uri)
-          ..fields['authorId'] = user!.email
+          ..fields['authorId'] = user!.id!
           ..fields['name'] = groupName
           ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
 
@@ -74,16 +75,6 @@ class _StudyMakeGroupName extends State<StudyMakeGroupName> {
           contentType: MediaType('image', 'jpeg'),
         ),
       );
-
-      user.joinedGroups = [
-        ...user.joinedGroups,
-        GroupModel(
-          authorId: user.email,
-          name: groupName,
-          tags: tags,
-          imageUrl: imagePath,
-        ),
-      ];
 
       try {
         var response = await request.send(); // 🚀 요청 전송

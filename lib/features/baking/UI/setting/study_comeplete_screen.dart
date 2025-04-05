@@ -1,33 +1,23 @@
-import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:componentss/core/user_provider.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class StudyComplete extends StatelessWidget {
+  const StudyComplete({super.key});
 
   @override
-
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final user = userProvider.user;
-    if (user != null) {
-      print("사용자 이름: ${user.username}");
-    }
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 125),
-            Center(
+            SizedBox(height: 90),
+            Padding(
+              padding: const EdgeInsets.only(left: 13),
               child: Text(
-                user != null ? '${user.username} 님, 환영합니다!': 'Username 님, 환영합니다!',
+                '면접 합격을 위한\n완벽한 준비를 마쳤어요',
                 style: TextStyle(
                   color: const Color(0xFF1C1C1C) /* main-black */,
                   fontSize: 76.sp,
@@ -36,16 +26,20 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 5),
-            Center(
+
+            Padding(
+              padding: const EdgeInsets.only(left: 13.0, top: 8),
               child: Text(
-                "함께 면접 준비 시작해 볼까요?",
-                style: TextStyle(fontSize: 60.sp, fontWeight: FontWeight.w500),
+                "입력하신 정보들로 맞춤 퀘스트를 출제합니다!",
+                style: TextStyle(
+                  fontSize: 44.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF8E95A2),
+                ),
               ),
             ),
+            SizedBox(height: 550),
 
-            Center(child: Image.asset('assets/icons/oven.png')),
-            SizedBox(height: 85),
             GestureDetector(
               onTap: () {},
               child: Center(
@@ -62,14 +56,13 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => StudyMakeGroup(),
+                          builder: (context) => MainScreen(goToPage: 0),
                         ),
-                        //MaterialPageRoute(builder: (context) => StudyMake()),
                       );
                     },
                     child: Center(
                       child: Text(
-                        "면접 목표 만들기",
+                        "시작하기",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,

@@ -1,15 +1,18 @@
 import 'dart:math';
 
 import 'package:componentss/core/user_provider.dart';
-import 'package:componentss/features/baking/data/attendance_api.dart';
-import 'package:componentss/features/baking/data/attendance_model.dart';
-import 'package:componentss/features/baking/data/mission_api.dart';
-import 'package:componentss/features/baking/data/mission_model.dart';
-import 'package:componentss/features/baking/data/mission_response_model.dart';
-import 'package:componentss/features/baking/data/qna_list_model.dart';
-import 'package:componentss/features/baking/questions/even/answer_screen.dart';
-import 'package:componentss/features/baking/questions/odd/odd_screen.dart';
-import 'package:componentss/features/baking/baking_qnaList_screen.dart';
+import 'package:componentss/features/baking/UI/baking_qnaList_screen.dart';
+import 'package:componentss/features/baking/UI/baking_stage.dart';
+import 'package:componentss/features/baking/UI/qna_list_model.dart';
+import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
+import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
+import 'package:componentss/features/baking/data/interview/interview_api.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
+import 'package:componentss/features/baking/data/mission/mission_api.dart';
+import 'package:componentss/features/baking/data/mission/mission_model.dart';
+import 'package:componentss/features/baking/data/mission/mission_response_model.dart';
+import 'package:componentss/features/baking/UI/questions/even/answer_screen.dart';
+import 'package:componentss/features/baking/UI/questions/odd/odd_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +26,20 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  int? _dday; // D-day 데이터를 저장할 변수
+  bool isLoadingDday = true; // D-day 데이터 로딩 상태
   late MissionResponse? _missionResponse;
   bool _isLoading = true; // 로딩 상태를 관리
   final List<Quest> dailyQuests = [];
   late List<Attendance> _attendanceHistory;
+  late List<Interview> _interviews;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // _loadMissionData();
+  }
 
   @override
   void initState() {
@@ -35,6 +48,24 @@ class _BakingScreenState extends State<BakingScreen> {
     _attendanceHistory = []; // 초기화
     _loadMissionAndAttendanceData(); // 미션과
     // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
+  }
+
+  Future<void> _loadInterviewData() async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final user = userProvider.user;
+      final interviewResponse = await fetchUserInterviews(user!.username);
+
+      setState(() {
+        _interviews = interviewResponse;
+        _isLoading = false;
+      });
+    } catch (error) {
+      print("Error loading interview data: $error");
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> _loadMissionAndAttendanceData() async {
@@ -195,7 +226,7 @@ class _BakingScreenState extends State<BakingScreen> {
             MaterialPageRoute(
               builder:
                   (context) =>
-                      AnswerScreen(mission: missionresponse.nextOddMission),
+                      OddScreen(mission: missionresponse.nextOddMission),
             ),
           );
         } else if (quest.title == "랜덤질문에 답변 연습하기") {
@@ -204,7 +235,7 @@ class _BakingScreenState extends State<BakingScreen> {
             MaterialPageRoute(
               builder:
                   (context) =>
-                      OddScreen(mission: missionresponse.nextEvenMission),
+                      AnswerScreen(mission: missionresponse.nextEvenMission),
             ),
           );
           // 다른 퀘스트에 대한 동작 추가
@@ -519,6 +550,8 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                       SizedBox(height: 20),
                       QnaListView(qnaItems: qnaList),
+
+
                       //Padding(
                       //  padding: EdgeInsets.only(left: 20, right: 20),
                       //  child: Column(

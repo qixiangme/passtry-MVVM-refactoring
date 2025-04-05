@@ -18,16 +18,20 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _idController.text;
     final password = _passwordController.text;
 
-    String result = await userProvider.login(email, password);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result)));
-    if (result == "로그인 성공!") {
-      print("로그인 성공");
+    final success = await AuthApi.loginUser(context, email, password);
+
+    if (success) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("로그인 성공!")));
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MainScreen(goToPage: 1)),
       );
     } else {
-      print("로그인 실패");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("로그인 실패")));
     }
   }
 
