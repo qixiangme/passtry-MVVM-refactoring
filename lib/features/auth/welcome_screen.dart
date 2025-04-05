@@ -2,12 +2,20 @@ import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:componentss/core/user_provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
+
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    if (user != null) {
+      print("사용자 이름: ${user.username}");
+    }
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -18,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 13),
               child: Text(
-                'Username 님, 환영합니다!',
+                user != null ? '${user.username} 님, 환영합니다!': 'Username 님, 환영합니다!',
                 style: TextStyle(
                   color: const Color(0xFF1C1C1C) /* main-black */,
                   fontSize: 76.sp,
