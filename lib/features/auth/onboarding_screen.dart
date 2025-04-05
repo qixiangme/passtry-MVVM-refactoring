@@ -20,7 +20,7 @@ class OnboardingScreen extends StatelessWidget {
               fit: BoxFit.cover,
             )
           ),
-          SizedBox(height: 142.h),
+          SizedBox(height: 125.h),
           GestureDetector(
             onTap: () {
               Navigator.push(
