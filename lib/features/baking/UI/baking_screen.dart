@@ -38,7 +38,13 @@ class _BakingScreenState extends State<BakingScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // _loadMissionData();
+    // UserProvider를 통해 사용자 정보 가져오기
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    if (user != null && _interviews.isNotEmpty) {
+      // 첫 번째 인터뷰의 ID로 D-day 데이터 가져오기
+      fetchDday(_interviews[0].id!);
+    }
   }
 
   @override
@@ -49,11 +55,6 @@ class _BakingScreenState extends State<BakingScreen> {
     _attendanceHistory = []; // 초기화
     _loadMissionAndAttendanceData(); // 미션과
     _loadInterviews();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_interviews.isNotEmpty) {
-        _loadDday(_interviews.first.id!); // 첫 번째 인터뷰 ID로 D-Day 호출
-      }
-    });
 
     // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
   }
@@ -71,20 +72,31 @@ class _BakingScreenState extends State<BakingScreen> {
       });
 
       print("✅ 인터뷰 데이터 로드 성공: ${_interviews.length}개");
+
+      // 인터뷰 데이터 로드 후 첫 번째 인터뷰의 D-Day 호출
+      if (_interviews.isNotEmpty) {
+        await fetchDday(_interviews.first.id!);
+      }
     } catch (error) {
       print("🚨 인터뷰 데이터 로드 실패: $error");
     }
   }
 
-  void _loadDday(String interviewId) async {
-    final dday = await InterviewApi.getInterviewDday(interviewId);
-    if (dday != null) {
-      print("✅ D-Day: $dday");
+  Future<void> fetchDday(String interviewId) async {
+    try {
+      print("📤 D-Day 요청 시작: 인터뷰 ID = $interviewId");
+      final int? dday = await InterviewApi.getInterviewDday(interviewId);
+      print("📥 D-Day 응답: $dday");
+
       setState(() {
-        _dday = dday; // 상태에 D-Day 값 저장
+        _dday = dday;
+        isLoadingDday = false;
       });
-    } else {
-      print("❌ D-Day 데이터를 가져오지 못했습니다.");
+    } catch (e) {
+      print('❌ D-day 데이터 로드 중 오류 발생: $e');
+      setState(() {
+        isLoadingDday = false;
+      });
     }
   }
 
@@ -355,6 +367,34 @@ class _BakingScreenState extends State<BakingScreen> {
           children: [
             Stack(
               children: [
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'D-Day',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      _dday != null
+                          ? Text(
+                            '$_dday일 남음',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.orange,
+                            ),
+                          )
+                          : Text(
+                            isLoadingDday
+                                ? 'D-Day 데이터를 불러오는 중...'
+                                : 'D-Day 데이터를 가져올 수 없습니다.',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                    ],
+                  ),
+                ),
                 Container(
                   width: double.infinity,
                   color: Colors.white,
@@ -364,16 +404,17 @@ class _BakingScreenState extends State<BakingScreen> {
                       Text(_dday.toString()),
                       SizedBox(
                         height: 100,
-                        width: 100,
+                        width: 500,
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: _interviews.length,
                           itemBuilder: (context, index) {
                             final interview = _interviews[index];
+                            print(interview.id!);
                             return ListTile(
                               title: Text(
-                                interview.name,
+                                interview.id!,
                                 style: TextStyle(color: Colors.black),
                               ),
                               subtitle: Text(interview.category),
