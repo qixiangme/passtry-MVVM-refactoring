@@ -229,17 +229,12 @@ class _BakingStageState extends State<BakingStage> {
               ),
             ),
             Positioned(
-              left: 1.w,
-              top: 135.h,
+              top: 120.h,
+              right: 30,
               child: Container(
                 width: 1080.w,
                 height: 120.h,
-                padding: const EdgeInsets.only(
-                  top: 13.75,
-                  left: 55,
-                  right: 77,
-                  bottom: 13.75,
-                ),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
