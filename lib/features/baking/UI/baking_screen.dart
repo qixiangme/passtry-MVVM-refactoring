@@ -496,6 +496,22 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                       SizedBox(height: 10),
 
+                      SizedBox(height: 50.h),
+                      Center(
+                        child: Container(
+                        width: 1080.w,
+                        height: 120.h,
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/icons/header1.png',
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        ),
+                        )
+                      ),
+                      SizedBox(height: 30.h),
                       Center(
                         child:
                             isLoadingDday || _interviews.isEmpty
@@ -543,13 +559,14 @@ class _BakingScreenState extends State<BakingScreen> {
                             child: Center(
                               child: Container(
                                 width: 611.w,
-                                height: 500.h,
-                                decoration: BoxDecoration(
-                                  color: Color(0XFF6B6B6B),
+                                height: 530.h,
+                                child: Image.asset(
+                                  'assets/icons/kneading.png',
+                                  fit: BoxFit.cover,
+                                ),
                                 ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                       SizedBox(height: 20),
@@ -828,6 +845,7 @@ class _AnimatedHalfCircleProgressState extends State<AnimatedHalfCircleProgress>
     )..repeat(reverse: false);
 
     _animation = Tween<double>(begin: 0, end: 0.5).animate(_controller);
+
     _controller.forward();
   }
 
