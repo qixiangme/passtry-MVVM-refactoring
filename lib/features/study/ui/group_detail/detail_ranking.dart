@@ -15,6 +15,7 @@ class DetailRanking extends StatefulWidget {
 
 class _DetailRankingState extends State<DetailRanking> {
   List<RankingModel> _rankings = [];
+  
   bool _isLoading = true;
   @override
   void initState() {
