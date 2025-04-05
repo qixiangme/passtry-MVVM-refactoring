@@ -31,7 +31,8 @@ class _BakingScreenState extends State<BakingScreen> {
   bool _isLoading = true; // 로딩 상태를 관리
   final List<Quest> dailyQuests = [];
   late List<Attendance> _attendanceHistory;
-  late List<Interview> _interviews;
+  late List<InterviewModel> _interviews;
+  final InterviewApi _interviewApi = InterviewApi();
 
   @override
   void didChangeDependencies() {
@@ -44,26 +45,46 @@ class _BakingScreenState extends State<BakingScreen> {
   void initState() {
     super.initState();
     // _loadMissionData();
+    _interviews = [];
     _attendanceHistory = []; // 초기화
     _loadMissionAndAttendanceData(); // 미션과
+    _loadInterviews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_interviews.isNotEmpty) {
+        _loadDday(_interviews.first.id!); // 첫 번째 인터뷰 ID로 D-Day 호출
+      }
+    });
+
     // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
   }
 
-  Future<void> _loadInterviewData() async {
+  Future<void> _loadInterviews() async {
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final user = userProvider.user;
-      final interviewResponse = await fetchUserInterviews(user!.username);
+
+      // 인터뷰 데이터 가져오기
+      final interviews = await InterviewApi.getInterviewsByUser(user!.id!);
 
       setState(() {
-        _interviews = interviewResponse;
-        _isLoading = false;
+        _interviews = interviews; // 인터뷰 데이터를 상태에 저장
       });
+
+      print("✅ 인터뷰 데이터 로드 성공: ${_interviews.length}개");
     } catch (error) {
-      print("Error loading interview data: $error");
+      print("🚨 인터뷰 데이터 로드 실패: $error");
+    }
+  }
+
+  void _loadDday(String interviewId) async {
+    final dday = await InterviewApi.getInterviewDday(interviewId);
+    if (dday != null) {
+      print("✅ D-Day: $dday");
       setState(() {
-        _isLoading = false;
+        _dday = dday; // 상태에 D-Day 값 저장
       });
+    } else {
+      print("❌ D-Day 데이터를 가져오지 못했습니다.");
     }
   }
 
@@ -73,10 +94,10 @@ class _BakingScreenState extends State<BakingScreen> {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final user = userProvider.user;
       final missionResponseFuture = fetchNextMissions(
-        user!.username,
+        user!.id!,
       ); // 유저 ID를 실제 값으로 대체
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
-        user.username,
+        user.id!,
       );
 
       final results = await Future.wait([
@@ -340,6 +361,26 @@ class _BakingScreenState extends State<BakingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(_dday.toString()),
+                      SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _interviews.length,
+                          itemBuilder: (context, index) {
+                            final interview = _interviews[index];
+                            return ListTile(
+                              title: Text(
+                                interview.name,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              subtitle: Text(interview.category),
+                            );
+                          },
+                        ),
+                      ),
                       SizedBox(height: 100),
                       Text('logo'),
                       Center(

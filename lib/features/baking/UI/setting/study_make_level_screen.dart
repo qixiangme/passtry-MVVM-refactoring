@@ -1,8 +1,13 @@
+import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/UI/setting/study_comeplete_screen.dart';
+import 'package:componentss/features/baking/data/interview/interview_api.dart';
+import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/study/ui/make_group/study_make_group_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class StudyMakeLevel extends StatefulWidget {
   const StudyMakeLevel({super.key});
@@ -12,7 +17,7 @@ class StudyMakeLevel extends StatefulWidget {
 }
 
 class _StudyMakeLevelState extends State<StudyMakeLevel> {
-  bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
+  final bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
 
   String? _selectedStudyLevelText;
   String? _selectedInclusionOptionText;
@@ -42,56 +47,83 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
     // 디버깅용 출력
   }
 
-  void _handleNextButtonTap() {
+  void _handleNextButtonTap() async {
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final user = userProvider.user;
+
     final String category = args['category'];
     final String category2 = args['category2'];
-    final String date = args['date'];
+    final DateTime selectedDate = DateTime.parse(args['date']); // DateTime으로 변환
     final String time = args['time'];
-    print('category: $category');
-    print('category2: $category2');
-    print('Selected Date: $date');
-    print('Selected Time: $time');
 
-    // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
-    if (_isNextButtonEnabled) {
-      print("--- 다음 버튼 클릭 ---");
-      print("선택된 난이도: ${_selectedStudyLevelText ?? '선택되지 않음'}");
-      print("포함할까요?: ${_selectedInclusionOptionText ?? '선택되지 않음'}");
-      print("--------------------");
-      setState(() {
-        _isNextButtonClicked = true;
-      });
+    final String? studyLevel = _selectedStudyLevelText; // 난이도
+    final String? inclusionOption = _selectedInclusionOptionText; // 포함 여부
 
-      // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
+    // ENUM 변환
+    final String questDifficulty = _mapDifficultyToEnum(studyLevel);
+    final String mappedCategory = _mapCategoryToEnum(category);
+    final String mappedCategory2 = _mapCategoryToEnum(category2);
+    final bool includeTrendQuiz = inclusionOption == '포함합니다';
+
+    // InterviewModel 생성
+    final interview = InterviewModel(
+      userId: user!.id!, // UserProvider에서 가져온 사용자 ID
+      name: '인터뷰 이름', // 필요에 따라 설정
+      category: _mapCategoryToEnum(category),
+      tags:  [mappedCategory2],
+      date: DateFormat('yyyy-MM-dd').format(selectedDate), // YYYY-MM-DD 형식으로 변환
+      time: time,
+      questDifficulty: questDifficulty,
+      includeTrendQuiz: includeTrendQuiz,
+    );
+
+    // POST 요청
+    final success = await InterviewApi.postInterview(interview);
+    if (success) {
+      print("인터뷰 생성 성공");
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => StudyComplete(),
-          settings: RouteSettings(
-            arguments: {
-              'category': category,
-              'category2': category2,
-              'date': date,
-              'time': time,
-              'studyLevel': _selectedStudyLevelText,
-              'inclusionOption': _selectedInclusionOptionText,
-            },
-          ),
-        ),
-      ).then((_) {
-        // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
-        // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
-        if (mounted) {
-          // 3. 버튼 상태를 다시 false로 초기화
-          setState(() {
-            _isNextButtonClicked = false;
-          });
-        }
-      });
+        MaterialPageRoute(builder: (context) => StudyComplete()),
+      );
     } else {
-      print("다음 버튼 클릭 불가");
+      print("인터뷰 생성 실패");
+    }
+  }
+
+  // 난이도를 ENUM 형식으로 변환
+  String _mapDifficultyToEnum(String? difficulty) {
+    switch (difficulty) {
+      case '난이도 상':
+        return 'HIGH';
+      case '난이도 중':
+        return 'MID';
+      case '난이도 하':
+        return 'LOW';
+      case '난이도 기초':
+        return 'BASIC';
+      default:
+        return 'BASIC';
+    }
+  }
+
+  String _mapCategoryToEnum(String category) {
+    switch (category) {
+      case '교내동아리':
+        return 'SCHOOLCLUB';
+      case '연합동아리':
+        return 'JOINTCLUB';
+      case '서포터즈':
+        return 'SUPPORTERS';
+      case '봉사단':
+        return 'VOLUNTEERGROUP';
+      case '인턴 • 현장실습':
+        return 'INTERNSHIP';
+      case '기타':
+        return 'OTHERS';
+      default:
+        return 'OTHERS';
     }
   }
 
