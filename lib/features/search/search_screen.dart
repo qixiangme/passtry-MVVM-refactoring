@@ -34,6 +34,12 @@ class _SearchScreenState extends State<SearchScreen> {
     "startup",
     "travel",
   ];
+  final List<String> bannerImages = [
+    'assets/icons/banner1.png',
+    'assets/icons/real_banner2.png',
+    'assets/icons/banner3.png',
+    'assets/icons/banner4.png',
+  ];
   int currentCardIndex = 0;
   final PageController _pageController = PageController(viewportFraction: 1);
   final ScrollController _scrollController = ScrollController();
@@ -171,15 +177,17 @@ class _SearchScreenState extends State<SearchScreen> {
                           });
                         }),
                         children: List.generate(
-                          4,
+                          bannerImages.length,
                           (index) => Container(
                             height: 389.h,
                             width: 993.w,
                             margin: EdgeInsets.only(right: 30.w),
                             decoration: BoxDecoration(
-                              color: Color(0xffFF9F1C),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15),
+                              ),
+                              image: DecorationImage(
+                                image: AssetImage(bannerImages[index]),
                               ),
                             ),
                           ),
