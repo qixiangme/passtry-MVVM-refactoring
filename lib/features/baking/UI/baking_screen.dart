@@ -97,7 +97,11 @@ class _BakingScreenState extends State<BakingScreen> {
         user!.id!,
       ); // 유저 ID를 실제 값으로 대체
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
+<<<<<<< HEAD
         user.id!,
+=======
+        user!.id!,
+>>>>>>> 823e86c397f155e2bdf6481edecee28c45998e0b
       );
 
       final results = await Future.wait([
