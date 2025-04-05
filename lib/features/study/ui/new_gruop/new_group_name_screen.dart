@@ -60,10 +60,10 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
 
     final List<String> tags = [category];
     var request =
-    http.MultipartRequest("POST", uri)
-      ..fields['authorId'] = user!.email
-      ..fields['name'] = groupName
-      ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
+        http.MultipartRequest("POST", uri)
+          ..fields['authorId'] = user!.id!
+          ..fields['name'] = groupName
+          ..fields['tags'] = jsonEncode(tags); // JSON 문자열 형태
 
     if (imageFile != null) {
       request.files.add(
@@ -102,7 +102,7 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
 
   void _handleNextButtonTap() async {
     final Map<String, dynamic> args =
-    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final user = userProvider.user;
@@ -234,9 +234,9 @@ class _NewGroupNameScreen extends State<NewGroupNameScreen> {
                                           // 밑줄 테두리 추가
                                           borderSide: BorderSide(
                                             color:
-                                            Colors
-                                                .grey
-                                                .shade200, // 테두리 색상 설정
+                                                Colors
+                                                    .grey
+                                                    .shade200, // 테두리 색상 설정
                                           ),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
@@ -321,15 +321,15 @@ class _AddImageContainerState extends State<AddImageContainer> {
         height: 450.h,
         decoration: BoxDecoration(
           image:
-          _image != null
-              ? DecorationImage(
-            image: FileImage(_image!),
-            fit: BoxFit.contain,
-          )
-              : DecorationImage(
-            image: AssetImage('assets/images/add_image_circle.png'),
-            fit: BoxFit.contain,
-          ),
+              _image != null
+                  ? DecorationImage(
+                    image: FileImage(_image!),
+                    fit: BoxFit.contain,
+                  )
+                  : DecorationImage(
+                    image: AssetImage('assets/images/add_image_circle.png'),
+                    fit: BoxFit.contain,
+                  ),
         ),
       ),
     );
