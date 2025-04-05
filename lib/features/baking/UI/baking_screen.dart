@@ -21,7 +21,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-
 class LevelInfo {
   final String badgeText;
   final String titleText;
@@ -38,10 +37,8 @@ final List<LevelInfo> levelData = [
   const LevelInfo(badgeText: 'Lv.5', titleText: '제빵의 달인'),
 ];
 
-
 class BakingScreen extends StatefulWidget {
   const BakingScreen({super.key});
-
 
   @override
   State<BakingScreen> createState() => _BakingScreenState();
@@ -51,7 +48,7 @@ class _BakingScreenState extends State<BakingScreen> {
   int? userScore; // 유저의 점수
   bool isLoadingScore = true; // 점수 로딩 상태
   int index = 0;
-  bool isExpanded = true;
+  bool isExpanded = false;
   List<Answer> qnaItems = []; // Qna 데이터 리스트
   bool isLoadingQna = true; // Qna 로딩 상태
   int? _dday; // D-day 데이터를 저장할 변수
@@ -116,15 +113,16 @@ class _BakingScreenState extends State<BakingScreen> {
       });
     }
   }
+
   String getImageForScore(int score) {
-  if (score < 2) {
-    return 'assets/images/'; // 스코어가 100 미만일 때
-  } else if (score < 197) {
-    return 'assets/images/medium_score.png'; // 스코어가 100 이상 500 미만일 때
-  } else {
-    return 'assets/images/high_score.png'; // 스코어가 500 이상일 때
+    if (score < 2) {
+      return 'assets/images/'; // 스코어가 100 미만일 때
+    } else if (score < 197) {
+      return 'assets/images/medium_score.png'; // 스코어가 100 이상 500 미만일 때
+    } else {
+      return 'assets/images/high_score.png'; // 스코어가 500 이상일 때
+    }
   }
-}
 
   @override
   void initState() {
@@ -265,7 +263,7 @@ class _BakingScreenState extends State<BakingScreen> {
 
     return Center(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
             child:
@@ -486,8 +484,17 @@ class _BakingScreenState extends State<BakingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(_dday.toString()),
-                      Text('logo'),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40, left: 20),
+                        child: Text(
+                          '패스츄리',
+                          style: TextStyle(
+                            fontSize: 66.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
 
                       Center(
                         child:
