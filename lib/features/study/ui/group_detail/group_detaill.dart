@@ -88,7 +88,7 @@ class _GroupDetaillState extends State<GroupDetaill> {
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          _currentIndex = 2;
+                          _currentIndex = 1;
                         });
                       },
                       child: Column(
