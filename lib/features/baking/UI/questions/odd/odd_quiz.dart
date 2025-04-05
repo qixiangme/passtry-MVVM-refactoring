@@ -239,6 +239,8 @@ class _OddQuizState extends State<OddQuiz> {
                         index: widget.mission.index,
                       );
 
+                      
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:componentss/core/user_provider.dart';
+import 'package:componentss/features/baking/UI/baking_qnaList_screen.dart';
 import 'package:componentss/features/baking/UI/baking_stage.dart';
+import 'package:componentss/features/baking/UI/qna_list_model.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_api.dart';
@@ -190,12 +192,20 @@ class _BakingScreenState extends State<BakingScreen> {
         if (quest.title == "모범답안 작성하기") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => BakingStage()),
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      OddScreen(mission: missionresponse.nextOddMission),
+            ),
           );
         } else if (quest.title == "랜덤질문에 답변 연습하기") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => BakingStage()),
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      AnswerScreen(mission: missionresponse.nextEvenMission),
+            ),
           );
           // 다른 퀘스트에 대한 동작 추가
         }
@@ -530,6 +540,7 @@ class _BakingScreenState extends State<BakingScreen> {
                         ),
                       ),
                       SizedBox(height: 20),
+                      QnaListView(qnaItems: qnaList),
 
                       //Padding(
                       //  padding: EdgeInsets.only(left: 20, right: 20),

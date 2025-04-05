@@ -17,6 +17,7 @@ class _BakingStageState extends State<BakingStage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         width: 1080.w,
         height: 2857.h,
@@ -35,16 +36,16 @@ class _BakingStageState extends State<BakingStage> {
             ),
             Positioned(
               top: 281.h,
-              child: Image.asset('assets/images/stage_road.png'),
               width: 1080.w,
               height: 2000.h,
+              child: Image.asset('assets/images/stage_road.png'),
             ),
             Positioned(
               right: 200,
               top: 1860.h,
-              child: Image.asset('assets/images/road_bottom.png'),
               width: 380.w,
               height: 900.h,
+              child: Image.asset('assets/images/road_bottom.png'),
             ),
             Positioned(
               left: 1002.w,
