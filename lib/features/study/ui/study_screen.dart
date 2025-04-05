@@ -8,6 +8,7 @@ import 'package:componentss/features/study/ui/make_group/study_make_group_screen
 import 'package:componentss/features/study/ui/widgets/interview_schedule_card.dart';
 import 'package:componentss/features/study/ui/widgets/ranking_card.dart';
 import 'package:componentss/features/study/ui/widgets/study_group_card.dart';
+import 'package:componentss/features/study/ui/new_gruop/new_group_category_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -370,7 +371,7 @@ class _StudyScreenState extends State<StudyScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StudyMakeGroup(),
+                              builder: (context) => NewGroupCategoryScreen(),
                             ),
                           );
                         }
