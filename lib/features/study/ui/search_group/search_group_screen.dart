@@ -39,7 +39,7 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final user = userProvider.user;
-    final userId = user?.email ?? "unknown";
+    final userId = user?.id ?? "unknown";
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -243,6 +243,8 @@ class _SearchGroupScreenState extends State<SearchGroupScreen> {
                                     SizedBox(width: 20),
                                     GestureDetector(
                                       onTap: () {
+
+
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(

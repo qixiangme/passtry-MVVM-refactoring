@@ -30,6 +30,7 @@ class _StudyScreenState extends State<StudyScreen>
   final bool _showButton = true;
   final bool _showAdditionalButtons = false; // 추가 버튼 표시 여부
   final double _lastOffset = 0;
+  int score = 0; // 점수 초기화
 
   @override
   void initState() {
@@ -230,7 +231,7 @@ class _StudyScreenState extends State<StudyScreen>
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 17),
                           child: SizedBox(
-                            height: 455.h, // 🟢 높이 제한 추가
+                            height: 500.h, // 🟢 높이 제한 추가
                             child:
                                 _studyGroups.isEmpty
                                     ? Center(
@@ -393,7 +394,7 @@ class _StudyScreenState extends State<StudyScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => NewGroupCategoryScreen(),
+                              builder: (context) => SearchGroupScreen(),
                             ),
                           );
                         }
