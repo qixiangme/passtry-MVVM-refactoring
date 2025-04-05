@@ -134,8 +134,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: _buildInputField(
-                  "이름",
-                  "이름을 적어주세요",
+                  "닉네임",
+                  "닉네임을 적어주세요",
                   _nameController,
                   _nameError,
                 ),

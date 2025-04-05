@@ -168,67 +168,10 @@ class _StudyMakeLevelState extends State<StudyMakeLevel> {
               ),
             ),
             SizedBox(height: 150.h),
-            Container(
-              width: 70.w,
-              height: 70.h,
-              decoration: ShapeDecoration(
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.r),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  '1',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 50.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
             SizedBox(height: 50.h),
             StudyLevels(onItemSelected: _handleStudyLevelSelect),
             SizedBox(height: 150.h),
-            Row(
-              children: [
-                Container(
-                  width: 70.w,
-                  height: 70.h,
-                  decoration: ShapeDecoration(
-                    color: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100.r),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '2',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 50.sp,
-                        fontFamily: 'Wanted Sans',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
 
-                SizedBox(width: 40.w),
-
-                Text(
-                  '최근 이슈, 트랜드 퀴즈도 포함할까요?',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 35.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
             SizedBox(height: 50.h),
             InclusionOptions(onItemSelected: _handleInclusionOptionSelect),
             Spacer(),
@@ -481,10 +424,10 @@ class InclusionOptionInfo {
 class _InclusionOptionsState extends State<InclusionOptions> {
   String? selectedText;
 
-  final List<InclusionOptionInfo> items = [
-    InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/images/box.png'),
-    InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/images/box.png'),
-  ];
+  // final List<InclusionOptionInfo> items = [
+  //   InclusionOptionInfo(text: '포함합니다', assetPath: 'assets/images/box.png'),
+  //   InclusionOptionInfo(text: '포함하지 않습니다', assetPath: 'assets/images/box.png'),
+  // ];
 
   void handleInclusionOptionSelected(String text) {
     setState(() {
@@ -499,15 +442,15 @@ class _InclusionOptionsState extends State<InclusionOptions> {
       alignment: WrapAlignment.center,
       spacing: 15.w,
       runSpacing: 15.h,
-      children:
-          items.map((InclusionOptionInfo) {
-            return InclusionOption(
-              text: InclusionOptionInfo.text,
-              assetPath: InclusionOptionInfo.assetPath,
-              isSelected: selectedText == InclusionOptionInfo.text,
-              onSelected: handleInclusionOptionSelected,
-            );
-          }).toList(),
+      // children:
+      //     items.map((InclusionOptionInfo) {
+      //       return InclusionOption(
+      //         text: InclusionOptionInfo.text,
+      //         assetPath: InclusionOptionInfo.assetPath,
+      //         isSelected: selectedText == InclusionOptionInfo.text,
+      //         onSelected: handleInclusionOptionSelected,
+      //       );
+      //     }).toList(),
     );
   }
 }

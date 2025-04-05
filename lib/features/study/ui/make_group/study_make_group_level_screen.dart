@@ -191,13 +191,7 @@ class _StudyMakeGroupLevelState extends State<StudyMakeGroupLevel> {
 
                 SizedBox(width: 40.w),
 
-                Text('최근 이슈, 트랜드 퀴즈도 포함할까요?',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 35.sp,
-                    fontFamily: 'Wanted Sans',
-                    fontWeight: FontWeight.w600,
-                  ),)
+            
               ],
             ),
             SizedBox(height: 50.h),
