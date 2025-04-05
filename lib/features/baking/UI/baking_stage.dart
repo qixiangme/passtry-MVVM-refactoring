@@ -17,249 +17,336 @@ class _BakingStageState extends State<BakingStage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        width: 1080.w,
-        height: 2857.h,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(color: Colors.white),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0.w,
-              top: -67.h,
-              child: Container(
-                width: 1080.w,
-                height: 3575.h,
-                decoration: BoxDecoration(color: const Color(0xFF95E08A)),
-              ),
-            ),
-            Positioned(
-              top: 281.h,
-              width: 1080.w,
-              height: 2000.h,
-              child: Image.asset('assets/images/stage_road.png'),
-            ),
-            Positioned(
-              right: 200,
-              top: 1860.h,
-              width: 380.w,
-              height: 900.h,
-              child: Image.asset('assets/images/road_bottom.png'),
-            ),
-            Positioned(
-              left: 1002.w,
-              top: 4692.h,
-              child: Container(
-                transform:
-                    Matrix4.identity()
-                      ..translate(0.0, 0.0)
-                      ..rotateZ(3.14),
-                width: 903.w,
-                height: 2328.h,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(),
-                child: Stack(),
-              ),
-            ),
-            Positioned(
-              left: 99.w,
-              top: 253.h,
-              child: Container(
-                width: 903.w,
-                height: 2328.h,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(),
-                child: Stack(),
-              ),
-            ),
-            Positioned(
-              // 첫 번째 동그라미
-              left: 300.w,
-              top: 420.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
+      body: SingleChildScrollView(
+        child: Container(
+          width: 1080.w,
+          height: 3623.h,
+          decoration: BoxDecoration(color: Colors.white),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 1080.w,
+                  height: 3623.h,
+                  decoration: BoxDecoration(color: const Color(0xFFE5E5E5)),
                 ),
               ),
-            ),
-            Positioned(
-              // 네 번째 동그라미
-              left: 150.w,
-              top: 1280.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
+              Positioned(
+                top: 135.h,
+                left: 44.w,
+                child: Image.asset(
+                  'assets/icons/oven.png',
+                  width: 992.w,
+                  height: 1092.h,
                 ),
               ),
-            ),
-            Positioned(
-              // 일곱 번째 동그라미미
-              left: 400.w,
-              top: 2100.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
+              Positioned(
+                left: 90.w,
+                top: 1165.h,
+                child: Image.asset(
+                  'assets/images/StageRoad.png',
+                  width: 900.w,
+                  height: 2143.h,
                 ),
               ),
-            ),
-            Positioned(
-              //세 번째 동그라미
-              left: 530.w,
-              top: 980.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              // 다섯 번째 동그라미미
-              left: 500.w,
-              top: 1550.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              // 두 번째 동그라미
-              left: 710.w,
-              top: 621.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              // 여섯 번째 동그라미
-              left: 730.w,
-              top: 1850.h,
-              child: Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: ShapeDecoration(
-                  color: Colors.white /* white */,
-                  shape: OvalBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 15.r,
-                      offset: Offset(0, 0),
-                      spreadRadius: 0.r,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0.w,
-              top: 0.h,
-              child: Container(
-                width: 1081.w,
-                height: 281.h,
-                decoration: BoxDecoration(color: Colors.white),
-              ),
-            ),
-            Positioned(
-              top: 120.h,
-              right: 30,
-              child: Container(
-                width: 1080.w,
-                height: 120.h,
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 49.50.w,
+              Positioned(
+                // 두 번째 동그라미
+                left: 765.w,
+                top: 1470.h,
+                child: Stack(
                   children: [
-                    SizedBox(
-                      width: 948.w,
-                      child: Text(
-                        'STAGE 1',
-                        style: TextStyle(
-                          color: const Color(0xFF1C1C1C) /* main-black */,
-                          fontSize: 60.w,
-                          fontFamily: 'Wanted Sans',
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: -0.60.w,
-                        ),
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Positioned(
+                // 첫 번째 동그라미
+                left: 446.w,
+                top: 1150.h,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                // 네 번째 동그라미
+                left: 75.w,
+                top: 2123.h,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                // 일곱 번째 동그라미
+                left: 446.w,
+                top: 3067.h,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                // 세 번째 동그라미
+                left: 446.w,
+                top: 1780.h,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                // 다섯 번째 동그라미
+                left: 446.w,
+                top: 2435.h,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                // 여섯 번째 동그라미
+                left: 770.w,
+                top: 2760.h,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 240.w,
+                      height: 240.h,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFD2D2D2),
+                        shape: OvalBorder(),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 15.r,
+                            offset: Offset(0, 0),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 83.w,
+                      top: 73.h,
+                      child: Image.asset(
+                        'assets/icons/lock.png',
+                        width: 74.w,
+                        height: 94.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                left: 393.w,
+                top: 3000.h,
+                child: Image.asset(
+                  'assets/icons/acorn.png',
+                  width: 333.77.w,
+                  height: 325.h,
+                ),
+              ),
+              Positioned(
+                left: 376.w,
+                top: 3404.h,
+                child: Image.asset(
+                  'assets/icons/start.png',
+                  width: 367.w,
+                  height: 82.h,
+                ),
+              ),
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: 1081,
+                  height: 110,
+                  decoration: BoxDecoration(color: Colors.white),
+                ),
+              ),
+              Positioned(
+                top: 135.h,
+                child: Container(
+                  width: 1080.w,
+                  height: 120.h,
+                  padding: const EdgeInsets.only(top: 5, left: 5, right: 28),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: 49.50.w,
+                    children: [
+                      SizedBox(
+                        width: 948.w,
+                        child: Text(
+                          'STAGE 1',
+                          style: TextStyle(
+                            color: const Color(0xFF1C1C1C) /* main-black */,
+                            fontSize: 60.sp,
+                            fontFamily: 'Wanted Sans',
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: -0.60.w,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

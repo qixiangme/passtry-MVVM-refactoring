@@ -4,6 +4,7 @@ import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/UI/baking_qnaList_screen.dart';
 import 'package:componentss/features/baking/UI/baking_stage.dart';
 import 'package:componentss/features/baking/UI/qna_list_model.dart';
+import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
 import 'package:componentss/features/baking/data/interview/interview_api.dart';
@@ -26,44 +27,78 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  bool isExpanded = true;
   int? _dday; // D-day 데이터를 저장할 변수
   bool isLoadingDday = true; // D-day 데이터 로딩 상태
   late MissionResponse? _missionResponse;
   bool _isLoading = true; // 로딩 상태를 관리
   final List<Quest> dailyQuests = [];
   late List<Attendance> _attendanceHistory;
-  late List<Interview> _interviews;
+  late List<InterviewModel> _interviews;
+  final InterviewApi _interviewApi = InterviewApi();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // _loadMissionData();
+    // UserProvider를 통해 사용자 정보 가져오기
+    final userProvider = Provider.of<UserProvider>(context);
+    final user = userProvider.user;
+    if (user != null && _interviews.isNotEmpty) {
+      // 첫 번째 인터뷰의 ID로 D-day 데이터 가져오기
+      fetchDday(_interviews[0].id!);
+    }
   }
 
   @override
   void initState() {
     super.initState();
     // _loadMissionData();
+    _interviews = [];
     _attendanceHistory = []; // 초기화
     _loadMissionAndAttendanceData(); // 미션과
+    _loadInterviews();
+
     // 유저 ID를 사용하여 미션 데이터를 가져옵니다.
   }
 
-  Future<void> _loadInterviewData() async {
+  Future<void> _loadInterviews() async {
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final user = userProvider.user;
-      final interviewResponse = await fetchUserInterviews(user!.username);
+
+      // 인터뷰 데이터 가져오기
+      final interviews = await InterviewApi.getInterviewsByUser(user!.id!);
 
       setState(() {
-        _interviews = interviewResponse;
-        _isLoading = false;
+        _interviews = interviews; // 인터뷰 데이터를 상태에 저장
       });
+
+      print("✅ 인터뷰 데이터 로드 성공: ${_interviews.length}개");
+
+      // 인터뷰 데이터 로드 후 첫 번째 인터뷰의 D-Day 호출
+      if (_interviews.isNotEmpty) {
+        await fetchDday(_interviews.first.id!);
+      }
     } catch (error) {
-      print("Error loading interview data: $error");
+      print("🚨 인터뷰 데이터 로드 실패: $error");
+    }
+  }
+
+  Future<void> fetchDday(String interviewId) async {
+    try {
+      print("📤 D-Day 요청 시작: 인터뷰 ID = $interviewId");
+      final int? dday = await InterviewApi.getInterviewDday(interviewId);
+      print("📥 D-Day 응답: $dday");
+
       setState(() {
-        _isLoading = false;
+        _dday = dday;
+        isLoadingDday = false;
+      });
+    } catch (e) {
+      print('❌ D-day 데이터 로드 중 오류 발생: $e');
+      setState(() {
+        isLoadingDday = false;
       });
     }
   }
@@ -74,10 +109,10 @@ class _BakingScreenState extends State<BakingScreen> {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       final user = userProvider.user;
       final missionResponseFuture = fetchNextMissions(
-        user!.username,
+        user!.id!,
       ); // 유저 ID를 실제 값으로 대체
       final attendanceHistoryFuture = AttendanceApi().fetchAttendanceHistory(
-        user.username,
+        user.id!,
       );
 
       final results = await Future.wait([
@@ -335,12 +370,60 @@ class _BakingScreenState extends State<BakingScreen> {
           children: [
             Stack(
               children: [
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'D-Day',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      _dday != null
+                          ? Text(
+                            '$_dday일 남음',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.orange,
+                            ),
+                          )
+                          : Text(
+                            isLoadingDday
+                                ? 'D-Day 데이터를 불러오는 중...'
+                                : 'D-Day 데이터를 가져올 수 없습니다.',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                    ],
+                  ),
+                ),
                 Container(
                   //width: double.infinity,
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(_dday.toString()),
+                      SizedBox(
+                        height: 100,
+                        width: 500,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _interviews.length,
+                          itemBuilder: (context, index) {
+                            final interview = _interviews[index];
+                            return ListTile(
+                              title: Text(
+                                interview.id!,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              subtitle: Text(interview.category),
+                            );
+                          },
+                        ),
+                      ),
                       SizedBox(height: 100),
                       Text('logo'),
                       SizedBox(height: 50),
@@ -565,6 +648,82 @@ class _BakingScreenState extends State<BakingScreen> {
           ],
         ),
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // 인터뷰 버튼들 (애니메이션 적용)
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: isExpanded ? 1.0 : 0.0,
+            child: Column(
+              children: List.generate(_interviews.length, (index) {
+                final interview = _interviews[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: FloatingActionButton.extended(
+                    heroTag: 'interview_$index',
+                    backgroundColor: Colors.white,
+                    icon: const Icon(Icons.person, color: Colors.orange),
+                    label: Text(
+                      interview.name, // 인터뷰 이름 표시
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {
+                      // 인터뷰 버튼 클릭 시 동작
+                      print('인터뷰 ${interview.name} 선택됨');
+                    },
+                  ),
+                );
+              }),
+            ),
+          ),
+
+          // 항상 표시되는 버튼
+          if (isExpanded)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: FloatingActionButton.extended(
+                heroTag: 'always_visible',
+                backgroundColor: Colors.orange,
+                icon: const Icon(Icons.add, color: Colors.white),
+                label: const Text(
+                  '새 인터뷰 만들기',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onPressed: () {
+                  // StudyMake 화면으로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StudyMake()),
+                  );
+                },
+              ),
+            ),
+
+          // 메인 플로팅 버튼 (토글 기능)
+          FloatingActionButton(
+            heroTag: 'main_fab',
+            backgroundColor: Colors.orange,
+            child: Icon(
+              isExpanded ? Icons.close : Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                isExpanded = !isExpanded; // 버튼 확장/축소 상태 변경
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -591,7 +750,6 @@ class _AnimatedHalfCircleProgressState extends State<AnimatedHalfCircleProgress>
     )..repeat(reverse: false);
 
     _animation = Tween<double>(begin: 0, end: 0.5).animate(_controller);
-
     _controller.forward();
   }
 
