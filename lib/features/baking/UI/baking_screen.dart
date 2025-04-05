@@ -60,6 +60,7 @@ class _BakingScreenState extends State<BakingScreen> {
   late List<InterviewModel> _interviews;
   final InterviewApi _interviewApi = InterviewApi();
   late int currentLevel; // 현재 레벨 상태 변수
+  late double progress = 0.0; // 진행 상태 변수
 
   @override
   void didChangeDependencies() {
@@ -84,6 +85,7 @@ class _BakingScreenState extends State<BakingScreen> {
         setState(() {
           userScore = score; // 점수 상태에 저장
           isLoadingScore = false; // 로딩 완료
+          progress = (userScore ?? 0) / 1000.0;
         });
       }
     } catch (e) {
@@ -116,11 +118,19 @@ class _BakingScreenState extends State<BakingScreen> {
 
   String getImageForScore(int score) {
     if (score < 2) {
-      return 'assets/images/'; // 스코어가 100 미만일 때
-    } else if (score < 197) {
-      return 'assets/images/medium_score.png'; // 스코어가 100 이상 500 미만일 때
+      return 'assets/icons/dough.png'; // 스코어가 100 미만일 때
+    } else if (score < 100) {
+      return 'assets/icons/bread.png'; // 스코어가 100 미만일 때
+      // 스코어가 100 이상 500 미만일 때
+    } else if (score < 300) {
+      return 'assets/icons/baguette.png'; // 스코어가 100 미만일 때
+      // 스코어가 100 이상 500 미만일 때
+    } else if (score < 500) {
+      return 'assets/icons/croissant.png'; // 스코어가 100 미만일 때
+      // 스코어가 100 이상 500 미만일 때
     } else {
-      return 'assets/images/high_score.png'; // 스코어가 500 이상일 때
+      return 'assets/icons/bagel.png'; // 스코어가 100 미만일 때
+      // 스코어가 500 이상일 때
     }
   }
 
@@ -537,7 +547,11 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                       Stack(
                         children: [
-                          Center(child: AnimatedHalfCircleProgress()),
+                          Center(
+                            child: AnimatedHalfCircleProgress(
+                              progress: progress,
+                            ),
+                          ),
                           Padding(
                             padding: EdgeInsets.only(top: 90),
                             child: Center(
@@ -546,6 +560,12 @@ class _BakingScreenState extends State<BakingScreen> {
                                 height: 500.h,
                                 decoration: BoxDecoration(
                                   color: Color(0XFF6B6B6B),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      getImageForScore(userScore ?? 0),
+                                    ), // AssetImage를 DecorationImage로 감쌈
+                                    fit: BoxFit.cover, // 이미지 크기 조정
+                                  ),
                                 ),
                               ),
                             ),
@@ -807,7 +827,9 @@ class _BakingScreenState extends State<BakingScreen> {
 }
 
 class AnimatedHalfCircleProgress extends StatefulWidget {
-  const AnimatedHalfCircleProgress({super.key});
+  final double progress; // 진행률 (0.0 ~ 1.0)
+
+  const AnimatedHalfCircleProgress({super.key, required this.progress});
 
   @override
   _AnimatedHalfCircleProgressState createState() =>
@@ -822,13 +844,32 @@ class _AnimatedHalfCircleProgressState extends State<AnimatedHalfCircleProgress>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
-    )..repeat(reverse: false);
+      duration: const Duration(seconds: 1),
+    );
 
-    _animation = Tween<double>(begin: 0, end: 0.5).animate(_controller);
+    _animation = Tween<double>(
+      begin: 0,
+      end: widget.progress,
+    ).animate(_controller);
+
     _controller.forward();
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimatedHalfCircleProgress oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // 진행률이 변경되었을 때 애니메이션 업데이트
+    if (oldWidget.progress != widget.progress) {
+      _animation = Tween<double>(
+        begin: _animation.value,
+        end: widget.progress,
+      ).animate(_controller);
+      _controller.forward(from: 0.0);
+    }
   }
 
   @override
@@ -852,7 +893,7 @@ class _AnimatedHalfCircleProgressState extends State<AnimatedHalfCircleProgress>
 }
 
 class HalfCircleProgressPainter extends CustomPainter {
-  final double progress;
+  final double progress; // 진행률 (0.0 ~ 1.0)
 
   HalfCircleProgressPainter({required this.progress});
 
@@ -860,26 +901,29 @@ class HalfCircleProgressPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint backgroundPaint =
         Paint()
-          ..color = Color(0xFFD9D9D9)
+          ..color = const Color(0xFFD9D9D9)
           ..strokeWidth = 10
           ..style = PaintingStyle.stroke
           ..strokeCap = StrokeCap.round;
 
     Paint progressPaint =
         Paint()
-          ..color = Color(0xFFFF9F1C)
+          ..color = const Color(0xFFFF9F1C)
           ..strokeWidth = 10
           ..style = PaintingStyle.stroke
           ..strokeCap = StrokeCap.round;
 
     Rect rect = Rect.fromLTWH(0, 0, size.width, size.height * 2);
 
+    // 배경 반원 그리기
     canvas.drawArc(rect, pi, pi, false, backgroundPaint);
+
+    // 진행률에 따른 반원 그리기
     canvas.drawArc(rect, pi, pi * progress, false, progressPaint);
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
 class Quest {
