@@ -182,6 +182,11 @@ class _AnswerBlockState extends State<AnswerBlock> {
                     stage: widget.mission.stage,
                     index: widget.mission.index,
                   );
+                  updateMissionScore(
+                    userId: userId,
+                    interviewId: widget.inteview.id!,
+                    points: 200,
+                  );
 
                   Navigator.pushReplacement(
                     context,

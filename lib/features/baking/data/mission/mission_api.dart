@@ -113,4 +113,51 @@ Future<void> completeMission({
   }
 }
 
+Future<void> updateMissionScore({
+  required String userId,
+  required String interviewId,
+  required int points,
+}) async {
+  final url = Uri.parse(
+    '$baseUrl/missions/score/$userId/$interviewId?points=$points',
+  );
 
+  try {
+    final response = await http.post(url); // body 없이 POST 요청
+
+    if (response.statusCode == 200) {
+      print('✅ 포인트 업데이트 성공');
+    } else {
+      print('❌ 포인트 업데이트 실패');
+      print('응답 코드: ${response.statusCode}');
+      print('응답 내용: ${response.body}');
+      throw Exception('포인트 업데이트 중 오류 발생');
+    }
+  } catch (e) {
+    print('🚨 네트워크 요청 중 오류 발생: $e');
+    throw Exception('포인트 업데이트 중 네트워크 오류 발생');
+  }
+}
+
+Future<int> getTodayScore(String userId) async {
+  final url = Uri.parse('$baseUrl/missions/score/$userId');
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      // 응답 본문을 정수로 변환하여 반환
+      final score = int.parse(response.body);
+      print('✅ 오늘 점수 가져오기 성공: $score');
+      return score;
+    } else {
+      print('❌ 오늘 점수 가져오기 실패');
+      print('응답 코드: ${response.statusCode}');
+      print('응답 내용: ${response.body}');
+      throw Exception('오늘 점수를 가져오는 중 오류 발생');
+    }
+  } catch (e) {
+    print('🚨 네트워크 요청 중 오류 발생: $e');
+    throw Exception('오늘 점수를 가져오는 중 네트워크 오류 발생');
+  }
+}

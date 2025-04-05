@@ -29,6 +29,8 @@ class BakingScreen extends StatefulWidget {
 }
 
 class _BakingScreenState extends State<BakingScreen> {
+  int? userScore; // 유저의 점수
+  bool isLoadingScore = true; // 점수 로딩 상태
   int index = 0;
   bool isExpanded = true;
   List<Answer> qnaItems = []; // Qna 데이터 리스트
@@ -51,7 +53,27 @@ class _BakingScreenState extends State<BakingScreen> {
     final user = userProvider.user;
     if (user != null && _interviews.isNotEmpty) {
       // 첫 번째 인터뷰의 ID로 D-day 데이터 가져오기
-      fetchDday(_interviews[0].id!);
+      fetchDday(_interviews[index].id!);
+    }
+  }
+
+  Future<void> _loadUserScore() async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final user = userProvider.user;
+
+      if (user != null) {
+        final score = await getTodayScore(user.id!); // 유저 ID로 점수 가져오기
+        setState(() {
+          userScore = score; // 점수 상태에 저장
+          isLoadingScore = false; // 로딩 완료
+        });
+      }
+    } catch (e) {
+      print('❌ 유저 점수 로드 중 오류 발생: $e');
+      setState(() {
+        isLoadingScore = false; // 로딩 실패
+      });
     }
   }
 
@@ -74,6 +96,15 @@ class _BakingScreenState extends State<BakingScreen> {
       });
     }
   }
+  String getImageForScore(int score) {
+  if (score < 2) {
+    return 'assets/images/'; // 스코어가 100 미만일 때
+  } else if (score < 197) {
+    return 'assets/images/medium_score.png'; // 스코어가 100 이상 500 미만일 때
+  } else {
+    return 'assets/images/high_score.png'; // 스코어가 500 이상일 때
+  }
+}
 
   @override
   void initState() {
@@ -86,6 +117,7 @@ class _BakingScreenState extends State<BakingScreen> {
       }
     });
     _loadQnaItems();
+    _loadUserScore();
   }
 
   Future<void> _loadInterviews() async {
@@ -215,6 +247,19 @@ class _BakingScreenState extends State<BakingScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Center(
+            child:
+                isLoadingScore
+                    ? const CircularProgressIndicator() // 로딩 중
+                    : Text(
+                      '오늘의 점수: ${userScore ?? 0}', // 점수 표시
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+          ),
           Container(
             width: 1000.w,
             height: 300.h,
@@ -422,21 +467,15 @@ class _BakingScreenState extends State<BakingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(_dday.toString()),
-
                       Text('logo'),
 
                       Center(
-                        //API로 받아오기
-                        child: EventCard(
-                          title: '동아리 면접 🍞', // 이모지도 텍스트로 넣을 수 있습니다.
-                          targetDate: DateTime(
-                            2024,
-                            5,
-                            31,
-                            15,
-                            00,
-                          ), // 목표 날짜 및 시간
-                        ),
+                        child:
+                            isLoadingDday || _interviews.isEmpty
+                                ? const CircularProgressIndicator() // 로딩 중일 때 표시
+                                : EventCard(
+                                  title: _interviews[index].name, // 인터뷰 이름 표시
+                                ),
                       ),
 
                       Row(
@@ -682,6 +721,10 @@ class _BakingScreenState extends State<BakingScreen> {
                       ),
                     ),
                     onPressed: () {
+                      setState(() {
+                        this.index = index; // 선택된 인터뷰의 인덱스를 업데이트
+                      });
+                      _loadMissionAndAttendanceData(index);
                       // 인터뷰 버튼 클릭 시 동작
                     },
                   ),
@@ -828,9 +871,8 @@ class Quest {
 
 class EventCard extends StatelessWidget {
   final String title;
-  final DateTime targetDate;
 
-  const EventCard({super.key, required this.title, required this.targetDate});
+  const EventCard({super.key, required this.title});
 
   String calculateDday(DateTime target) {
     final now = DateTime.now();
@@ -864,10 +906,6 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat('yyyy.MM.dd HH:mm').format(targetDate);
-    final dDayString = calculateDday(targetDate);
-    final dDayParts = getDdayParts(dDayString); // D-day 부분을 각 문자로 분리
-
     return Container(
       width: 1000.w,
       height: 250.h,
@@ -894,34 +932,7 @@ class EventCard extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 4.0),
-              Text(
-                formattedDate,
-                style: TextStyle(fontSize: 14.0, color: Colors.black54),
-              ),
             ],
-          ),
-
-          Row(
-            children:
-                dDayParts.map((part) {
-                  // 각 문자(부분)를 위한 컨테이너 생성
-                  return Container(
-                    margin: const EdgeInsets.only(left: 3.0),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 5.0,
-                    ),
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: Text(
-                      part, // D-day 문자 (예: 'D', '-', '3', '0')
-                      style: TextStyle(
-                        fontSize: 75.51.sp,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.orange,
-                      ),
-                    ),
-                  );
-                }).toList(),
           ),
         ],
       ),
