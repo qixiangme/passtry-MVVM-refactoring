@@ -559,7 +559,6 @@ class _BakingScreenState extends State<BakingScreen> {
                                 width: 611.w,
                                 height: 500.h,
                                 decoration: BoxDecoration(
-                                  color: Color(0XFF6B6B6B),
                                   image: DecorationImage(
                                     image: AssetImage(
                                       getImageForScore(userScore ?? 0),
