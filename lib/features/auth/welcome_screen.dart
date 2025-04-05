@@ -17,6 +17,7 @@ class WelcomeScreen extends StatelessWidget {
       print("사용자 이름: ${user.username}");
     }
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
