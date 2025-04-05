@@ -21,8 +21,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
+
+class LevelInfo {
+  final String badgeText;
+  final String titleText;
+  const LevelInfo({required this.badgeText, required this.titleText});
+}
+
+// --- 위에서 정의한 levelData 리스트 ---
+final List<LevelInfo> levelData = [
+  const LevelInfo(badgeText: 'Lv.0', titleText: '알 수 없음'), // 인덱스 0 (기본값)
+  const LevelInfo(badgeText: 'Lv.1', titleText: '따끈따끈한 반죽'),
+  const LevelInfo(badgeText: 'Lv.2', titleText: '살짝 익은 스콘'),
+  const LevelInfo(badgeText: 'Lv.3', titleText: '노릇노릇한 식빵'),
+  const LevelInfo(badgeText: 'Lv.4', titleText: '달콤한 케이크'),
+  const LevelInfo(badgeText: 'Lv.5', titleText: '제빵의 달인'),
+];
+
+
 class BakingScreen extends StatefulWidget {
   const BakingScreen({super.key});
+
 
   @override
   State<BakingScreen> createState() => _BakingScreenState();
@@ -43,6 +62,7 @@ class _BakingScreenState extends State<BakingScreen> {
   late List<Attendance> _attendanceHistory;
   late List<InterviewModel> _interviews;
   final InterviewApi _interviewApi = InterviewApi();
+  late int currentLevel; // 현재 레벨 상태 변수
 
   @override
   void didChangeDependencies() {
