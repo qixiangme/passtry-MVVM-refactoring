@@ -1,6 +1,4 @@
-import 'dart:convert'; // JSON 인코딩을 위해 유지
 // import 'dart:io'; // File 사용 안 하므로 제거
-import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/baking/viewmodel/baking_setting_view_model.dart';
 // import 'package:componentss/features/study/data/group_model.dart'; // GroupModel 사용하지 않으므로 제거 (필요시 유지)
 import 'package:flutter/material.dart';
@@ -8,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 // import 'package:image_picker/image_picker.dart'; // ImagePicker 사용 안 하므로 제거
 // import 'package:path/path.dart' as path; // path 사용 안 하므로 제거
-import 'package:http/http.dart' as http; // http는 그룹 업로드에 필요하므로 유지
 // import 'package:http_parser/http_parser.dart'; // MediaType 사용 안 하므로 제거
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
