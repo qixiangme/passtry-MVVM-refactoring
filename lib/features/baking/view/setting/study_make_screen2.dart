@@ -1,126 +1,24 @@
 import 'package:componentss/features/baking/view/setting/study_make_level_screen.dart';
+import 'package:componentss/features/baking/viewmodel/baking_setting_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 
-class StudyMake2 extends StatefulWidget {
+class StudyMake2 extends ConsumerStatefulWidget {
   const StudyMake2({super.key});
 
   @override
-  State<StudyMake2> createState() => _StudyMakeState2();
+  ConsumerState<StudyMake2> createState() => _StudyMakeState2();
 }
 
-class _StudyMakeState2 extends State<StudyMake2> {
-  DateTime? _selectedDate;
-  TimeOfDay? _selectedTime;
-
-  // 남은 일 수 계산
-  int _calculateRemainingDays() {
-    if (_selectedDate == null) {
-      return 0;
-    }
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final interviewDate = DateTime(
-      _selectedDate!.year,
-      _selectedDate!.month,
-      _selectedDate!.day,
-    );
-    final difference = interviewDate.difference(today).inDays;
-    return difference >= 0 ? difference : 0;
-  }
-
-  // 날짜 선택 Bottom Sheet 표시
-  void _showDatePicker(BuildContext context) {
-    DateTime initialDate = _selectedDate ?? DateTime.now();
-    DateTime firstDate = DateTime.now().subtract(Duration(days: 1));
-    DateTime lastDate = DateTime.now().add(Duration(days: 365 * 5));
-
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        DateTime tempDate = initialDate;
-        return Container(
-          height: MediaQuery.of(context).copyWith().size.height / 3,
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime: initialDate,
-                  minimumDate: firstDate,
-                  maximumDate: lastDate,
-                  onDateTimeChanged: (DateTime newDate) {
-                    tempDate = newDate;
-                  },
-                ),
-              ),
-              CupertinoButton(
-                child: Text('확인', style: TextStyle(color: Colors.orange)),
-                onPressed: () {
-                  setState(() {
-                    _selectedDate = tempDate;
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  // 시간 선택 Bottom Sheet 표시
-  void _showTimePicker(BuildContext context) {
-    DateTime initialDateTime = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      _selectedTime?.hour ?? DateTime.now().hour,
-      _selectedTime?.minute ?? DateTime.now().minute,
-    );
-
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        DateTime tempDateTime = initialDateTime;
-        return Container(
-          height: MediaQuery.of(context).copyWith().size.height / 3,
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.time,
-                  initialDateTime: initialDateTime,
-                  use24hFormat: true,
-                  onDateTimeChanged: (DateTime newDateTime) {
-                    tempDateTime = newDateTime;
-                  },
-                ),
-              ),
-              CupertinoButton(
-                child: Text('확인', style: TextStyle(color: Colors.orange)),
-                onPressed: () {
-                  setState(() {
-                    _selectedTime = TimeOfDay.fromDateTime(tempDateTime);
-                  });
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
+class _StudyMakeState2 extends ConsumerState<StudyMake2> {
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(StudyMakeViewModelProvider.notifier);
+    final state = ref.watch(StudyMakeViewModelProvider);
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String category = args['category'];
@@ -130,15 +28,23 @@ class _StudyMakeState2 extends State<StudyMake2> {
     final DateFormat timeFormatter = DateFormat('HH:mm:00');
 
     String displayDate =
-        _selectedDate != null ? dateFormatter.format(_selectedDate!) : '날짜 선택';
+        state.selectedDate != null
+            ? dateFormatter.format(state.selectedDate!)
+            : '날짜 선택';
     String displayTime =
-        _selectedTime != null
+        state.selectedTime != null
             ? timeFormatter.format(
-              DateTime(2000, 1, 1, _selectedTime!.hour, _selectedTime!.minute),
+              DateTime(
+                2000,
+                1,
+                1,
+                state.selectedTime!.hour,
+                state.selectedTime!.minute,
+              ),
             )
             : '시간 선택';
 
-    int remainingDays = _calculateRemainingDays();
+    int remainingDays = vm.calculateRemainingDays();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -189,7 +95,16 @@ class _StudyMakeState2 extends State<StudyMake2> {
               context: context,
               displayText: displayDate,
               icon: Icons.calendar_today_outlined,
-              onTap: () => _showDatePicker(context),
+              onTap: () async {
+                final selected = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+
+                if (selected != null) {
+                  vm.selectTime(selected);
+                }
+              },
             ),
             SizedBox(height: 40.h),
             // 시간 선택 영역
@@ -197,7 +112,17 @@ class _StudyMakeState2 extends State<StudyMake2> {
               context: context,
               displayText: displayTime,
               icon: Icons.access_time_outlined,
-              onTap: () => _showTimePicker(context),
+              onTap: () async {
+                final selected = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime.now().subtract(Duration(days: 1)),
+                  lastDate: DateTime.now().add(Duration(days: 365 * 5)),
+                );
+                if (selected != null) {
+                  vm.selectDate(selected);
+                }
+              },
             ),
             SizedBox(height: 70.h),
             // 남은 날짜 표시 영역
@@ -244,7 +169,7 @@ class _StudyMakeState2 extends State<StudyMake2> {
                     elevation: 0,
                   ),
                   onPressed:
-                      (_selectedDate != null && _selectedTime != null)
+                      (state.selectedDate != null && state.selectedTime != null)
                           ? () {
                             print('category: $category');
                             print('category2: $category2');

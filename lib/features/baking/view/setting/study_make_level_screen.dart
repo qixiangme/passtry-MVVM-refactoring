@@ -1,8 +1,8 @@
 import 'package:componentss/core/user_provider.dart';
-import 'package:componentss/features/baking/view/setting/study_comeplete_screen.dart';
 import 'package:componentss/features/baking/data/interview/interview_api.dart';
 import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/ui/setting/study_make_group_name_screen.dart';
+import 'package:componentss/features/baking/viewmodel/baking_setting_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
@@ -18,115 +18,10 @@ class StudyMakeLevel extends ConsumerStatefulWidget {
 }
 
 class _StudyMakeLevelState extends ConsumerState<StudyMakeLevel> {
-  final bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
-
-  String? _selectedStudyLevelText;
-  String? _selectedInclusionOptionText;
-
-  bool _isNextButtonEnabled = false;
-  String _nextButtonText = '다음';
-  void _updateNextButtonState() {
-    setState(() {
-      _isNextButtonEnabled = _selectedStudyLevelText != null;
-      _nextButtonText = _selectedStudyLevelText != null ? '퀘스트 생성하기' : '다음';
-    });
-  }
-
-  void _handleStudyLevelSelect(String itemText) {
-    setState(() {
-      _selectedStudyLevelText = itemText;
-      _updateNextButtonState();
-    });
-    // 디버깅용 출력
-  }
-
-  void _handleInclusionOptionSelect(String itemText) {
-    setState(() {
-      _selectedInclusionOptionText = itemText;
-      _updateNextButtonState();
-    });
-    // 디버깅용 출력
-  }
-
-  void _handleNextButtonTap() async {
-    final Map<String, dynamic> args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final user = ref.watch(userProvider);
-
-    final String category = args['category'];
-    final String category2 = args['category2'];
-    final DateTime selectedDate = DateTime.parse(args['date']); // DateTime으로 변환
-    final String time = args['time'];
-
-    final String? studyLevel = _selectedStudyLevelText; // 난이도
-    final String? inclusionOption = _selectedInclusionOptionText; // 포함 여부
-
-    // ENUM 변환
-    final String questDifficulty = _mapDifficultyToEnum(studyLevel);
-    final String mappedCategory = _mapCategoryToEnum(category);
-    final String mappedCategory2 = _mapCategoryToEnum(category2);
-    final bool includeTrendQuiz = inclusionOption == '포함합니다';
-
-    // InterviewModel 생성
-    final interview = InterviewModel(
-      userId: user!.id!, // UserProvider에서 가져온 사용자 ID
-      name: '인터뷰 이름', // 필요에 따라 설정
-      category: _mapCategoryToEnum(category),
-      tags: [mappedCategory2],
-      date: DateFormat('yyyy-MM-dd').format(selectedDate), // YYYY-MM-DD 형식으로 변환
-      time: time,
-      questDifficulty: questDifficulty,
-      includeTrendQuiz: includeTrendQuiz,
-    );
-    print("DEVUG");
-    // POST 요청
-    final success = await InterviewApi.postInterview(interview);
-    if (success) {
-      print("인터뷰 생성 성공");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => StudyMakeGroupName()),
-      );
-    }
-  }
-
-  // 난이도를 ENUM 형식으로 변환
-  String _mapDifficultyToEnum(String? difficulty) {
-    switch (difficulty) {
-      case '난이도 상':
-        return 'HIGH';
-      case '난이도 중':
-        return 'MID';
-      case '난이도 하':
-        return 'LOW';
-      case '난이도 기초':
-        return 'BASIC';
-      default:
-        return 'BASIC';
-    }
-  }
-
-  String _mapCategoryToEnum(String category) {
-    switch (category) {
-      case '교내동아리':
-        return 'SCHOOLCLUB';
-      case '연합동아리':
-        return 'JOINTCLUB';
-      case '서포터즈':
-        return 'SUPPORTERS';
-      case '봉사단':
-        return 'VOLUNTEERGROUP';
-      case '인턴 • 현장실습':
-        return 'INTERNSHIP';
-      case '기타':
-        return 'OTHERS';
-      default:
-        return 'OTHERS';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(StudyMakeViewModelProvider);
+    final vm = ref.watch(StudyMakeViewModelProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -169,19 +64,19 @@ class _StudyMakeLevelState extends ConsumerState<StudyMakeLevel> {
             ),
             SizedBox(height: 150.h),
             SizedBox(height: 50.h),
-            StudyLevels(onItemSelected: _handleStudyLevelSelect),
+            StudyLevels(onItemSelected: vm.handleStudyLevelSelect),
             SizedBox(height: 150.h),
 
             SizedBox(height: 50.h),
-            InclusionOptions(onItemSelected: _handleInclusionOptionSelect),
+            InclusionOptions(onItemSelected: vm.handleInclusionOptionSelect),
             Spacer(),
             Padding(
               padding: EdgeInsets.only(bottom: 200.h),
               child: Center(
                 child: NextButton(
-                  isEnabled: _isNextButtonEnabled,
-                  onTap: _handleNextButtonTap,
-                  text: _nextButtonText,
+                  isEnabled: state.isNextButtonEnabled,
+                  onTap: vm.handleNextButtonTap,
+                  text: state.nextButtonText,
                 ),
               ),
             ),

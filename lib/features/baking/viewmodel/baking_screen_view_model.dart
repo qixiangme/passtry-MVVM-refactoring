@@ -1,13 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:componentss/core/user_model.dart';
-import 'package:componentss/features/baking/view/widget/AnimatedHalfCircleProgress.dart';
 import 'package:componentss/features/baking/data/answer/answer_api.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_api.dart';
 import 'package:componentss/features/baking/data/interview/interview_api.dart';
 import 'package:componentss/features/baking/data/mission/mission_api.dart';
+import 'package:componentss/features/baking/view/widget/AnimatedHalfCircleProgress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:componentss/features/baking/view/baking_screen.dart';
 import 'package:componentss/features/baking/data/answer/answer.dart';
 import 'package:componentss/features/baking/data/attendacne/attendance_model.dart';
 import 'package:componentss/features/baking/data/interview/interview_model.dart';

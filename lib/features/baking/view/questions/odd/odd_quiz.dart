@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:componentss/core/user_provider.dart';
-import 'package:componentss/features/baking/view/baking_screen.dart';
 import 'package:componentss/features/baking/data/interview/interview_model.dart';
 import 'package:componentss/features/baking/data/mission/mission_api.dart';
 import 'package:componentss/features/baking/data/mission/mission_model.dart';
@@ -9,7 +8,6 @@ import 'package:componentss/features/main_screen.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OddQuiz extends ConsumerStatefulWidget {

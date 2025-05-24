@@ -1,87 +1,22 @@
-import 'package:componentss/features/baking/view/setting/study_make_screen2.dart';
+import 'package:componentss/features/baking/viewmodel/baking_screen_view_model.dart';
+import 'package:componentss/features/baking/viewmodel/baking_setting_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:componentss/icons/custom_icon_icons.dart';
 
-class StudyMake extends StatefulWidget {
+class StudyMake extends ConsumerStatefulWidget {
   const StudyMake({super.key});
 
   @override
-  State<StudyMake> createState() => _StudyMakeState();
+  ConsumerState<StudyMake> createState() => _StudyMakeState();
 }
 
-class _StudyMakeState extends State<StudyMake> {
-  bool _isNextButtonClicked = false; // 버튼 상태를 부모에서 관리
-
-  String? _selectedCategoryItemText;
-  String? _selectedCategoryChipText;
-
-  bool _isNextButtonEnabled = false;
-
-  void _updateNextButtonState() {
-    setState(() {
-      _isNextButtonEnabled =
-          _selectedCategoryItemText != null &&
-          _selectedCategoryChipText != null;
-    });
-  }
-
-  void _handleCategoryItemSelect(String itemText) {
-    setState(() {
-      _selectedCategoryItemText = itemText;
-      _updateNextButtonState(); // 버튼 상태 업데이트
-    });
-  }
-
-  void _handleCategoryChipSelect(String chipText) {
-    setState(() {
-      _selectedCategoryChipText = chipText;
-      _updateNextButtonState(); // 버튼 상태 업데이트
-    });
-  }
-
-  // 다음 버튼 탭 처리 및 네비게이션 함수
-  void _handleNextButtonTap() {
-    // 1. 버튼 클릭 상태 변경 (UI 즉시 업데이트)
-
-    if (_isNextButtonEnabled) {
-      print("--- 다음 버튼 클릭 ---");
-      print("선택된 단체: ${_selectedCategoryItemText ?? '선택되지 않음'}");
-      print("선택된 분야: ${_selectedCategoryChipText ?? '선택되지 않음'}");
-      print("--------------------");
-      setState(() {
-        _isNextButtonClicked = true;
-      });
-
-      // 2. 다음 화면으로 이동하고, 돌아왔을 때 실행될 로직 추가
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => StudyMake2(),
-          settings: RouteSettings(
-            arguments: {
-              'category': _selectedCategoryItemText,
-              'category2': _selectedCategoryChipText,
-            }, // 전달할 데이터
-          ),
-        ),
-      ).then((_) {
-        // StudyMakeGroup2 에서 돌아온 후에 이 코드가 실행됨
-        // 위젯이 화면에 아직 마운트되어 있는지 확인 (중요)
-        if (mounted) {
-          // 3. 버튼 상태를 다시 false로 초기화
-          setState(() {
-            _isNextButtonClicked = false;
-          });
-        }
-      });
-    } else {
-      print("다음 버튼 클릭 불가");
-    }
-  }
-
+class _StudyMakeState extends ConsumerState<StudyMake> {
   @override
   Widget build(BuildContext context) {
+    final vm = ref.watch(StudyMakeViewModelProvider.notifier);
+    final state = ref.watch(StudyMakeViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -128,7 +63,7 @@ class _StudyMakeState extends State<StudyMake> {
                   width: 992.w,
                   padding: (EdgeInsets.symmetric(horizontal: 50.w)),
                   child: CategoryItems(
-                    onItemSelected: _handleCategoryItemSelect,
+                    onItemSelected: vm.handleCategoryItemSelect,
                   ),
                 ),
 
@@ -137,7 +72,7 @@ class _StudyMakeState extends State<StudyMake> {
                   padding: EdgeInsets.symmetric(horizontal: 77.w),
                   width: 991.w,
                   child: CategoryChipGroup(
-                    onChipSelected: _handleCategoryChipSelect,
+                    onChipSelected: vm.handleCategoryChipSelect,
                   ),
                 ),
 
@@ -146,8 +81,8 @@ class _StudyMakeState extends State<StudyMake> {
                   padding: EdgeInsets.only(bottom: 200.h),
                   child: Center(
                     child: NextButton(
-                      isEnabled: _isNextButtonEnabled,
-                      onTap: _handleNextButtonTap,
+                      isEnabled: state.isNextButtonEnabled,
+                      onTap: vm.handleNextButtonTap,
                     ),
                   ),
                 ),
@@ -166,7 +101,8 @@ class CategoryItem extends StatefulWidget {
   final bool isSelected;
   final Function(String) onSelected;
 
-  CategoryItem({
+  const CategoryItem({
+    super.key,
     required this.text,
     required this.assetPath,
     required this.isSelected,
@@ -238,8 +174,7 @@ class _CategoryItemState extends State<CategoryItem> {
 class CategoryItems extends StatefulWidget {
   final Function(String) onItemSelected;
 
-  const CategoryItems({required this.onItemSelected, Key? key})
-    : super(key: key);
+  const CategoryItems({required this.onItemSelected, super.key});
 
   @override
   _CategoryItemsState createState() => _CategoryItemsState();
@@ -299,13 +234,13 @@ class CategoryChip extends StatelessWidget {
   final bool isSelected;
   final Function(String) onSelected;
 
-  CategoryChip({
+  const CategoryChip({
     required this.emoji,
     required this.text,
     required this.isSelected,
     required this.onSelected,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -315,7 +250,7 @@ class CategoryChip extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        print("${text} 클릭됨");
+        print("$text 클릭됨");
         onSelected(text);
       },
       child: Container(
@@ -370,8 +305,7 @@ class CategoryChipInfo {
 class CategoryChipGroup extends StatefulWidget {
   final Function(String) onChipSelected;
 
-  const CategoryChipGroup({required this.onChipSelected, Key? key})
-    : super(key: key);
+  const CategoryChipGroup({required this.onChipSelected, super.key});
 
   @override
   _CategoryChipGroupState createState() => _CategoryChipGroupState();
@@ -425,8 +359,7 @@ class NextButton extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
 
-  const NextButton({required this.isEnabled, required this.onTap, Key? key})
-    : super(key: key);
+  const NextButton({required this.isEnabled, required this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
