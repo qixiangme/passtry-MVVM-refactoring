@@ -29,6 +29,7 @@ class PostApi {
       }
 
       // 헤더 추가
+      request.headers['Content-Type'] = 'multipart/form-data; charset=UTF-8';
 
       // 요청 전송
       final response = await request.send().timeout(Duration(seconds: 10));
@@ -38,7 +39,8 @@ class PostApi {
         print("게시글 업로드 성공");
         return true;
       } else {
-        final responseBody = response.stream.bytesToString();
+        final responseBytes = await response.stream.toBytes();
+        final responseBody = utf8.decode(responseBytes);
         print("게시글 업로드 실패: ${response.statusCode}");
         print("서버 응답: $responseBody");
         return false;
@@ -48,7 +50,4 @@ class PostApi {
       return false;
     }
   }
-
-
-
 }

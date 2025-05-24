@@ -1,5 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/data/auth_api.dart';
+import 'package:componentss/features/baking/view/setting/study_make_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,19 +16,23 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void _login(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final email = _idController.text;
+    final username = _idController.text;
     final password = _passwordController.text;
 
-    String result = await userProvider.login(email, password);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result)));
-    if (result == "로그인 성공!") {
-      print("로그인 성공");
+    final success = await AuthApi.loginUser( username, password);
+
+    if (success) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("로그인 성공!")));
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainScreen(goToPage: 1)),
+        MaterialPageRoute(builder: (context) => StudyMake()),
       );
     } else {
-      print("로그인 실패");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("로그인 실패")));
     }
   }
 
@@ -151,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Text(
-                  '|',
+                  'ㅣ',
                   style: TextStyle(
                     color: const Color(0xFF6B6B6B) /* dark-gray */,
                     fontSize: 40.sp,
@@ -172,8 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-      )
-
+      ),
     );
   }
 }

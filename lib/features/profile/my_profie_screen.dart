@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:componentss/core/user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyProfieScreen extends StatelessWidget {
+class MyProfieScreen extends ConsumerWidget {
   const MyProfieScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final user = userProvider.user;
+  Widget build(BuildContext context,WidgetRef ref) {
+
+    final user = ref.watch(userProvider);
     if (user != null) {
       print("사용자 이름: ${user.username}");
     }
@@ -39,7 +39,6 @@ class MyProfieScreen extends StatelessWidget {
               onPressed: () {},
             ),
           ),
-
         ],
       ),
       body: SingleChildScrollView(
@@ -103,7 +102,11 @@ class MyProfieScreen extends StatelessWidget {
               ),
               SizedBox(height: 50.h),
               _buildInfoCard(
-                iconData: Icons.flag,
+                leading: Image.asset(
+                  'assets/icons/bread.png',
+                  width: 80.w,
+                  height: 80.h,
+                ),
                 title: '목표',
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -119,7 +122,11 @@ class MyProfieScreen extends StatelessWidget {
               ),
               SizedBox(height: 25.h),
               _buildInfoCard(
-                iconData: Icons.edit_note,
+                leading: Image.asset(
+                  'assets/icons/baguette.png',
+                  width: 80.w,
+                  height: 80.h,
+                ),
                 title: '내가 작성한 예상 답안',
                 trailing: Text(
                   '20',
@@ -136,7 +143,11 @@ class MyProfieScreen extends StatelessWidget {
               ),
               SizedBox(height: 25.h),
               _buildInfoCard(
-                iconData: Icons.bakery_dining,
+                leading: Image.asset(
+                  'assets/icons/bagel.png',
+                  width: 80.w,
+                  height: 80.h,
+                ),
                 title: '완성한 빵 레시피',
                 trailing: Text(
                   '3',
@@ -158,14 +169,31 @@ class MyProfieScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 30.h),
                 child: Column(
                   children: [
-                    _buildSettingsItem('공지사항', onTap: () { print("공지사항"); }),
-                    _buildSettingsItem('FAQ', onTap: () { print("FAQ"); }),
-                    _buildSettingsItem('약관 및 정책', onTap: () { print("약관 및 정책"); }),
+                    _buildSettingsItem(
+                      '공지사항',
+                      onTap: () {
+                        print("공지사항");
+                      },
+                    ),
+                    _buildSettingsItem(
+                      'FAQ',
+                      onTap: () {
+                        print("FAQ");
+                      },
+                    ),
+                    _buildSettingsItem(
+                      '약관 및 정책',
+                      onTap: () {
+                        print("약관 및 정책");
+                      },
+                    ),
                     _buildSettingsItem(
                       '버전 정보',
                       trailingText: '1.0.0',
                       showArrow: false,
-                      onTap: () { print("버전 정보"); },
+                      onTap: () {
+                        print("버전 정보");
+                      },
                     ),
                   ],
                 ),
@@ -205,7 +233,7 @@ class MyProfieScreen extends StatelessWidget {
   }
 
   Widget _buildInfoCard({
-    required IconData iconData,
+    required Widget leading,
     required String title,
     required Widget trailing,
     required VoidCallback onTap,
@@ -224,7 +252,7 @@ class MyProfieScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(iconData, size: 80.w, color: Colors.grey[700]),
+            leading,
             SizedBox(width: 30.w),
             Text(
               title,
@@ -245,7 +273,8 @@ class MyProfieScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsItem(String title, {
+  Widget _buildSettingsItem(
+    String title, {
     String? trailingText,
     bool showArrow = true,
     required VoidCallback onTap,
@@ -286,7 +315,6 @@ class MyProfieScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildTag(String text) {
     return Text(

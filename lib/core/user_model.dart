@@ -1,15 +1,16 @@
 import 'package:componentss/features/study/data/group_model.dart';
-import 'package:componentss/features/study/data/tempGroup.dart';
 
 class User {
   final String username;
   final String email;
+  final String? id;
   List<GroupModel> joinedGroups;
   final int score; // 참가 그룹 리스트
 
   User({
     required this.username,
     required this.email,
+     this.id,
     required this.score,
     this.joinedGroups = const [], // 기본값은 빈 리스트
   });
@@ -20,6 +21,7 @@ class User {
       score: json['score'] ?? 0,
       username: json['username'],
       email: json['email'],
+      id: json['id'],
       joinedGroups: List<GroupModel>.from(json['joinedGroups'] ?? []),
     );
   }

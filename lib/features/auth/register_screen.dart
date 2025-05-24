@@ -120,36 +120,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "회원가입",
-                style: TextStyle(fontSize: 76.sp, fontWeight: FontWeight.w600),
+              Padding(
+                padding: EdgeInsets.only(left: 10, top: 20),
+                child: Text(
+                  "회원가입",
+                  style: TextStyle(
+                    fontSize: 76.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
               SizedBox(height: 40),
-              _buildInputField(
-                "닉네임",
-                "닉네임을 적어주세요",
-                _nameController,
-                _nameError,
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: _buildInputField(
+                  "닉네임",
+                  "닉네임을 적어주세요",
+                  _nameController,
+                  _nameError,
+                ),
               ),
               SizedBox(height: 30),
-              _buildInputField("이메일", "이메일을 적어주세요", _idController, _idError),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: _buildInputField(
+                  "이메일",
+                  "이메일을 적어주세요",
+                  _idController,
+                  _idError,
+                ),
+              ),
               SizedBox(height: 30),
-              _buildInputField(
-                "비밀번호",
-                "영문, 숫자 조합 8자리 이상",
-                _passwordController,
-                _passwordError,
-                obscureText: true,
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: _buildInputField(
+                  "비밀번호",
+                  "영문, 숫자 조합 8자리 이상",
+                  _passwordController,
+                  _passwordError ?? _confirmPasswordError,
+                  obscureText: true,
+                ),
               ),
-              SizedBox(height: 10),
-              _buildInputField(
-                "비밀번호 재입력",
-                "비밀번호 재입력",
-                _confirmPasswordController,
-                _confirmPasswordError,
-                obscureText: true,
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: _buildInputField(
+                  "",
+                  "비밀번호 재입력",
+                  _confirmPasswordController,
+                  _confirmPasswordError,
+                  obscureText: true,
+                ),
               ),
-              SizedBox(height: 100),
+              SizedBox(height: 250),
               Center(
                 child: GestureDetector(
                   onTap: _validateInputs,
@@ -197,17 +219,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              label,
-              style: TextStyle(fontSize: 50.sp, fontWeight: FontWeight.w600),
-            ),
-            Spacer(),
-            if (error != null)
-              Text(error, style: TextStyle(color: Colors.red, fontSize: 30.sp)),
-          ],
-        ),
+        if (label.isNotEmpty)
+          Row(
+            children: [
+              Text(
+                label,
+                style: TextStyle(fontSize: 50.sp, fontWeight: FontWeight.w600),
+              ),
+              Spacer(),
+              if (error != null)
+                Text(
+                  error,
+                  style: TextStyle(color: Colors.red, fontSize: 30.sp),
+                ),
+            ],
+          ),
         SizedBox(height: 10),
         Container(
           width: 991.w,

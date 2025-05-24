@@ -1,17 +1,19 @@
-import 'package:componentss/core/user_provider.dart';
-import 'package:componentss/features/auth/onboarding_screen.dart';
-import 'package:componentss/features/baking/questions/odd/odd_quiz.dart';
-import 'package:componentss/features/baking/questions/odd/odd_screen.dart';
-import 'package:componentss/features/baking/questions/trend/trend_quiz.dart';
-import 'package:componentss/features/main_screen.dart';
-import 'package:componentss/features/baking/questions/trend/trend_ox.dart';
-import 'package:componentss/features/baking/questions/trend/trend_screen.dart';
+import 'package:componentss/features/baking/view/baking_screen.dart';
+import 'package:componentss/features/study/view/study_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ Riverpod
+
+import 'package:componentss/core/user_provider.dart';
+import 'package:componentss/features/search/view/search_screen_view.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ProviderScope(
+      // ✅ Riverpod 사용 가능하게 감싸기
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,26 +21,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => UserProvider(),
-        ), // UserProvider 등록
-      ],
-      child: Builder(
-        builder: (context) {
-          // ScreenUtil 초기화
-          ScreenUtil.init(context, designSize: Size(1080, 2400));
-          return MaterialApp(
-            home: OnboardingScreen(),
-            theme: ThemeData(
-              fontFamily: "Wanted Sans",
-              scaffoldBackgroundColor: Colors.white,
-              appBarTheme: AppBarTheme(color: Colors.white),
-            ),
-          );
-        },
-      ),
+    return Builder(
+      builder: (context) {
+        ScreenUtil.init(context, designSize: const Size(1080, 2400));
+        return MaterialApp(
+          locale: const Locale('ko', 'KR'),
+          home: BakingScreen(),
+          theme: ThemeData(
+            fontFamily: "Wanted Sans",
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(color: Colors.white),
+          ),
+        );
+      },
     );
   }
 }
