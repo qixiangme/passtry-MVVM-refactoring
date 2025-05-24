@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:componentss/core/user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyProfieScreen extends StatelessWidget {
+class MyProfieScreen extends ConsumerWidget {
   const MyProfieScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final user = userProvider.user;
+  Widget build(BuildContext context,WidgetRef ref) {
+
+    final user = ref.watch(userProvider);
     if (user != null) {
       print("사용자 이름: ${user.username}");
     }

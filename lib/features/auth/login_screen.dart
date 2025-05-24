@@ -1,6 +1,6 @@
 import 'package:componentss/core/user_provider.dart';
 import 'package:componentss/features/auth/data/auth_api.dart';
-import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
+import 'package:componentss/features/baking/view/setting/study_make_screen.dart';
 import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,10 +16,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void _login(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final email = _idController.text;
+    final username = _idController.text;
     final password = _passwordController.text;
 
-    final success = await AuthApi.loginUser(context, email, password);
+    final success = await AuthApi.loginUser( username, password);
 
     if (success) {
       ScaffoldMessenger.of(

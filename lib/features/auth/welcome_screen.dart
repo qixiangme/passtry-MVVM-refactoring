@@ -1,19 +1,15 @@
 import 'package:componentss/features/auth/login_screen.dart';
-import 'package:componentss/features/baking/UI/setting/study_make_screen.dart';
-import 'package:componentss/features/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:componentss/features/study/ui/make_group/study_make_group_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:componentss/core/user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final user = userProvider.user;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
     if (user != null) {
       print("사용자 이름: ${user.username}");
     }
